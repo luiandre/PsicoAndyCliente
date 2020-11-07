@@ -1,0 +1,28 @@
+<div class="fondo-modal-imagen animate fadeIn" [class.oculto]="modalImagenService.getOcultarModal">
+
+    <div id="responsive-modal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block; padding-right: 15px;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cambiar Imagen</h4>
+                    <button (click)="cerrarModal()" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="text-center">
+                        <img *ngIf="!imgShow" [src]="modalImagenService.img" class="img-user">
+                        <img *ngIf="imgShow" [src]="imgShow" class="img-user">
+                    </div>
+                    <br>
+                    <input type="file" (change)="cambiarImagen($event.target.files[0])">
+
+                </div>
+                <div class="modal-footer">
+                    <button (click)="cerrarModal()" type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</button>
+                    <button [disabled]="!imagenNueva" (click)="subirImagen()" type="button" class="btn btn-success waves-effect waves-light">Cambiar Imagen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

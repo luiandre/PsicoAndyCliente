@@ -1,0 +1,103 @@
+<div class="row animate fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando...</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">Usuarios</div>
+                <div class="card-columns animated fadeIn" *ngIf="!cargando" [hidden]="usuarios.length === 0">
+
+                    <div *ngFor="let usuario of usuarios">
+                        <div class="card h-100">
+                            <img [src]="usuario.img | imagen:'usuarios'" class="card-img-top h-25" alt="user">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ usuario.nombre + ' ' + usuario.apellido}}</h5>
+                                <p class="card-text">{{ usuario.email}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="usuarios.length > 0">
+                    <div class="col-12">
+                        <div class="alert alert-warning text-center">
+                            <h4 class="alert-heading">Sin resultados</h4>
+                            <i class="fa fa-warning fa-2x"></i>
+                            <p class="mb-0"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">Servicios</div>
+                <div class="card-columns animated fadeIn" *ngIf="!cargando" [hidden]="servicios.length === 0">
+                    <div *ngFor="let servicio of servicios">
+                        <div class="card h-100">
+                            <img [src]="servicio.img | imagen:'servicios'" class="card-img-top h-25" alt="user">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ servicio.titulo}}</h5>
+                                <p class="card-text">{{ servicio.fecha | date:'short'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="servicios.length > 0">
+                    <div class="col-12">
+                        <div class="alert alert-warning text-center">
+                            <h4 class="alert-heading">Sin resultados</h4>
+                            <i class="fa fa-warning fa-2x"></i>
+                            <p class="mb-0"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">Noticias</div>
+                <div class="card-columns animated fadeIn" *ngIf="!cargando" [hidden]="noticias.length === 0">
+                    <div *ngFor="let noticia of noticias">
+                        <div class="card h-100">
+                            <img [src]="noticia.img | imagen:'noticias'" class="card-img-top h-25" alt="user">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ noticia.titulo}}</h5>
+                                <p class="card-text">{{ noticia.fecha | date:'short'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="noticias.length > 0">
+                    <div class="col-12">
+                        <div class="alert alert-warning text-center">
+                            <h4 class="alert-heading">Sin resultados</h4>
+                            <i class="fa fa-warning fa-2x"></i>
+                            <p class="mb-0"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

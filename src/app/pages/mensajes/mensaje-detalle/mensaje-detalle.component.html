@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header px-4 py-4 bg-white">
+                <div class="media"><img [src]="usuarioSeleccionado.img | imagen:'usuarios'" alt="user" class="rounded-circle" style="height: 40px; width: 40px;">
+                    <div class="media-body ml-4">
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <h6 class="mb-0">{{usuarioSeleccionado.nombre + ' ' + usuarioSeleccionado.apellido}}</h6>
+                        </div>
+                        <p *ngIf="usuarioSeleccionado.estado" class="font-italic mb-0 text-small text-success">online</p>
+                        <p *ngIf="!usuarioSeleccionado.estado" class="font-italic mb-0 text-small text-danger">offline</p>
+                    </div>
+                    <div *ngIf="usuarioService.rol !== 'USER_ROL'"><button [disabled]='!usuarioSeleccionado.estado' (click)="llamar(usuarioSeleccionado.uid)" class="btn btn-info" style="height: 40px; width: 40px;"><i class=" fa fa-phone"></i></button></div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="px-4 py-5 chat-box bg-white" style="height: 280px;" #scrollMe>
+
+                    <div class="row animate fadeIn fast" [hidden]="mensajes.length > 0">
+                        <div class="col-12">
+                            <div class="alert alert-warning text-center">
+                                <h4 class="alert-heading">No existen mensajes</h4>
+                                <i class="fa fa-warning fa-2x"></i>
+                                <p class="mb-0"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngFor="let mensaje of mensajes">
+
+                        <div *ngIf="usuarioSeleccionado.uid == mensaje.de._id" class="media w-50 mb-3"><img [src]="usuarioSeleccionado.img | imagen:'usuarios'" style="width: 40px; height: 40px;" alt="user" width="50" class="rounded-circle">
+                            <div class="media-body ml-3">
+                                <div class="d-flex align-items-center justify-content-between mb-1">
+                                    <h6 class="mb-0">{{ usuarioSeleccionado.nombre + ' ' + usuarioSeleccionado.apellido}}</h6>
+                                </div>
+                                <div class="bg-light rounded py-2 px-3 mb-2">
+                                    <p class="text-small mb-0">{{mensaje.mensaje}}</p>
+                                </div>
+                                <p class="small text-muted">{{ mensaje.fecha | date:'short'}}</p>
+                            </div>
+                        </div>
+
+
+                        <div class="media w-50 ml-auto mb-3" *ngIf="usuarioService.uid == mensaje.de._id">
+                            <div class="media-body">
+                                <div class="bg-info rounded py-2 px-3 mb-2">
+                                    <p class="text-small mb-0 text-white">{{mensaje.mensaje}}</p>
+                                </div>
+                                <p class="small text-muted">{{ mensaje.fecha | date:'short'}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <form #mensajeForm="ngForm" (ngSubmit)="onSubmit(mensajeForm)" class="bg-light">
+                    <div class="input-group">
+                        <input autocomplete="off" type="text" #mensaje="ngModel" name="mensaje" required [(ngModel)]="mensajeNuevo.mensaje" placeholder="Escribir mensaje..." aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+                        <div class="input-group-append">
+                            <button id="button-addon2" type="submit" class="btn btn-link"> <i class="fa fa-paper-plane fa-2x"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

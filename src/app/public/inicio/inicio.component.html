@@ -1,0 +1,32 @@
+<div class="card mb-3" *ngFor="let noticia of noticias">
+    <div class="row no-gutters">
+        <div class="col-md-4 text-center">
+            <img [src]="noticia.img | imagen:'noticias'" class="card-img img-responsive img-padding" [alt]="noticia.titulo">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{ noticia.titulo }}</h5>
+                <p class="card-text">{{ noticia.detalle}}</p>
+                <p class="card-text"><small class="text-muted">{{ noticia.fecha | date:'short'}}</small></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" [hidden]="noticias.length > 0">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row animate fadeIn fast">
+                    <div class="col-12">
+                        <div class="alert alert-warning text-center">
+                            <h4 class="alert-heading">No se han agregado noticias</h4>
+                            <i class="fa fa-warning fa-2x"></i>
+                            <p class="mb-0"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

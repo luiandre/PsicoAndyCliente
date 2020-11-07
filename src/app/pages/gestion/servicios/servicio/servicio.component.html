@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form class="form" [formGroup]="servicioForm" (ngSubmit)="guardarServicio()">
+                    <div class="col-12 text-center" *ngIf="servicioSeleccionado">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row p-t-20">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <img class="w200" [src]="servicioSeleccionado.img | imagen: 'servicios'">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-t-20">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Título</label>
+                                <input type="text" class="form-control" placeholder="Título" formControlName="titulo">
+                                <span class="text-danger" *ngIf="campoNoValido('titulo')">El título es obligatorio</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-t-20">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Detalle</label>
+                                <textarea type="text" class="form-control" placeholder="Detalle" formControlName="detalle" rows="5"></textarea>
+                                <span class="text-danger" *ngIf="campoNoValido('detalle')">El detalle es obligatorio</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-t-20">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Responsable</label>
+                                <select class="form-control" formControlName="responsable">
+                                    <option value="">Seleccione un usuario</option>
+                                    <option *ngFor="let usuario of usuarios" [value]="usuario.uid">{{usuario.nombre + ' ' + usuario.apellido}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-t-20 text-center" *ngIf="usuarioSeleccionado">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">{{usuarioSeleccionado.email}}</label>
+                                <br>
+                                <img class="w100" [src]="usuarioSeleccionado.img | imagen: 'usuarios'">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-t-20">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button routerLink='/dashboard/servicios' type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</button> &nbsp;
+                                <button [disabled]="servicioForm.invalid" type="submit" class="btn btn-success waves-effect waves-light">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

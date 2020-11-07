@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <audio id="player" controls style="display: none;">
+                <source id="file-mp3" src="../../../assets/multimedia/alert.mp3" type="audio/mpeg">
+            </audio>
+            <div class="card-body">
+                <div class="container">
+                    <div class="content-container">
+                        <div class="video-chat-container">
+                            <div id="video-grid" class="video-container">
+                                <div *ngIf="remoteStream === null" class="remote-video" style="height: 100%; width: 100%; background-color: black;">
+                                    <div class="m-5 text-white" style="background-color: black;">
+                                        Conectando. Porfavor espere...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button (click)="salir()" class="btn btn-danger">Salir</button>
+                            <br>
+                            <br>
+                            <button *ngIf="options.video" (click)="descativarCamara()" class="btn btn-success btn-circle"><i class="fa fa-camera"></i></button>
+                            <button *ngIf="!options.video" (click)="ativarCamara()" class="btn btn-danger btn-circle"><i class="fa fa-camera"></i></button>
+                            <br>
+                            <br>
+                            <button *ngIf="options.audio" (click)="desactivarAudio()" class="btn btn-success btn-circle"><i class="fa fa-microphone"></i></button>
+                            <button *ngIf="!options.audio" (click)="activarAudio()" class="btn btn-danger btn-circle"><i class="fa fa-microphone"></i></button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

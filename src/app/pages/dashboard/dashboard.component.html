@@ -1,0 +1,21 @@
+<div class="card mb-3" *ngIf="noticia">
+    <div class="text-center align-center">
+        <img [src]="noticia.img | imagen:'noticias'" class="img-responsive img-padding text-center" style="width: 340px;" [alt]="noticia.titulo">
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{ noticia.titulo }}</h5>
+        <p class="card-text">{{ noticia.detalle }}</p>
+        <p class="card-text"><small class="text-muted">{{ noticia.fecha | date:'short'}}</small></p>
+    </div>
+</div>
+
+
+<div class="row" *ngIf="!noticia">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <img class="img-responsive" src='../../../assets/images/imagenPsicoDashboard.png'>
+            </div>
+        </div>
+    </div>
+</div>

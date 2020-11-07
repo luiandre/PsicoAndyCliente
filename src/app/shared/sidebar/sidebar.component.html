@@ -1,0 +1,40 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="user-profile" *ngIf="usuario">
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="usuario.imagenUrl" alt="user" style="height: 23px; width: 23px;" /><span class="hide-menu">{{ usuario.nombre + ' ' + usuario.apellido }}</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a routerLink="/perfil" routerLinkActive="active">Perfil</a></li>
+                        <li><a routerLink='/mensajes' routerLinkActive="active">Mensajes</a></li>
+                        <!-- <li><a routerLink="/account-settings">Configuración</a></li> -->
+                        <li><a (click)="logout()" class="cursor">Salir</a></li>
+                    </ul>
+                </li>
+                <li class="nav-devider"></li>
+
+                <li *ngFor="let menu of sidebarService.menu"> <a class="has-arrow waves-effect waves-dark" aria-expanded="false"><i [class]="menu.icono"></i><span class="hide-menu">{{menu.titulo}}</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li *ngFor="let submenu of menu.submenu">
+                            <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true}" [routerLink]="submenu.url">{{submenu.titulo}} </a>
+                        </li>
+                        <li *ngIf="!usuario && menu.titulo === 'PsicoAndy'">
+                            <a routerLink="/login">Ingresar</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->

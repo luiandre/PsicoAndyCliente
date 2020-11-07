@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form class="form" [formGroup]="noticiaForm" (ngSubmit)="guardarNoticia()">
+                    <div class="col-12 text-center" *ngIf="noticiaSeleccionada">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row p-t-20">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <img class="w200" [src]="noticiaSeleccionada.img | imagen: 'noticias'">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-t-20">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Título</label>
+                                <input type="text" class="form-control" placeholder="Título" formControlName="titulo">
+                                <span class="text-danger" *ngIf="campoNoValido('titulo')">El título es obligatorio</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-t-20">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Detalle</label>
+                                <textarea type="text" class="form-control" placeholder="Detalle" formControlName="detalle" rows="5"></textarea>
+                                <span class="text-danger" *ngIf="campoNoValido('detalle')">El detalle es obligatorio</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row p-t-20">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button routerLink='/dashboard/noticias' type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</button> &nbsp;
+                                <button [disabled]="noticiaForm.invalid" type="submit" class="btn btn-success waves-effect waves-light">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

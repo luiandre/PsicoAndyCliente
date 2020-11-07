@@ -1,0 +1,80 @@
+<div class="row animate fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="Buscar servicios por título" (keyup)="buscarServicio( txtTermino.value)" #txtTermino>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animate fadeIn fast text-right">
+    <div class="col-12">
+        <button routerLink="/dashboard/servicios/nuevo" class="btn btn-success">Agregar Servicio</button>
+    </div>
+</div>
+
+<br>
+
+<div class="row animate fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando...</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="totalServicios > 0">
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <h4 class="alert-heading">Sin resultados</h4>
+            <i class="fa fa-warning fa-2x"></i>
+            <p class="mb-0"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="totalServicios === 0">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Detalle</th>
+                                <th class="w200">Fecha</th>
+                                <th class="w200">Responsable</th>
+                                <th class="w200">Creado por</th>
+                                <th class="text-nowrap w100">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let servicio of servicios">
+                                <td>{{ servicio.titulo }}</td>
+                                <td>{{ servicio.detalle }}</td>
+                                <td>{{ servicio.fecha | date:'short'}}</td>
+                                <td>{{ servicio.responsable.nombre + ' ' + servicio.responsable.apellido}}</td>
+                                <td>{{ servicio.usuario.nombre + ' ' + servicio.usuario.apellido}}</td>
+                                <td class="text-nowrap text-center">
+                                    <a [routerLink]="['/dashboard/servicios/', servicio.id]" data-original-title="Editar"> <i class="fa fa-edit text-dark cursor"></i> </a> &nbsp;
+                                    <a (click)="abrirModal(servicio)" data-original-title="Imagen"> <i class="fa fa-image text-dark cursor"></i> </a> &nbsp;
+                                    <a (click)="eliminarNoticia(servicio)" data-original-title="Eliminar"> <i class="fa fa-close text-danger cursor"></i> </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div *ngIf="txtTermino.value.length === 0">
+                        <button (click)="cambiarPagina(-6)" class="btn btn-secondary">Anterior</button> &nbsp;
+                        <button (click)="cambiarPagina(6)" class="btn btn-secondary">Siguiente</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-body">
+                    <h3 class="card-title">Mis Datos</h3>
+                    <hr>
+
+                    <form class="form" [formGroup]="perfilForm" (ngSubmit)="actualizarPerfil()">
+                        <div class="row p-t-20">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Nombre</label>
+                                    <input type="text" class="form-control" placeholder="Nombre" formControlName="nombre">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Apellido</label>
+                                    <input type="text" class="form-control" placeholder="Apellido" formControlName="apellido">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-t-20" *ngIf="usuario.rol != 'USER_ROL'">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Biografría</label>
+                                    <input type="text" class="form-control" placeholder="Biografía" formControlName="bio">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="row p-t-20">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label class="control-label">Anterior Contraseña</label>
+                                        <input type="password" class="form-control" placeholder="Anterior Contraseña" formControlName="anterior">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Nueva Contraseña</label>
+                                        <input type="password" class="form-control" placeholder="Nueva Contraseña" formControlName="nueva">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Repetir Contraseña</label>
+                                        <input type="password" class="form-control" placeholder="Repetir Contraseña" formControlName="repetir">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-actions">
+                                    <button [disabled]="perfilForm.invalid" type="submit" class="btn btn-info"> <i class="fa fa-save"></i> Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <br>
+                    <h3 class="card-title">Foto</h3>
+                    <hr>
+                    <div class="row p-t-20">
+                        <div class="col-md-6 text-center">
+                            <img *ngIf="!imgShow" [src]="usuario.imagenUrl" class="img-user">
+                            <img *ngIf="imgShow" [src]="imgShow" class="img-user">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="file" (change)="cambiarImagen($event.target.files[0])">
+                            <br>
+                            <br>
+                            <div class="form-actions">
+                                <button class="btn btn-info" (click)="subirImagen()" type="button" [disabled]="!imagenNueva"> <i class="fa fa-image"></i> Cambiar imagen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
