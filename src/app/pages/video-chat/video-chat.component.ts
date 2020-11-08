@@ -33,6 +33,7 @@ export class VideoChatComponent implements OnInit {
   private myPeer = new Peer(undefined, {
     host: '161.35.124.218',
     port: 3001,
+    secure: true
   });
 
   // private myPeer = new Peer();

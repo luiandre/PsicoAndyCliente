@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   public auth2: any;
   public formSubmitted = false;
   socket = io(socket_url);
-  linkTerminos = '';
+  linkTerminos = `${socket_url}terminos-condiciones`;
 
   public loginForm = this.fb.group({
     email: [localStorage.getItem('email') || '', [Validators.required, Validators.email, Validators.maxLength(50)]],
@@ -91,7 +91,7 @@ export class LoginComponent implements OnInit {
         title: 'Al ingresar con tu cuenta Google',
         icon: 'warning',
         html:
-          `Aceptas los siguientes <a href="${this.linkTerminos}">Términos y condiciones</a>`,
+          `Aceptas los siguientes <a target="_blank" href="${this.linkTerminos}">Términos y condiciones</a>`,
         showCancelButton: true,
         focusConfirm: false,
         confirmButtonText:

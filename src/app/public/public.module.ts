@@ -12,6 +12,7 @@ import { ServiciosComponent } from './servicios/servicios.component';
 import { ContactanosComponent } from './contactanos/contactanos.component';
 import { PublicComponent } from './public.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { TerminosCondicionesComponent } from './terminos-condiciones/terminos-condiciones.component';
 
 
 @NgModule({
@@ -20,14 +21,16 @@ import { PipesModule } from '../pipes/pipes.module';
     ConocenosComponent,
     ServiciosComponent,
     ContactanosComponent,
-    PublicComponent
+    PublicComponent,
+    TerminosCondicionesComponent
   ],
   exports: [
     InicioComponent,
     ConocenosComponent,
     ServiciosComponent,
     ContactanosComponent,
-    PublicComponent
+    PublicComponent,
+    TerminosCondicionesComponent
   ],
   imports: [
     CommonModule,
