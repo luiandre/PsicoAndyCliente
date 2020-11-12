@@ -11,6 +11,7 @@ import { UsuarioService } from '../../services/usuario.service';
 export class ConocenosComponent implements OnInit {
 
   public usuarios: Usuario[] = [];
+  public cargando = true;
 
   constructor(  private usuarioService: UsuarioService) { }
 
@@ -19,8 +20,10 @@ export class ConocenosComponent implements OnInit {
   }
 
   cargarUsuarios(){
+    this.cargando = true;
     this.usuarioService.getUsuariosAdministrativos().subscribe( usuarios => {
       this.usuarios = usuarios;
+      this.cargando = false;
     });
   }
 

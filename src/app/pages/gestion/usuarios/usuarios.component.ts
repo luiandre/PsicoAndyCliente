@@ -105,7 +105,18 @@ export class UsuariosComponent implements OnInit, OnDestroy{
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
+
+        Swal.fire({
+          icon: 'warning',
+          title: 'Espere por favor...',
+          allowOutsideClick: false,
+          onBeforeOpen: () => {
+              Swal.showLoading();
+          },
+        });
+
         this.usuarioService.eliminarUsuario(usuario).subscribe( resp => {
+          Swal.close();
           Swal.fire(
             'Inhabilitado!',
             'Usuario ' + usuario.nombre + ' ' + usuario.apellido + ' inhabilitado.',
@@ -116,6 +127,7 @@ export class UsuariosComponent implements OnInit, OnDestroy{
 
           this.cargarUsuarios();
         }, (err) => {
+          Swal.close();
           Swal.fire({
             title: 'Error!',
             text: err.error.msg,
@@ -149,7 +161,18 @@ export class UsuariosComponent implements OnInit, OnDestroy{
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
+
+        Swal.fire({
+          icon: 'warning',
+          title: 'Espere por favor...',
+          allowOutsideClick: false,
+          onBeforeOpen: () => {
+              Swal.showLoading();
+          },
+        });
+
         this.usuarioService.habilitarUsuario(usuario).subscribe( resp => {
+          Swal.close();
           Swal.fire(
             'Habilitado!',
             'Usuario ' + usuario.nombre + ' ' + usuario.apellido + ' habilitado.',
@@ -158,6 +181,7 @@ export class UsuariosComponent implements OnInit, OnDestroy{
 
           this.cargarUsuarios();
         }, (err) => {
+          Swal.close();
           Swal.fire({
             title: 'Error!',
             text: err.error.msg,
@@ -170,13 +194,25 @@ export class UsuariosComponent implements OnInit, OnDestroy{
   }
 
   cambiarRol(usuario: Usuario){
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
     this.usuarioService.actualizarUsuario(usuario).subscribe( resp => {
+      Swal.close();
       Swal.fire(
         'Exito!',
         usuario.nombre + ' ' + usuario.apellido + ' ha cambiado de rol ',
         'success'
       );
     }, (err) => {
+      Swal.close();
       Swal.fire({
         title: 'Error!',
         text: err.error.msg,

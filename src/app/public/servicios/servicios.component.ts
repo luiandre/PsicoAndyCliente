@@ -15,6 +15,7 @@ export class ServiciosComponent implements OnInit {
 
   public servicios: any[] = [];
   public uid;
+  public cargando = true;
 
   constructor(  private serviciosService: ServiciosService,
                 private router: Router,
@@ -25,8 +26,10 @@ export class ServiciosComponent implements OnInit {
   }
 
   cargarServicios() {
+    this.cargando = true;
     this.serviciosService.cargarServicios(0).subscribe( resp => {
       this.servicios = resp.servicios;
+      this.cargando = false;
     });
   }
 

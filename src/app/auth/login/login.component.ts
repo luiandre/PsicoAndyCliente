@@ -45,6 +45,15 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
     this.usuarioService.login(this.loginForm.value).subscribe( resp => {
 
       if (this.loginForm.get('recordarme').value){
@@ -57,12 +66,13 @@ export class LoginComponent implements OnInit {
         this.usuarioService.sumarConexion(resp.usuario.uid).subscribe(() => {
           this.usuarioService.cargarUsuarios().subscribe( data => {
             this.socket.emit('guardar-usuarios', data.usuarios);
+            this.router.navigateByUrl('/dashboard');
+            Swal.close();
           });
         });
       });
-
-      this.router.navigateByUrl('/dashboard');
     }, (err) => {
+      Swal.close();
       Swal.fire({
         title: 'Error!',
         text: err.error.msg,
@@ -122,8 +132,18 @@ export class LoginComponent implements OnInit {
 
   logout(){
 
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
     this.usuarioService.restarConexion(this.usuarioService.uid).subscribe( () => {
       this.usuarioService.desconectado(this.usuarioService.uid).subscribe( data => {
+        Swal.close();
         this.socket.emit('guardar-usuarios', data);
         this.usuarioService.logout();
       });
@@ -145,15 +165,25 @@ export class LoginComponent implements OnInit {
     this.auth2.attachClickHandler(element, {},
         (googleUser) => {
 
+        Swal.fire({
+          icon: 'warning',
+          title: 'Espere por favor...',
+          allowOutsideClick: false,
+          onBeforeOpen: () => {
+              Swal.showLoading();
+          },
+        });
+
         const id_token = googleUser.getAuthResponse().id_token;
         this.usuarioService.loginGoogle(id_token).subscribe( resp => {
             this.ngZone.run( () => {
-              this.router.navigateByUrl('/dashboard');
 
               this.usuarioService.conectado(resp.usuario.uid).subscribe( () => {
                 this.usuarioService.sumarConexion(resp.usuario.uid).subscribe(() => {
                   this.usuarioService.cargarUsuarios().subscribe( data => {
                     this.socket.emit('guardar-usuarios', data.usuarios);
+                    this.router.navigateByUrl('/dashboard');
+                    Swal.close();
                     this.aceptarTerminosGoolge(resp.usuario);
                   });
                 });
@@ -161,6 +191,7 @@ export class LoginComponent implements OnInit {
 
             });
           }, (err) => {
+            Swal.close();
             Swal.fire({
               title: 'Error!',
               text: err.error.msg,
@@ -169,6 +200,7 @@ export class LoginComponent implements OnInit {
             });
           });
         }, (error) => {
+          Swal.close();
           Swal.fire({
             title: 'Error!',
             text: error,

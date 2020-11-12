@@ -50,11 +50,22 @@ export class NoticiaComponent implements OnInit {
       return;
     }
 
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
     this.noticiasService.getNoticia(id)
     .pipe(
       delay(1000)
     )
     .subscribe( noticia => {
+
+      Swal.close();
 
       if ( !noticia ){
         return this.router.navigateByUrl('/dashboard/noticias');
@@ -65,6 +76,7 @@ export class NoticiaComponent implements OnInit {
       this.noticiaForm.setValue({titulo, detalle});
 
     }, (err) => {
+      Swal.close();
       return this.router.navigateByUrl('/dashboard/noticias');
     });
   }
@@ -92,7 +104,17 @@ export class NoticiaComponent implements OnInit {
       img: 'no-image'
     };
 
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
     this.noticiasService.crearNoticia(noticia).subscribe( resp => {
+      Swal.close();
       Swal.fire({
         title: 'Exito!',
         text: 'Noticia guardada',
@@ -101,6 +123,7 @@ export class NoticiaComponent implements OnInit {
       });
       this.router.navigateByUrl('/dashboard/noticias');
     }, (err) => {
+      Swal.close();
       Swal.fire({
         title: 'Error!',
         text: err.error.msg,
@@ -118,15 +141,26 @@ export class NoticiaComponent implements OnInit {
       usuario: this.usuarioService.uid,
     };
 
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
     this.noticiasService.actualizarNoticia(this.noticiaSeleccionada.id, noticia).subscribe( resp => {
+      Swal.close();
       Swal.fire({
         title: 'Exito!',
         text: 'Noticia actualizada',
         icon: 'success',
         confirmButtonText: 'Aceptar'
       });
-      this.router.navigateByUrl('/dashboard/servicios');
+      this.router.navigateByUrl('/dashboard/noticias');
     }, (err) => {
+      Swal.close();
       Swal.fire({
         title: 'Error!',
         text: err.error.msg,

@@ -41,11 +41,25 @@ export class RegisterComponent  {
       return;
     }
 
+    Swal.fire({
+      title: 'Loading cars from data base'
+    });
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
     // Realiza el posteo
     this.usuarioService.crearUsuario( this.registerForm.value).subscribe( resp => {
       this.usuarioService.sumarConexion(resp.usuario.uid).subscribe( () => {
         this.socket.emit('guardar-usuarios', resp);
         this.router.navigateByUrl('/dashboard');
+        Swal.close();
       });
     }, (err) => {
       Swal.fire({

@@ -86,3 +86,7 @@
 .swal-height {
     height: 150px;
 }
+
+.my-swal {
+    z-index: 300000;
+}

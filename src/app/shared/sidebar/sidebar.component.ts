@@ -4,6 +4,7 @@ import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario.model';
 import { environment } from 'src/environments/environment';
 import * as io from 'socket.io-client';
+import Swal from 'sweetalert2';
 
 const socket_url = environment.socket_url;
 
@@ -28,9 +29,20 @@ export class SidebarComponent implements OnInit {
   }
 
   logout(){
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
     this.usuarioService.restarConexion(this.usuarioService.uid).subscribe( () => {
       this.usuarioService.desconectado(this.usuarioService.uid).subscribe( data => {
         this.socket.emit('guardar-usuarios', data);
+        Swal.close();
         this.usuarioService.logout();
       });
     });

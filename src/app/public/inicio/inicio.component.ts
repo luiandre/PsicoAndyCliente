@@ -11,6 +11,7 @@ import { Noticia } from '../../models/noticia.model';
 export class InicioComponent implements OnInit {
 
   public noticias: Noticia[] = [];
+  public cargando = true;
 
   constructor(  private noticiasService: NoticiasService) { }
 
@@ -19,9 +20,11 @@ export class InicioComponent implements OnInit {
   }
 
   cargarNoticias() {
+    this.cargando = true;
     this.noticiasService.cargarNoticias()
     .subscribe( resp => {
       this.noticias = resp.noticias;
+      this.cargando = false;
     });
   }
 

@@ -124,8 +124,19 @@ export class PerfilComponent implements OnInit {
   }
 
   subirImagen(){
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
     this.fileUploadSerivece.actualizarFoto(this.imagenNueva, 'usuarios', this.usuario.uid).subscribe( (resp: any) => {
       this.usuario.img = resp.nombreArchivo;
+      Swal.close();
       Swal.fire({
         title: 'Exito!',
         text: 'Foto actualizada',
@@ -133,6 +144,7 @@ export class PerfilComponent implements OnInit {
         confirmButtonText: 'Aceptar'
       });
     }, err => {
+      Swal.close();
       Swal.fire({
         title: 'Error!',
         text: 'No se pudo subir la imagen',

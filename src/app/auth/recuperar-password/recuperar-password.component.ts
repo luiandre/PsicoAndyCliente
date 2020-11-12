@@ -41,7 +41,17 @@ export class RecuperarPasswordComponent implements OnInit {
       return;
     }
 
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
     this.usuarioService.recuperarPassword(this.loginForm.get('email').value).subscribe(resp => {
+      Swal.close();
       Swal.fire({
         title: 'Exito!',
         text: 'Por favor, revise su correo ' + this.loginForm.get('email').value,
@@ -50,6 +60,7 @@ export class RecuperarPasswordComponent implements OnInit {
       });
       this.router.navigateByUrl('/login');
     }, err => {
+      Swal.close();
       Swal.fire({
         title: 'Error!',
         text: err.error.msg,

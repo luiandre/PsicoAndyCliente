@@ -56,11 +56,21 @@ export class ServicioComponent implements OnInit {
       return;
     }
 
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
     this.servicioService.getServicio(id)
     .pipe(
       delay(1000)
     )
     .subscribe( servicio => {
+      Swal.close();
 
       if ( !servicio ){
         return this.router.navigateByUrl('/dashboard/servicios');
@@ -71,6 +81,7 @@ export class ServicioComponent implements OnInit {
       this.servicioForm.setValue({titulo, detalle, responsable: _id});
 
     }, (err) => {
+      Swal.close();
       return this.router.navigateByUrl('/dashboard/servicios');
     });
   }
@@ -99,7 +110,17 @@ export class ServicioComponent implements OnInit {
       img: 'no-image'
     };
 
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
     this.servicioService.crearServicio(servicio).subscribe( resp => {
+      Swal.close();
       Swal.fire({
         title: 'Exito!',
         text: 'Servicio guardado',
@@ -108,6 +129,7 @@ export class ServicioComponent implements OnInit {
       });
       this.router.navigateByUrl('/dashboard/servicios');
     }, (err) => {
+      Swal.close();
       Swal.fire({
         title: 'Error!',
         text: err.error.msg,
@@ -126,7 +148,17 @@ export class ServicioComponent implements OnInit {
       responsable: this.servicioForm.value.responsable,
     };
 
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
     this.servicioService.actualizarServicio(this.servicioSeleccionado.id, servicio).subscribe( resp => {
+      Swal.close();
       Swal.fire({
         title: 'Exito!',
         text: 'Servicio actualizado',
@@ -135,6 +167,7 @@ export class ServicioComponent implements OnInit {
       });
       this.router.navigateByUrl('/dashboard/servicios');
     }, (err) => {
+      Swal.close();
       Swal.fire({
         title: 'Error!',
         text: err.error.msg,

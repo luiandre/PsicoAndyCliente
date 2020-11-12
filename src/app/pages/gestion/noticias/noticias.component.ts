@@ -89,7 +89,18 @@ export class NoticiasComponent implements OnInit, OnDestroy {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
+
+        Swal.fire({
+          icon: 'warning',
+          title: 'Espere por favor...',
+          allowOutsideClick: false,
+          onBeforeOpen: () => {
+              Swal.showLoading();
+          },
+        });
+
         this.noticiaService.eliminarNoticia(noticia.id).subscribe( resp => {
+          Swal.close();
           Swal.fire(
             'Exito!',
             'Noticia ' + noticia.titulo + ' eliminada.',
@@ -97,6 +108,7 @@ export class NoticiasComponent implements OnInit, OnDestroy {
           );
           this.cargarNoticias();
         }, (err) => {
+          Swal.close();
           Swal.fire({
             title: 'Error!',
             text: err.error.msg,

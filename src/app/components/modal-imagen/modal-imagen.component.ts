@@ -47,7 +47,20 @@ export class ModalImagenComponent implements OnInit {
     const id = this.modalImagenService.id;
     const tipo = this.modalImagenService.tipo;
 
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      customClass: {
+        container: 'my-swal'
+      },
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
     this.fileUploadSerivec.actualizarFoto(this.imagenNueva, tipo, id).subscribe( (resp: any) => {
+      Swal.close();
       Swal.fire({
         title: 'Exito!',
         text: 'Foto actualizada',
@@ -57,6 +70,7 @@ export class ModalImagenComponent implements OnInit {
       this.modalImagenService.imgActualizada.emit(resp.nombreArchivo);
       this.cerrarModal();
     }, err => {
+      Swal.close();
       Swal.fire({
         title: 'Error!',
         text: 'No se pudo subir la imagen',
