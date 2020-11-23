@@ -58,6 +58,7 @@ export class RegisterComponent  {
     this.usuarioService.crearUsuario( this.registerForm.value).subscribe( resp => {
       this.usuarioService.sumarConexion(resp.usuario.uid).subscribe( () => {
         this.socket.emit('guardar-usuarios', resp);
+        this.socket.emit('guardar-usuario', resp);
         this.router.navigateByUrl('/dashboard');
         Swal.close();
       });

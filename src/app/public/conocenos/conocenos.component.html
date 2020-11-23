@@ -5,6 +5,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ usuario.nombre + ' ' + usuario.apellido}}</h5>
                 <p class="card-text">{{ usuario.bio }}</p>
+                <button (click)="contactar(usuario.uid)" class="btn btn-info">Contactar</button>
             </div>
         </div>
     </div>

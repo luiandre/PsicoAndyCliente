@@ -67,8 +67,11 @@
                     </table>
 
                     <div *ngIf="txtTermino.value.length === 0">
-                        <button (click)="cambiarPagina(-6)" class="btn btn-secondary">Anterior</button> &nbsp;
-                        <button (click)="cambiarPagina(6)" class="btn btn-secondary">Siguiente</button>
+                        <button [disabled]="desde === 0" (click)="cambiarPagina(-6)" class="btn btn-info">Anterior</button> &nbsp;
+                        <button [disabled]="hasta=== totalNoticias" (click)="cambiarPagina(6)" class="btn btn-info">Siguiente</button>
+                        <div class="float-right">
+                            {{desde+1}}-{{hasta}} ({{totalNoticias}})
+                        </div>
                     </div>
 
                 </div>

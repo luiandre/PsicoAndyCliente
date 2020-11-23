@@ -10,6 +10,7 @@ import Push from 'push.js';
 import { SalasService } from '../../../services/salas.service';
 import Swal from 'sweetalert2';
 import { Sala } from 'src/app/models/sala.model';
+import { error } from 'protractor';
 
 const socket_url = environment.socket_url;
 
@@ -39,6 +40,12 @@ export class MensajeDetalleComponent implements OnInit {
     this.mensajeNuevo = new Mensaje('', '', '');
 
     this.activatedRoute.params.subscribe( ({uid}) => {
+
+      this.usuarioService.getUsuario(uid).subscribe( (usuario: Usuario) => {
+      }, err => {
+        this.router.navigateByUrl('/mensajes');
+      });
+
       this.uid = uid;
       this.cargarMensajes(uid);
     });

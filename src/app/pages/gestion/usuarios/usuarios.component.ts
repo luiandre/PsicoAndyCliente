@@ -25,6 +25,7 @@ export class UsuariosComponent implements OnInit, OnDestroy{
   public usuarios: Usuario[];
   public usuariosTemp: Usuario[];
   public desde = 0;
+  public hasta = 6;
   public cargando = true;
   public imgSubs: Subscription;
   public socket = io(socket_url);
@@ -47,6 +48,10 @@ export class UsuariosComponent implements OnInit, OnDestroy{
     .subscribe( img => {
       this.cargarUsuarios();
     });
+
+    this.socket.on('nuevo-usuario', function(data) {
+      this.cargarUsuarios();
+    }.bind(this));
   }
 
   public cargarUsuarios() {
@@ -56,16 +61,26 @@ export class UsuariosComponent implements OnInit, OnDestroy{
       this.usuarios = usuarios;
       this.usuariosTemp = usuarios;
       this.cargando = false;
+      if (this.totalUsuarios < 6) {
+        this.hasta = this.totalUsuarios;
+      }
     });
   }
 
   cambiarPagina( valor: number) {
     this.desde += valor;
+    this.hasta += valor;
 
     if (this.desde < 0) {
       this.desde = 0;
     } else if (this.desde >= this.totalUsuarios) {
       this.desde -= valor;
+    }
+
+    if (this.hasta > this.totalUsuarios){
+      this.hasta = this.totalUsuarios;
+    } else if (this.hasta < this.totalUsuarios){
+      this.hasta = 6;
     }
 
     this.cargarUsuarios();
@@ -194,6 +209,15 @@ export class UsuariosComponent implements OnInit, OnDestroy{
   }
 
   cambiarRol(usuario: Usuario){
+
+    if (usuario.uid === this.usuarioService.uid) {
+      return Swal.fire({
+        title: 'Error!',
+        text: 'No puede cambiar su rol: ' + usuario.nombre + ' ' + usuario.apellido,
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+    }
 
     Swal.fire({
       icon: 'warning',

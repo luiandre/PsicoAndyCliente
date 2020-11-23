@@ -71,10 +71,11 @@ export class UsuarioService {
     sessionStorage.removeItem('token');
     localStorage.removeItem('menu');
 
+    this.router.navigateByUrl('/login');
+    window.location.reload();
+
     this.auth2.signOut().then( () => {
       this.ngZone.run( () => {
-        this.router.navigateByUrl('/login');
-        window.location.reload();
       });
     });
   }

@@ -22,6 +22,7 @@ export class NoticiasComponent implements OnInit, OnDestroy {
   public noticias: any[];
   public noticiasTemp: Noticia[];
   public desde = 0;
+  public hasta = 6;
   public cargando = true;
   private imgSubs: Subscription;
 
@@ -49,16 +50,26 @@ export class NoticiasComponent implements OnInit, OnDestroy {
       this.noticias = noticias;
       this.noticiasTemp = noticias;
       this.cargando = false;
+      if (this.totalNoticias < 6) {
+        this.hasta = this.totalNoticias;
+      }
     });
   }
 
   cambiarPagina( valor: number) {
     this.desde += valor;
+    this.hasta += valor;
 
     if (this.desde < 0) {
       this.desde = 0;
     } else if (this.desde >= this.totalNoticias) {
       this.desde -= valor;
+    }
+
+    if (this.hasta > this.totalNoticias){
+      this.hasta = this.totalNoticias;
+    } else if (this.hasta < this.totalNoticias){
+      this.hasta = 6;
     }
 
     this.cargarNoticias();

@@ -21,6 +21,7 @@ export class ServiciosComponent implements OnInit, OnDestroy {
   public servicios: any[];
   public serviciosTemp: Servicio[];
   public desde = 0;
+  public hasta = 0;
   public cargando = true;
   private imgSubs: Subscription;
 
@@ -48,6 +49,9 @@ export class ServiciosComponent implements OnInit, OnDestroy {
       this.servicios = servicios;
       this.serviciosTemp = servicios;
       this.cargando = false;
+      if (this.totalServicios < 6) {
+        this.hasta = this.totalServicios;
+      }
     });
   }
 
@@ -113,11 +117,18 @@ export class ServiciosComponent implements OnInit, OnDestroy {
 
   cambiarPagina( valor: number) {
     this.desde += valor;
+    this.hasta += valor;
 
     if (this.desde < 0) {
       this.desde = 0;
     } else if (this.desde >= this.totalServicios) {
       this.desde -= valor;
+    }
+
+    if (this.hasta > this.totalServicios){
+      this.hasta = this.totalServicios;
+    } else if (this.hasta < this.totalServicios){
+      this.hasta = 6;
     }
 
     this.cargarServicios();
