@@ -4,10 +4,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { delay } from 'rxjs/operators';
 
 import Swal from 'sweetalert2';
+import * as io from 'socket.io-client';
 
 import { Noticia } from '../../../../models/noticia.model';
 import { NoticiasService } from '../../../../services/noticia.service';
 import { UsuarioService } from '../../../../services/usuario.service';
+import { environment } from 'src/environments/environment';
+
+
+const socket_url = environment.socket_url;
 
 @Component({
   selector: 'app-noticia',
@@ -23,6 +28,8 @@ export class NoticiaComponent implements OnInit {
   public formSubmitted = false;
 
   public noticiaForm: FormGroup;
+
+  public socket = io(socket_url);
 
 
   constructor(  private activatedRoute: ActivatedRoute,
@@ -121,6 +128,7 @@ export class NoticiaComponent implements OnInit {
         icon: 'success',
         confirmButtonText: 'Aceptar'
       });
+      this.socket.emit('guardar-noticia', resp);
       this.router.navigateByUrl('/dashboard/noticias');
     }, (err) => {
       Swal.close();
@@ -158,6 +166,7 @@ export class NoticiaComponent implements OnInit {
         icon: 'success',
         confirmButtonText: 'Aceptar'
       });
+      this.socket.emit('guardar-noticia', resp);
       this.router.navigateByUrl('/dashboard/noticias');
     }, (err) => {
       Swal.close();
