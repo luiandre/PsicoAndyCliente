@@ -3,11 +3,16 @@ import { Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
 import Swal from 'sweetalert2';
+import * as io from 'socket.io-client';
 
 import { NoticiasService } from '../../../services/noticia.service';
 import { ModalImagenService } from '../../../services/modal-imagen.service';
 import { BusquedasService } from '../../../services/busquedas.service';
 import { Noticia } from 'src/app/models/noticia.model';
+import { environment } from 'src/environments/environment';
+
+
+const socket_url = environment.socket_url;
 
 @Component({
   selector: 'app-noticias',
@@ -25,6 +30,7 @@ export class NoticiasComponent implements OnInit, OnDestroy {
   public hasta = 6;
   public cargando = true;
   private imgSubs: Subscription;
+  public socket = io(socket_url);
 
   constructor(  private noticiaService: NoticiasService,
                 private modalImagenService: ModalImagenService,
@@ -117,6 +123,7 @@ export class NoticiasComponent implements OnInit, OnDestroy {
             'Noticia ' + noticia.titulo + ' eliminada.',
             'success'
           );
+          this.socket.emit('guardar-noticia', resp);
           this.cargarNoticias();
         }, (err) => {
           Swal.close();
