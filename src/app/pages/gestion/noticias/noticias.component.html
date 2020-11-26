@@ -45,7 +45,6 @@
                         <thead>
                             <tr>
                                 <th class="w200">Título</th>
-                                <th>Detalle</th>
                                 <th>Fecha</th>
                                 <th>Creado por</th>
                                 <th class="text-nowrap w100">Acciones</th>
@@ -54,7 +53,6 @@
                         <tbody>
                             <tr *ngFor="let noticia of noticias">
                                 <td>{{ noticia.titulo }}</td>
-                                <td>{{ noticia.detalle }}</td>
                                 <td>{{ noticia.fecha | date:'short'}}</td>
                                 <td>{{ noticia.usuario.nombre + ' ' + noticia.usuario.apellido}}</td>
                                 <td class="text-nowrap text-center">

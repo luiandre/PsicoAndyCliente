@@ -45,7 +45,6 @@
                         <thead>
                             <tr>
                                 <th>Título</th>
-                                <th>Detalle</th>
                                 <th class="w200">Fecha</th>
                                 <th class="w200">Responsable</th>
                                 <th class="w200">Creado por</th>
@@ -55,7 +54,6 @@
                         <tbody>
                             <tr *ngFor="let servicio of servicios">
                                 <td>{{ servicio.titulo }}</td>
-                                <td>{{ servicio.detalle }}</td>
                                 <td>{{ servicio.fecha | date:'short'}}</td>
                                 <td>{{ servicio.responsable.nombre + ' ' + servicio.responsable.apellido}}</td>
                                 <td>{{ servicio.usuario.nombre + ' ' + servicio.usuario.apellido}}</td>
