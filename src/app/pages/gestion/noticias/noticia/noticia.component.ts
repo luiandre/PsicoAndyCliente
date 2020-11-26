@@ -46,8 +46,8 @@ export class NoticiaComponent implements OnInit {
     });
 
     this.noticiaForm = this.fb.group({
-      titulo: ['', [Validators.required, Validators.min(6), Validators.maxLength(50)]],
-      detalle: ['', [Validators.required, Validators.min(10), Validators.maxLength(100)]],
+      titulo: ['', [Validators.required, Validators.min(6), Validators.maxLength(100)]],
+      detalle: ['', [Validators.required, Validators.min(10), Validators.maxLength(500)]],
     });
   }
 

@@ -38,8 +38,8 @@ export class ServicioComponent implements OnInit {
     });
 
     this.servicioForm = this.fb.group({
-      titulo: ['', [Validators.required, Validators.min(6), Validators.maxLength(50)]],
-      detalle: ['', [Validators.required, Validators.min(10), Validators.maxLength(100)]],
+      titulo: ['', [Validators.required, Validators.min(6), Validators.maxLength(100)]],
+      detalle: ['', [Validators.required, Validators.min(10), Validators.maxLength(500)]],
       responsable: ['', [Validators.required]],
     });
 
