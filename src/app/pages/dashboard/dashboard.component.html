@@ -1,16 +1,21 @@
-<div class="card mb-3" *ngIf="noticia">
-    <div class="text-center align-center">
-        <img [src]="noticia.img | imagen:'noticias'" class="img-responsive img-padding text-center" style="width: 340px;" [alt]="noticia.titulo">
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">{{ noticia.titulo }}</h5>
-        <p class="card-text">{{ noticia.detalle }}</p>
-        <p class="card-text"><small class="text-muted">{{ noticia.fecha | date:'short'}}</small></p>
+<div class="card mb-3" *ngFor="let comunicado of comunicados">
+    <div style="padding: 10px;">
+        <div class="card">
+            <div class="card-header">
+                {{comunicado.titulo}}
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>{{comunicado.detalle}}</p>
+                    <span class="text-muted">{{comunicado.fecha | date:"short"}}</span>
+                </blockquote>
+            </div>
+        </div>
     </div>
 </div>
 
 
-<div class="row" *ngIf="!noticia">
+<div class="row" *ngIf="comunicados.length == 0">
     <div class="col-12">
         <div class="card">
             <div class="card-body">

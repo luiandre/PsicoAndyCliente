@@ -6,8 +6,8 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title">{{ servicio.titulo}}</h5>
-                <p class="card-text">{{ servicio.detalle}}</p>
-                <a (click)="enviarMensaje(servicio.responsable._id)" class="btn btn-secondary"> {{ servicio.responsable.nombre + ' ' + servicio.responsable.apellido }}</a>
+                <p class="card-text text-justify">{{ servicio.detalle}}</p>
+                <button (click)="enviarMensaje(servicio.responsable._id)" class="btn btn-info">Contactar a {{ servicio.responsable.nombre + ' ' + servicio.responsable.apellido }}</button>
             </div>
         </div>
     </div>

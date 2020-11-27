@@ -21,7 +21,8 @@ import { BusquedaComponent } from './busqueda/busqueda.component';
 import { MensajesComponent } from './mensajes/mensajes.component';
 import { MensajeDetalleComponent } from './mensajes/mensaje-detalle/mensaje-detalle.component';
 import { VideoChatComponent } from './video-chat/video-chat.component';
-import { environment } from '../../environments/environment';
+import { ComunicadoComponent } from './gestion/comunicados/comunicado/comunicado.component';
+import { ComunicadosComponent } from './gestion/comunicados/comunicados.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,9 @@ import { environment } from '../../environments/environment';
     BusquedaComponent,
     MensajesComponent,
     MensajeDetalleComponent,
-    VideoChatComponent
+    VideoChatComponent,
+    ComunicadoComponent,
+    ComunicadosComponent
   ],
   exports: [
     DashboardComponent,
@@ -47,7 +50,9 @@ import { environment } from '../../environments/environment';
     AccountSettingsComponent,
     MensajesComponent,
     MensajeDetalleComponent,
-    VideoChatComponent
+    VideoChatComponent,
+    ComunicadoComponent,
+    ComunicadosComponent
   ],
   imports: [
     CommonModule,

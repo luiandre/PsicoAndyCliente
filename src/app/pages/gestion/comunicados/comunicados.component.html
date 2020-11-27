@@ -1,0 +1,78 @@
+<div class="row animate fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="Buscar comunicados por título" (keyup)="buscarComunicado( txtTermino.value)" #txtTermino>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animate fadeIn fast text-right">
+    <div class="col-12">
+        <button routerLink="/dashboard/comunicados/nuevo" class="btn btn-success">Agregar Comunicado</button>
+    </div>
+</div>
+
+<br>
+
+<div class="row animate fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando...</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="totalComunicados > 0">
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <h4 class="alert-heading">Sin resultados</h4>
+            <i class="fa fa-warning fa-2x"></i>
+            <p class="mb-0"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="totalComunicados === 0">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="w200">Título</th>
+                                <th>Fecha</th>
+                                <th>Creado por</th>
+                                <th class="text-nowrap w100">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let comunicado of comunicados">
+                                <td>{{ comunicado.titulo }}</td>
+                                <td>{{ comunicado.fecha | date:'short'}}</td>
+                                <td>{{ comunicado.usuario.nombre + ' ' + comunicado.usuario.apellido}}</td>
+                                <td class="text-nowrap text-center">
+                                    <a [routerLink]="['/dashboard/comunicado/', comunicado.id]" data-original-title="Editar"> <i class="fa fa-edit text-dark cursor"></i> </a> &nbsp;
+                                    <a (click)="eliminarComunicado(comunicado)" data-original-title="Eliminar"> <i class="fa fa-close text-danger cursor"></i> </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div *ngIf="txtTermino.value.length === 0">
+                        <button [disabled]="desde === 0" (click)="cambiarPagina(-6)" class="btn btn-info">Anterior</button> &nbsp;
+                        <button [disabled]="hasta=== totalComunicados" (click)="cambiarPagina(6)" class="btn btn-info">Siguiente</button>
+                        <div class="float-right">
+                            {{desde+1}}-{{hasta}} ({{totalComunicados}})
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

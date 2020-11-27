@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Usuario } from '../models/usuario.model';
 import { Noticia } from '../models/noticia.model';
 import { Servicio } from '../models/servicio.model';
+import { Comunicado } from '../models/comunicado.model';
 
 const base_url = environment.base_url;
 
@@ -49,12 +50,17 @@ export class BusquedasService {
     return respuestas;
   }
 
+  private transformarComunicados( respuestas: any[]): Comunicado[] {
+
+    return respuestas;
+  }
+
   private transformarServicios( respuestas: any[]): Servicio[] {
 
     return respuestas;
   }
 
-  buscar(tipo: 'usuarios'|'servicios'|'noticias', termino: string){
+  buscar(tipo: 'usuarios'|'servicios'|'noticias'|'comunicados', termino: string){
 
     const url = `${ base_url }/todo/coleccion/${ tipo }/${termino}`;
     return this.http.get<any[]>(url, this.headers)
@@ -67,6 +73,8 @@ export class BusquedasService {
               return this.transformarServicios(resp.respuesta);
             case 'noticias':
               return this.transformarNoticias(resp.respuesta);
+            case 'comunicados':
+            return this.transformarComunicados(resp.respuesta);
             default:
               break;
           }

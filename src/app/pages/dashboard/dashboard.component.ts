@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Noticia } from '../../models/noticia.model';
-import { NoticiasService } from '../../services/noticia.service';
+
+import { environment } from 'src/environments/environment';
+import * as io from 'socket.io-client';
+import { Comunicado } from '../../models/comunicado.model';
+import { ComunicadoService } from '../../services/comunicado.service';
+
+const socket_url = environment.socket_url;
 
 @Component({
   selector: 'app-dashboard',
@@ -10,17 +15,23 @@ import { NoticiasService } from '../../services/noticia.service';
 })
 export class DashboardComponent implements OnInit {
 
-  public noticia: Noticia;
-  constructor(  private noticiasService: NoticiasService) { }
+  public comunicados: Comunicado[] = [];
+  public socket = io(socket_url);
+
+  constructor(  private comunicadoService: ComunicadoService) { }
 
   ngOnInit(): void {
-    this.cargarNoticia();
+    this.cargarComunicados();
+
+    this.socket.on('nuevo-comunicado', function(data) {
+      this.cargarComunicados();
+    }.bind(this));
   }
 
-  cargarNoticia(){
-    this.noticiasService.cargarNoticias(0, 1).subscribe(resp => {
-      if ( resp.noticias.length !== 0){
-        this.noticia = resp.noticias[0];
+  cargarComunicados(){
+    this.comunicadoService.cargarComunicados(0, 5).subscribe(resp => {
+      if ( resp.comunicados.length !== 0){
+        this.comunicados = resp.comunicados;
       }
     });
   }
