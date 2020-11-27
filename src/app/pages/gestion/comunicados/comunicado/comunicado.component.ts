@@ -72,14 +72,16 @@ export class ComunicadoComponent implements OnInit {
     )
     .subscribe( comunicado => {
 
+      console.log(comunicado);
+
       Swal.close();
 
       if ( !comunicado ){
         return this.router.navigateByUrl('/dashboard/comunicados');
       }
 
-      const { titulo, detalle} = comunicado[0];
-      this.comunicadoSeleccionado = comunicado[0];
+      const { titulo, detalle} = comunicado;
+      this.comunicadoSeleccionado = comunicado;
       this.comunicadoForm.setValue({titulo, detalle});
 
     }, (err) => {
