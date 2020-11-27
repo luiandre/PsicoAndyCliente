@@ -66,11 +66,7 @@ export class LoginComponent implements OnInit {
         this.usuarioService.sumarConexion(resp.usuario.uid).subscribe(() => {
           this.usuarioService.cargarUsuarios().subscribe( data => {
             this.socket.emit('guardar-usuarios', data.usuarios);
-            if (resp.usuario.rol === 'USER_ROL') {
-              this.router.navigateByUrl('/inicio');
-            } else {
-              this.router.navigateByUrl('/dashboard');
-            }
+            this.router.navigateByUrl('/dashboard');
             Swal.close();
           });
         });
@@ -190,11 +186,7 @@ export class LoginComponent implements OnInit {
                       this.socket.emit('guardar-usuario', data.usuarios);
                     }
 
-                    if (resp.usuario.rol === 'USER_ROL') {
-                      this.router.navigateByUrl('/inicio');
-                    } else {
-                      this.router.navigateByUrl('/dashboard');
-                    }
+                    this.router.navigateByUrl('/dashboard');
 
                     Swal.close();
                     this.aceptarTerminosGoolge(resp.usuario);

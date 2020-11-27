@@ -36,10 +36,10 @@ export class ComunicadosComponent implements OnInit {
 
   public cargarComunicados() {
     this.cargando = true;
-    this.comunicadoService.cargarComunicados(this.desde).subscribe( ({total, comunicados}) => {
+    this.comunicadoService.cargarComunicados(this.desde).subscribe( ({total, comunicado}) => {
       this.totalComunicados = total;
-      this.comunicados = comunicados;
-      this.comunicados = comunicados;
+      this.comunicados = comunicado;
+      this.comunicadosTemp = comunicado;
       this.cargando = false;
       if (this.totalComunicados < 6) {
         this.hasta = this.totalComunicados;

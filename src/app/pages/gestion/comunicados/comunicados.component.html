@@ -56,7 +56,7 @@
                                 <td>{{ comunicado.fecha | date:'short'}}</td>
                                 <td>{{ comunicado.usuario.nombre + ' ' + comunicado.usuario.apellido}}</td>
                                 <td class="text-nowrap text-center">
-                                    <a [routerLink]="['/dashboard/comunicado/', comunicado.id]" data-original-title="Editar"> <i class="fa fa-edit text-dark cursor"></i> </a> &nbsp;
+                                    <a [routerLink]="['/dashboard/comunicados/', comunicado.id]" data-original-title="Editar"> <i class="fa fa-edit text-dark cursor"></i> </a> &nbsp;
                                     <a (click)="eliminarComunicado(comunicado)" data-original-title="Eliminar"> <i class="fa fa-close text-danger cursor"></i> </a>
                                 </td>
                             </tr>

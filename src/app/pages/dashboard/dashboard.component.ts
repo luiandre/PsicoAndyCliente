@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
 
   public comunicados: Comunicado[] = [];
   public socket = io(socket_url);
+  public cargando = true;
 
   constructor(  private comunicadoService: ComunicadoService) { }
 
@@ -29,10 +30,11 @@ export class DashboardComponent implements OnInit {
   }
 
   cargarComunicados(){
-    this.comunicadoService.cargarComunicados(0, 5).subscribe(resp => {
-      if ( resp.comunicados.length !== 0){
-        this.comunicados = resp.comunicados;
-      }
+    this.cargando = true;
+    this.comunicados = [];
+    this.comunicadoService.cargarComunicados().subscribe(resp => {
+        this.comunicados = resp.comunicado;
+        this.cargando = false;
     });
   }
 

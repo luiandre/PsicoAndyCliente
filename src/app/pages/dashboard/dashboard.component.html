@@ -1,26 +1,32 @@
 <div class="card mb-3" *ngFor="let comunicado of comunicados">
     <div style="padding: 10px;">
+
         <div class="card">
-            <div class="card-header">
-                {{comunicado.titulo}}
-            </div>
+            <h5 class="card-header text-justify" style="background-color: #007bff; color: white;"> {{comunicado.titulo}}</h5>
             <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <p>{{comunicado.detalle}}</p>
-                    <span class="text-muted">{{comunicado.fecha | date:"short"}}</span>
-                </blockquote>
+                <p class="card-text text-justify">{{comunicado.detalle}}</p>
+                <span class="text-muted">{{comunicado.fecha | date:"short"}}</span>
             </div>
         </div>
     </div>
 </div>
 
-
-<div class="row" *ngIf="comunicados.length == 0">
+<div class="row" [hidden]="comunicados.length > 0" *ngIf="!cargando">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
                 <img class="img-responsive" src='../../../assets/images/imagenPsicoDashboard.png'>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animate fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando...</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0"></p>
         </div>
     </div>
 </div>
