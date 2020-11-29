@@ -4,7 +4,7 @@
         <div class="card">
             <h5 class="card-header text-justify" style="background-color: #007bff; color: white;"> {{comunicado.titulo}}</h5>
             <div class="card-body">
-                <p class="card-text text-justify">{{comunicado.detalle}}</p>
+                <p class="card-text text-justify" [innerHTML]="comunicado.detalle | linky:{newWindow: true}"></p>
                 <span class="text-muted">{{comunicado.fecha | date:"short"}}</span>
             </div>
         </div>

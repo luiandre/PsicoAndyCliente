@@ -14,6 +14,7 @@ import { PublicComponent } from './public.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { TerminosCondicionesComponent } from './terminos-condiciones/terminos-condiciones.component';
 
+import { LinkyModule } from 'ngx-linky';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { TerminosCondicionesComponent } from './terminos-condiciones/terminos-co
     SharedModule,
     RouterModule,
     ComponentsModule,
-    PipesModule
+    PipesModule,
+    LinkyModule
   ]
 })
 export class PublicModule { }

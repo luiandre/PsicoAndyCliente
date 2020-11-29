@@ -196,6 +196,7 @@ export class LoginComponent implements OnInit {
 
             });
           }, (err) => {
+            console.log(err);
             Swal.close();
             Swal.fire({
               title: 'Error!',
@@ -208,7 +209,7 @@ export class LoginComponent implements OnInit {
           Swal.close();
           Swal.fire({
             title: 'Error!',
-            text: error,
+            text: error.error,
             icon: 'error',
             confirmButtonText: 'Aceptar'
           });

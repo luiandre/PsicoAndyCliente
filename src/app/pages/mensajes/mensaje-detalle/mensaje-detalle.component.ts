@@ -89,6 +89,8 @@ export class MensajeDetalleComponent implements OnInit {
         this.usuarioSeleccionado = usuario;
       });
     }.bind(this));
+
+    this.obtenerUltimoMensaje();
   }
 
   cargarMensajes(uid: string){
@@ -153,4 +155,11 @@ export class MensajeDetalleComponent implements OnInit {
       });
   }
 
+  obtenerUltimoMensaje(){
+    this.mensajesService.getUltimoRecibido(this.uid).subscribe( (mensaje) => {
+      if (mensaje[0].pendiente){
+        this.mensajesService.desactivarPendiente(mensaje[0].id).subscribe();
+      }
+    });
+  }
 }

@@ -24,6 +24,8 @@ import { VideoChatComponent } from './video-chat/video-chat.component';
 import { ComunicadoComponent } from './gestion/comunicados/comunicado/comunicado.component';
 import { ComunicadosComponent } from './gestion/comunicados/comunicados.component';
 
+import { LinkyModule } from 'ngx-linky';
+
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -61,7 +63,8 @@ import { ComunicadosComponent } from './gestion/comunicados/comunicados.componen
     RouterModule,
     ComponentsModule,
     ReactiveFormsModule,
-    PipesModule
+    PipesModule,
+    LinkyModule
   ]
 })
 export class PagesModule { }

@@ -10,6 +10,8 @@ import { AppComponent } from './app.component';
 import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { PublicModule } from './public/public.module';
 
+import { LinkyModule } from 'ngx-linky';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +22,8 @@ import { PublicModule } from './public/public.module';
     AppRoutingModule,
     PagesModule,
     AuthModule,
-    PublicModule
+    PublicModule,
+    LinkyModule
   ],
   bootstrap: [AppComponent]
 })

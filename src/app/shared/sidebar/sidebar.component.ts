@@ -5,6 +5,7 @@ import { Usuario } from '../../models/usuario.model';
 import { environment } from 'src/environments/environment';
 import * as io from 'socket.io-client';
 import Swal from 'sweetalert2';
+import { ComunicadoService } from '../../services/comunicado.service';
 
 const socket_url = environment.socket_url;
 
@@ -18,14 +19,22 @@ export class SidebarComponent implements OnInit {
 
   public usuario: Usuario;
   socket = io(socket_url);
+  public totalComunicados = 0;
 
   constructor(  public sidebarService: SidebarService,
-                private usuarioService: UsuarioService) {
+                private usuarioService: UsuarioService,
+                private comunicadoService: ComunicadoService) {
     this.usuario = usuarioService.usuario;
     this.sidebarService.cargarMenu();
   }
 
   ngOnInit(): void {
+
+    this.socket.on('nuevo-comunicado', function(data) {
+      this.cargarComunicados();
+    }.bind(this));
+
+    this.cargarComunicados();
   }
 
   logout(){
@@ -45,6 +54,12 @@ export class SidebarComponent implements OnInit {
         Swal.close();
         this.usuarioService.logout();
       });
+    });
+  }
+
+  cargarComunicados(){
+    this.comunicadoService.cargarComunicados().subscribe(({total, comunicado}) => {
+      this.totalComunicados = total;
     });
   }
 }

@@ -34,7 +34,7 @@
                                     <h6 class="mb-0">{{ usuarioSeleccionado.nombre + ' ' + usuarioSeleccionado.apellido}}</h6>
                                 </div>
                                 <div class="bg-light rounded py-2 px-3 mb-2">
-                                    <p class="text-small mb-0">{{mensaje.mensaje}}</p>
+                                    <p class="text-small mb-0" [innerHTML]="mensaje.mensaje | linky:{newWindow: true}"></p>
                                 </div>
                                 <p class="small text-muted">{{ mensaje.fecha | date:'short'}}</p>
                             </div>
@@ -44,7 +44,7 @@
                         <div class="media w-50 ml-auto mb-3" *ngIf="usuarioService.uid == mensaje.de._id">
                             <div class="media-body">
                                 <div class="bg-info rounded py-2 px-3 mb-2">
-                                    <p class="text-small mb-0 text-white">{{mensaje.mensaje}}</p>
+                                    <p class="text-small mb-0 text-white" [innerHTML]="mensaje.mensaje | linky:{newWindow: true, className: 'myLink'}"></p>
                                 </div>
                                 <p class="small text-muted">{{ mensaje.fecha | date:'short'}}</p>
                             </div>

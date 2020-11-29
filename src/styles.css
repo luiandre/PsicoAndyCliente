@@ -90,3 +90,11 @@
 .my-swal {
     z-index: 300000;
 }
+
+.myLink {
+    color: white;
+}
+
+.myLink:hover {
+    color: gainsboro;
+}
