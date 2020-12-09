@@ -168,12 +168,15 @@ export class MensajesComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Lo siento',
-          text: 'El usuario esta en otra sala',
+          text: 'El usuario esta en otra llamada',
         });
       } else {
         this.salasService.crearSala(uid).subscribe(async (sala: Sala) => {
           this.socket.emit('guardar-llamada', sala);
-          this.router.navigateByUrl(`/video/${sala.uuid}`);
+          let url = window.location.href;
+          const path = `/video/${sala.uuid}`;
+          url = url.replace('/mensajes', path);
+          window.open(url, '_blank');
         });
       }
       });

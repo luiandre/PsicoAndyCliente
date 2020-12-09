@@ -7,6 +7,8 @@ import { ComponentsModule } from '../components/components.module';
 import { SharedModule } from '../shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
 
+import { LinkyModule } from 'ngx-linky';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
 import { PagesComponent } from './pages.component';
@@ -23,8 +25,10 @@ import { MensajeDetalleComponent } from './mensajes/mensaje-detalle/mensaje-deta
 import { VideoChatComponent } from './video-chat/video-chat.component';
 import { ComunicadoComponent } from './gestion/comunicados/comunicado/comunicado.component';
 import { ComunicadosComponent } from './gestion/comunicados/comunicados.component';
+import { HistoriasComponent } from './pacientes/historias/historias.component';
+import { AsignacionesComponent } from './pacientes/asignaciones/asignaciones.component';
+import { AsignacionComponent } from './pacientes/asignaciones/asignacion/asignacion.component';
 
-import { LinkyModule } from 'ngx-linky';
 
 @NgModule({
   declarations: [
@@ -43,7 +47,10 @@ import { LinkyModule } from 'ngx-linky';
     MensajeDetalleComponent,
     VideoChatComponent,
     ComunicadoComponent,
-    ComunicadosComponent
+    ComunicadosComponent,
+    AsignacionesComponent,
+    AsignacionComponent,
+    HistoriasComponent
   ],
   exports: [
     DashboardComponent,
@@ -54,7 +61,10 @@ import { LinkyModule } from 'ngx-linky';
     MensajeDetalleComponent,
     VideoChatComponent,
     ComunicadoComponent,
-    ComunicadosComponent
+    ComunicadosComponent,
+    HistoriasComponent,
+    AsignacionComponent,
+    AsignacionesComponent
   ],
   imports: [
     CommonModule,

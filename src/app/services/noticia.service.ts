@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { environment } from 'src/environments/environment';
 import { CargarNoticia } from '../interfaces/cargar-noticias.interface';
 import { Noticia } from '../models/noticia.model';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 const base_url = environment.base_url;
 
@@ -16,7 +16,7 @@ export class NoticiasService {
   constructor(  private http: HttpClient) { }
 
   get token(): string {
-    return sessionStorage.getItem('token') || '';
+    return localStorage.getItem('token') || '';
   }
 
   get headers() {

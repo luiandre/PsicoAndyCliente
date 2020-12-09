@@ -1,0 +1,74 @@
+<div class="row animate fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input type="text" class="form-control" placeholder="Buscar usuario por nombre o apellido" (keyup)="buscarUsuario( txtTermino.value)" #txtTermino>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animate fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando...</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="totalUsuarios > 0">
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <h4 class="alert-heading">Sin resultados</h4>
+            <i class="fa fa-warning fa-2x"></i>
+            <p class="mb-0"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="totalUsuarios === 0">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nombres</th>
+                                <th>Email</th>
+                                <th class="w100">Estado</th>
+                                <th class="text-nowrap w100">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let usuario of usuarios">
+                                <td>{{ usuario.nombre + ' '+ usuario.apellido}}</td>
+                                <td>{{ usuario.email }}</td>
+
+                                <td>
+                                    <span *ngIf="usuario.activo" class="label label-success">Activo</span>
+                                    <span *ngIf="!usuario.activo" class="label label-danger">Inactivo</span>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a routerLink='/dashboard/asignaciones/{{usuario.uid}}' data-original-title="Profesionales"><i class="fa fa-handshake-o cursor"></i> </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div *ngIf="txtTermino.value.length === 0">
+                        <button [disabled]="desde === 0" (click)="cambiarPagina(-6)" class="btn btn-info">Anterior</button> &nbsp;
+                        <button [disabled]="hasta=== totalUsuarios" (click)="cambiarPagina(6)" class="btn btn-info">Siguiente</button>
+                        <div class="float-right">
+                            {{desde+1}}-{{hasta}} ({{totalUsuarios}})
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

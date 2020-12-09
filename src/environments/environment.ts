@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  // base_url: 'http://localhost:3000/api',
-  // socket_url: 'http://localhost:3000',
-  base_url: 'https://psicoandymd.com/api',
-  socket_url: 'https://psicoandymd.com/',
+  base_url: 'http://localhost:3000/api',
+  socket_url: 'http://localhost:3000'
+  // base_url: 'https://psicoandymd.com/api',
+  // socket_url: 'https://psicoandymd.com/'
 };
 
 /*

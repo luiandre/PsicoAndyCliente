@@ -14,7 +14,7 @@ export class FileUploadService {
   get headers() {
     return {
       headers: {
-        'x-token': sessionStorage.getItem('token')
+        'x-token': localStorage.getItem('token')
       }
     };
   }

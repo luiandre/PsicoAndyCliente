@@ -16,7 +16,7 @@ export class MensajeService {
   constructor(  private http: HttpClient) { }
 
   get token(): string {
-    return sessionStorage.getItem('token') || '';
+    return localStorage.getItem('token') || '';
   }
 
   get headers() {

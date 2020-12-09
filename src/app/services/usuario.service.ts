@@ -34,7 +34,7 @@ export class UsuarioService {
   }
 
   get token(): string {
-    return sessionStorage.getItem('token') || '';
+    return localStorage.getItem('token') || '';
   }
 
   get uid(): string {
@@ -68,7 +68,7 @@ export class UsuarioService {
   }
 
   logout(){
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
     localStorage.removeItem('menu');
 
     this.router.navigateByUrl('/login');
@@ -164,6 +164,35 @@ export class UsuarioService {
       );
   }
 
+  cargarUsuariosAsignacion(desde: number = 0, hasta: number = 6) {
+    const url = `${ base_url }/usuarios/rol/usuariosasignaciones?desde=${desde}&hasta=${hasta}`;
+    return this.http.get<CargarUsuario>(url, this.headers)
+      .pipe(
+        map( resp => {
+          const usuarios = resp.usuarios.map(
+            user => new Usuario(
+              user.nombre,
+              user.apellido,
+              user.email,
+              '',
+              user.google,
+              user.activo,
+              user.img,
+              user.rol,
+              user.bio,
+              user.uid,
+              user.estado
+            )
+          );
+
+          return {
+            total: resp.total,
+            usuarios
+          };
+        })
+      );
+  }
+
   // eliminarUsuario( usuario: Usuario) {
   //   const url = `${ base_url }/usuarios/${usuario.uid}`;
   //   return this.http.delete(url, this.headers);
@@ -227,11 +256,12 @@ export class UsuarioService {
   }
 
   recuperarPassword(email){
-    return this.http.put(`${base_url}/login/recuperar/`, {email});
+    const url = `${base_url}/login/recuperar/`;
+    return this.http.put(url, {email});
   }
 
   guardarDatosUsuario(token: string, menu: string) {
-    sessionStorage.setItem('token', token);
+    localStorage.setItem('token', token);
     localStorage.setItem('menu', JSON.stringify(menu));
   }
 }

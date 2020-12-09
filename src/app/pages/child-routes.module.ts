@@ -12,6 +12,9 @@ import { NoticiaComponent } from './gestion/noticias/noticia/noticia.component';
 import { ServicioComponent } from './gestion/servicios/servicio/servicio.component';
 import { ComunicadosComponent } from './gestion/comunicados/comunicados.component';
 import { ComunicadoComponent } from './gestion/comunicados/comunicado/comunicado.component';
+import { HistoriasComponent } from './pacientes/historias/historias.component';
+import { AsignacionesComponent } from './pacientes/asignaciones/asignaciones.component';
+import { AsignacionComponent } from './pacientes/asignaciones/asignacion/asignacion.component';
 
 const childRoutes: Routes = [
 
@@ -23,9 +26,12 @@ const childRoutes: Routes = [
   { path: 'servicios/:id', canLoad: [ProfGuard], canActivate: [ProfGuard], component: ServicioComponent, data: {titulo: 'Servicio'}},
   { path: 'comunicados', canLoad: [ProfGuard], canActivate: [ProfGuard], component: ComunicadosComponent, data: {titulo: 'Comunicados'}},
   { path: 'comunicados/:id', canLoad: [ProfGuard], canActivate: [ProfGuard], component: ComunicadoComponent, data: {titulo: 'Comunicado'}},
+  { path: 'historias', canLoad: [ProfGuard], canActivate: [ProfGuard], component: HistoriasComponent, data: {titulo: 'Historias Clínicas'}},
 
   //  Rutas admin
   { path: 'usuarios', canLoad: [AdminGuard], canActivate: [AdminGuard], component: UsuariosComponent, data: {titulo: 'Usuarios'}},
+  { path: 'asignaciones', canLoad: [AdminGuard], canActivate: [AdminGuard], component: AsignacionesComponent, data: {titulo: 'Listado de Pacientes'}},
+  { path: 'asignaciones/:uid', canLoad: [AdminGuard], canActivate: [AdminGuard], component: AsignacionComponent, data: {titulo: 'Asignación de Profesionales'}},
 ];
 
 @NgModule({

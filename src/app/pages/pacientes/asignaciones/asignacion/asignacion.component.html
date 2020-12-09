@@ -1,0 +1,67 @@
+<div class="row animate fadeIn fast text-right">
+    <div class="col-12">
+        <button (click)="abrirModal()" class="btn btn-success">Asignar</button>
+    </div>
+</div>
+
+<br>
+
+<div class="row animate fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando...</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="totalAsignaciones > 0">
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <h4 class="alert-heading">Sin resultados</h4>
+            <i class="fa fa-warning fa-2x"></i>
+            <p class="mb-0"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="totalAsignaciones === 0">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="w200">Título</th>
+                                <th>Fecha</th>
+                                <th>Creado por</th>
+                                <th class="text-nowrap w100">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let asignacion of asignaciones">
+                                <!-- <td>{{ noticia.titulo }}</td>
+                                <td>{{ noticia.fecha | date:'short'}}</td>
+                                <td>{{ noticia.usuario.nombre + ' ' + noticia.usuario.apellido}}</td> -->
+                                <td class="text-nowrap text-center">
+                                    <a (click)="eliminarAsignacion(asignacion)" data-original-title="Eliminar"> <i class="fa fa-close text-danger cursor"></i> </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div>
+                        <button [disabled]="desde === 0" (click)="cambiarPagina(-6)" class="btn btn-info">Anterior</button> &nbsp;
+                        <button [disabled]="hasta=== totalAsignaciones" (click)="cambiarPagina(6)" class="btn btn-info">Siguiente</button>
+                        <div class="float-right">
+                            {{desde+1}}-{{hasta}} ({{totalAsignaciones}})
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
