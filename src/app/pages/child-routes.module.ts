@@ -15,6 +15,7 @@ import { ComunicadoComponent } from './gestion/comunicados/comunicado/comunicado
 import { HistoriasComponent } from './pacientes/historias/historias.component';
 import { AsignacionesComponent } from './pacientes/asignaciones/asignaciones.component';
 import { AsignacionComponent } from './pacientes/asignaciones/asignacion/asignacion.component';
+import { HistoriaComponent } from './pacientes/historias/historia/historia.component';
 
 const childRoutes: Routes = [
 
@@ -27,6 +28,11 @@ const childRoutes: Routes = [
   { path: 'comunicados', canLoad: [ProfGuard], canActivate: [ProfGuard], component: ComunicadosComponent, data: {titulo: 'Comunicados'}},
   { path: 'comunicados/:id', canLoad: [ProfGuard], canActivate: [ProfGuard], component: ComunicadoComponent, data: {titulo: 'Comunicado'}},
   { path: 'historias', canLoad: [ProfGuard], canActivate: [ProfGuard], component: HistoriasComponent, data: {titulo: 'Historias Clínicas'}},
+  { path: 'historias/:id',
+    canLoad: [ProfGuard],
+    canActivate: [ProfGuard],
+    component: HistoriaComponent,
+    data: {titulo: 'Historia Clínica'}},
 
   //  Rutas admin
   { path: 'usuarios', canLoad: [AdminGuard], canActivate: [AdminGuard], component: UsuariosComponent, data: {titulo: 'Usuarios'}},

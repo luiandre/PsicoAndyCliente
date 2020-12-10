@@ -39,7 +39,7 @@
                                 <th>Nombres</th>
                                 <th>Email</th>
                                 <th class="w100">Estado</th>
-                                <th class="text-nowrap w100">Acciones</th>
+                                <th class="text-nowrap w100">Asignar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -52,7 +52,7 @@
                                     <span *ngIf="!usuario.activo" class="label label-danger">Inactivo</span>
                                 </td>
                                 <td class="text-nowrap text-center">
-                                    <a routerLink='/dashboard/asignaciones/{{usuario.uid}}' data-original-title="Profesionales"><i class="fa fa-handshake-o cursor"></i> </a>
+                                    <a routerLink="/dashboard/asignaciones/{{usuario.uid}}" data-original-title="Profesionales"><i class="fa fa-handshake-o cursor"></i> </a>
                                 </td>
                             </tr>
                         </tbody>

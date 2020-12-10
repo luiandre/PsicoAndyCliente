@@ -79,8 +79,8 @@ export class UsuariosComponent implements OnInit, OnDestroy{
 
     if (this.hasta > this.totalUsuarios){
       this.hasta = this.totalUsuarios;
-    } else if (this.hasta < this.totalUsuarios){
-      this.hasta = 6;
+    } else if (this.hasta - this.desde < 5){
+      this.hasta = this.desde + 6;
     }
 
     this.cargarUsuarios();

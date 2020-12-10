@@ -34,17 +34,17 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th class="w200">Título</th>
+                                <th class="w200">Nombres</th>
+                                <th>Email</th>
                                 <th>Fecha</th>
-                                <th>Creado por</th>
-                                <th class="text-nowrap w100">Acciones</th>
+                                <th class="text-nowrap w100">Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let asignacion of asignaciones">
-                                <!-- <td>{{ noticia.titulo }}</td>
-                                <td>{{ noticia.fecha | date:'short'}}</td>
-                                <td>{{ noticia.usuario.nombre + ' ' + noticia.usuario.apellido}}</td> -->
+                                <td>{{ asignacion.profesional.nombre + ' ' + asignacion.profesional.apellido}}</td>
+                                <td>{{ asignacion.profesional.email}}</td>
+                                <td>{{ asignacion.fecha | date:'short'}}</td>
                                 <td class="text-nowrap text-center">
                                     <a (click)="eliminarAsignacion(asignacion)" data-original-title="Eliminar"> <i class="fa fa-close text-danger cursor"></i> </a>
                                 </td>

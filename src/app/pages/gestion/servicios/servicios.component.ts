@@ -127,8 +127,8 @@ export class ServiciosComponent implements OnInit, OnDestroy {
 
     if (this.hasta > this.totalServicios){
       this.hasta = this.totalServicios;
-    } else if (this.hasta < this.totalServicios){
-      this.hasta = 6;
+    } else if (this.hasta - this.desde < 5){
+      this.hasta = this.desde + 6;
     }
 
     this.cargarServicios();

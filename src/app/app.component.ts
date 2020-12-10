@@ -20,6 +20,7 @@ export class AppComponent {
   @HostListener('window:beforeunload', [ '$event' ])
   beforeUnloadHander(event) {
     if (this.usuarioService.usuario){
+      localStorage.clear();
       this.usuarioService.restarConexion(this.usuarioService.uid).subscribe( data => {
         this.usuarioService.logout();
       });

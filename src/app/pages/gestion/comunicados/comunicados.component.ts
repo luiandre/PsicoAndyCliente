@@ -60,8 +60,8 @@ export class ComunicadosComponent implements OnInit {
 
     if (this.hasta > this.totalComunicados){
       this.hasta = this.totalComunicados;
-    } else if (this.hasta < this.totalComunicados){
-      this.hasta = 6;
+    } else if (this.hasta - this.desde < 5){
+      this.hasta = this.desde + 6;
     }
 
     this.cargarComunicados();

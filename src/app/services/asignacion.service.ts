@@ -30,6 +30,11 @@ export class AsignacionService {
     return this.http.get<CargarAsignacion>(url, this.headers);
   }
 
+  getAsignacionesProfesional(uid: string, desde: number = 0, hasta: number = 6) {
+    const url = `${ base_url }/asignaciones/getAsignacionesProfesional/${uid}?desde=${desde}&hasta=${hasta}`;
+    return this.http.get<CargarAsignacion>(url, this.headers);
+  }
+
   crearAsignacion(noticia: Asignacion) {
     const url = `${ base_url }/asignaciones`;
     return this.http.post<CargarAsignacion>(url, noticia, this.headers);

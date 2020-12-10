@@ -164,6 +164,35 @@ export class UsuarioService {
       );
   }
 
+  cargarUsuariosModal(desde: number = 0, hasta: number = 4) {
+    const url = `${ base_url }/usuarios/rol/getUsuariosAdministrativosPaginado?desde=${desde}&hasta=${hasta}`;
+    return this.http.get<CargarUsuario>(url, this.headers)
+      .pipe(
+        map( resp => {
+          const usuarios = resp.usuarios.map(
+            user => new Usuario(
+              user.nombre,
+              user.apellido,
+              user.email,
+              '',
+              user.google,
+              user.activo,
+              user.img,
+              user.rol,
+              user.bio,
+              user.uid,
+              user.estado
+            )
+          );
+
+          return {
+            total: resp.total,
+            usuarios
+          };
+        })
+      );
+  }
+
   cargarUsuariosAsignacion(desde: number = 0, hasta: number = 6) {
     const url = `${ base_url }/usuarios/rol/usuariosasignaciones?desde=${desde}&hasta=${hasta}`;
     return this.http.get<CargarUsuario>(url, this.headers)

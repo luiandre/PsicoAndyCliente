@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 
 import * as io from 'socket.io-client';
 
-import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { Asignacion } from '../../../../models/asignacion.model';
 import { AsignacionService } from '../../../../services/asignacion.service';
 import { ActivatedRoute } from '@angular/router';
-import { ModalAsignacionComponent } from '../../../../components/modal-asignacion/modal-asignacion.component';
 import { ModalAsignacionService } from '../../../../services/modal-asignacion.service';
+import { environment } from 'src/environments/environment';
 
 
 const socket_url = environment.socket_url;
@@ -39,12 +38,18 @@ export class AsignacionComponent implements OnInit {
       this.uid = uid;
       this.cargarAsignaciones(uid);
     });
+
+    this.socket.on('nuevo-asignacion', function(data) {
+      if (data.paciente === this.uid){
+        this.cargarAsignaciones(this.uid);
+      }
+    }.bind(this));
   }
 
   public cargarAsignaciones(uid: string) {
     this.cargando = true;
     this.asignacionService.cargarAsignaciones(uid, this.desde).subscribe( ({total, asignaciones}) => {
-      this.totalAsignaciones = asignaciones.length;
+      this.totalAsignaciones = total;
       this.asignaciones = asignaciones;
       this.asignaciones = asignaciones;
       this.cargando = false;
@@ -66,18 +71,18 @@ export class AsignacionComponent implements OnInit {
 
     if (this.hasta > this.totalAsignaciones){
       this.hasta = this.totalAsignaciones;
-    } else if (this.hasta < this.totalAsignaciones){
-      this.hasta = 6;
+    } else if (this.hasta - this.desde < 5){
+      this.hasta = this.desde + 6;
     }
 
     this.cargarAsignaciones(this.uid);
   }
 
-  eliminarAsignacion( asignacion: Asignacion){
+  eliminarAsignacion( asignacion){
 
     Swal.fire({
       title: '¿Estas seguro?',
-      text: 'Eliminar asignacion ',
+      text: 'Eliminar asignacion de ' + asignacion.profesional.nombre + ' ' + asignacion.profesional.apellido,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -104,6 +109,7 @@ export class AsignacionComponent implements OnInit {
             'success'
           );
           this.cargarAsignaciones(this.uid);
+          this.socket.emit('guardar-asignacion', asignacion);
         }, (err) => {
           Swal.close();
           Swal.fire({

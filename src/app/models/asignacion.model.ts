@@ -5,7 +5,8 @@ export class Asignacion {
     constructor(
         public paciente: ServicioUser | string,
         public profesional: ServicioUser | string,
-        public fecha: number,
+        public usuario?: ServicioUser | string,
+        public fecha?: number,
         public id?: string,
     ){}
 }

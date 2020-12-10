@@ -28,6 +28,7 @@ import { ComunicadosComponent } from './gestion/comunicados/comunicados.componen
 import { HistoriasComponent } from './pacientes/historias/historias.component';
 import { AsignacionesComponent } from './pacientes/asignaciones/asignaciones.component';
 import { AsignacionComponent } from './pacientes/asignaciones/asignacion/asignacion.component';
+import { HistoriaComponent } from './pacientes/historias/historia/historia.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { AsignacionComponent } from './pacientes/asignaciones/asignacion/asignac
     ComunicadosComponent,
     AsignacionesComponent,
     AsignacionComponent,
-    HistoriasComponent
+    HistoriasComponent,
+    HistoriaComponent
   ],
   exports: [
     DashboardComponent,
@@ -64,7 +66,8 @@ import { AsignacionComponent } from './pacientes/asignaciones/asignacion/asignac
     ComunicadosComponent,
     HistoriasComponent,
     AsignacionComponent,
-    AsignacionesComponent
+    AsignacionesComponent,
+    HistoriaComponent
   ],
   imports: [
     CommonModule,

@@ -74,8 +74,8 @@ export class NoticiasComponent implements OnInit, OnDestroy {
 
     if (this.hasta > this.totalNoticias){
       this.hasta = this.totalNoticias;
-    } else if (this.hasta < this.totalNoticias){
-      this.hasta = 6;
+    } else if (this.hasta - this.desde < 5){
+      this.hasta = this.desde + 6;
     }
 
     this.cargarNoticias();

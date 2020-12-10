@@ -1,23 +1,20 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalAsignacionService {
-  private ocultarModal = true;
-  public tipo: 'usuarios'|'servicios'|'noticias';
-  public id: string;
-  public img: string;
 
-  public imgActualizada: EventEmitter<string> = new EventEmitter<string>();
+  private ocultarModal = true;
+  public id: string;
 
   get getOcultarModal() {
     return this.ocultarModal;
   }
 
   abrirModal(uid: string) {
-    this.ocultarModal = false;
     this.id = uid;
+    this.ocultarModal = false;
   }
 
   cerrarModal() {

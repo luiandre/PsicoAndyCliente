@@ -1,26 +1,95 @@
 <div class="fondo-modal-imagen animate fadeIn" [class.oculto]="modalAsignacionService.getOcultarModal" style="z-index: 100;">
-
-    <div id="responsive-modal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block; padding-right: 15px;">
-        <div class="modal-dialog">
+    <div class="modal fade bs-example-modal-lg show" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: block;">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Cambiar Imagen</h4>
+                    <h4 class="modal-title" id="myLargeModalLabel">Seleccione un Profesional</h4>
                     <button (click)="cerrarModal()" type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
 
-                    <div class="text-center">
-
+                    <div class="row animate fadeIn fast">
+                        <div class="col-12" style="height: 70px;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <input type="text" class="form-control" placeholder="Buscar usuario por nombre o apellido" (keyup)="buscarUsuario( txtTermino.value)" #txtTermino>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <br>
 
+                    <div class="row animate fadeIn fast" *ngIf="cargando">
+                        <div class="col-12">
+                            <div class="alert alert-info text-center">
+                                <h4 class="alert-heading">Cargando...</h4>
+                                <i class="fa fa-spin fa-refresh fa-2x"></i>
+                                <p class="mb-0"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="totalUsuarios > 0">
+                        <div class="col-12">
+                            <div class="alert alert-warning text-center">
+                                <h4 class="alert-heading">Sin resultados</h4>
+                                <i class="fa fa-warning fa-2x"></i>
+                                <p class="mb-0"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="totalUsuarios === 0">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nombres</th>
+                                                    <th>Email</th>
+                                                    <th class="w100">Estado</th>
+                                                    <th class="text-nowrap w100">Agregar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let usuario of usuarios">
+                                                    <td>{{ usuario.nombre + ' '+ usuario.apellido}}</td>
+                                                    <td>{{ usuario.email }}</td>
+
+                                                    <td>
+                                                        <span *ngIf="usuario.activo" class="label label-success">Activo</span>
+                                                        <span *ngIf="!usuario.activo" class="label label-danger">Inactivo</span>
+                                                    </td>
+                                                    <td class="text-nowrap text-center">
+                                                        <a (click)="agregarProfesional(usuario)" data-original-title="Habilitar"> <i class="fa fa-plus text-success cursor"></i> </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+                                        <div *ngIf="txtTermino.value.length === 0">
+                                            <button [disabled]="desde === 0" (click)="cambiarPagina(-4)" class="btn btn-info">Anterior</button> &nbsp;
+                                            <button [disabled]="hasta=== totalUsuarios" (click)="cambiarPagina(4)" class="btn btn-info">Siguiente</button>
+                                            <div class="float-right">
+                                                {{desde+1}}-{{hasta}} ({{totalUsuarios}})
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
-                    <button (click)="cerrarModal()" type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Cancelar</button>
+                    <button (click)="cerrarModal()" type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
                 </div>
             </div>
+            <!-- /.modal-content -->
         </div>
+        <!-- /.modal-dialog -->
     </div>
-
 </div>
