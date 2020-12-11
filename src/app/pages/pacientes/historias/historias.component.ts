@@ -5,6 +5,9 @@ import { AsignacionService } from 'src/app/services/asignacion.service';
 
 import { environment } from 'src/environments/environment';
 import { UsuarioService } from '../../../services/usuario.service';
+import { HistoriasService } from '../../../services/historias.service';
+import { Router } from '@angular/router';
+import { Historia } from 'src/app/models/historia.model';
 
 
 const socket_url = environment.socket_url;
@@ -26,7 +29,9 @@ export class HistoriasComponent implements OnInit {
   public socket = io(socket_url);
 
   constructor(private asignacionService: AsignacionService,
-              private usuarioService: UsuarioService) { }
+              private usuarioService: UsuarioService,
+              private historiasService: HistoriasService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.cargarAsignaciones(this.usuarioService.uid);
@@ -68,6 +73,26 @@ export class HistoriasComponent implements OnInit {
     }
 
     this.cargarAsignaciones(this.usuarioService.uid);
+  }
+
+  revisarHistoria(asignacion: Asignacion | any){
+    this.historiasService.getHistoria(asignacion.paciente._id).subscribe( resp => {
+      this.router.navigateByUrl(`/dashboard/historias/${asignacion.paciente._id}`);
+    }, err => {
+      if (err.error.msg === 'Sin historia'){
+        const historia: Historia = {
+          entrevistador: this.usuarioService.uid,
+          usuario: asignacion.paciente._id,
+          nombres: asignacion.paciente.nombre,
+          apellidos: asignacion.paciente.apellido,
+          email: asignacion.paciente.email
+        };
+        this.historiasService.crearHistoria(historia).subscribe( resp => {
+          this.router.navigateByUrl(`/dashboard/historias/${asignacion.paciente._id}`);
+        });
+      }
+    }
+    );
   }
 
 }

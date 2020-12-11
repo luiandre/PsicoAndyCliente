@@ -72,8 +72,6 @@ export class ComunicadoComponent implements OnInit {
     )
     .subscribe( comunicado => {
 
-      console.log(comunicado);
-
       Swal.close();
 
       if ( !comunicado ){

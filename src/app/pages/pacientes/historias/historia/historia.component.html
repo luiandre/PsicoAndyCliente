@@ -1,1 +1,400 @@
-<p>historia works!</p>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <form id="historiaform" [formGroup]="historiaForm" (ngSubmit)="guardarHistoria()">
+                    <div class="form-body">
+                        <div class="row p-t-20">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Historia N.</label>
+                                    <input type="text" id="numero" class="form-control" placeholder="Historia N." formControlName="numero">
+                                    <small *ngIf="campoNoValido('numero')" class="text-danger"> El numero de historia es requerido </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha 1ra consulta</label>
+                                    <input type="date" class="form-control" placeholder="dd/mm/yyyy" formControlName="fecha">
+                                    <small *ngIf="campoNoValido('fecha')" class="text-danger"> La fecha de la primera consulta es requerido </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Entrevistador</label>
+                                    <input type="text" id="entrevistador" class="form-control" formControlName="entrevistador">
+                                    <small *ngIf="campoNoValido('entrevistador')" class="text-danger"> Los datos del entrevistador son requeridos </small>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="card-title">DATOS INFORMATIVOS</h3>
+                        <hr>
+                        <div class="row p-t-20">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Nombres</label>
+                                    <input type="text" id="firstName" class="form-control" formControlName="nombres">
+                                    <small *ngIf="campoNoValido('nombres')" class="text-danger"> Los nombres son requeridos </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Apellidos</label>
+                                    <input type="text" id="lastName" class="form-control" formControlName="apellidos">
+                                    <small *ngIf="campoNoValido('apellidos')" class="text-danger"> Los apellidos son requeridos </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Sexo</label>
+                                    <select class="form-control custom-select" formControlName="sexo">
+                                            <option value="">Seleccione el sexo</option>
+                                            <option value="Hombre">Hombre</option>
+                                            <option value="Mujer">Mujer</option>
+                                        </select>
+                                    <small *ngIf="campoNoValido('sexo')" class="text-danger"> Seleccione el sexo </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha de Nacimiento</label>
+                                    <input type="date" class="form-control" placeholder="dd/mm/yyyy" formControlName="fechaNacimiento">
+                                    <small *ngIf="campoNoValido('fechaNacimiento')" class="text-danger"> La fecha de nacimienot es requeridos </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Lugar de nacimiento</label>
+                                    <input type="text" id="lugarNacimiento" class="form-control" formControlName="lugarNacimiento">
+                                    <small *ngIf="campoNoValido('lugarNacimiento')" class="text-danger"> El lugar de nacimiento requeridos </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Religión</label>
+                                    <input type="text" id="religion" class="form-control" formControlName="religion">
+                                    <small *ngIf="campoNoValido('religion')" class="text-danger"> La religión es requeridos </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Nacionalidad</label>
+                                    <input type="text" id="nacimiento" class="form-control" formControlName="nacionalidad">
+                                    <small *ngIf="campoNoValido('nacionalidad')" class="text-danger"> La nacionalidad requeridos </small>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="box-title m-t-40">DIRECCIÓN</h3>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Provincia</label>
+                                    <input type="text" class="form-control" formControlName="provincia">
+                                    <small *ngIf="campoNoValido('provincia')" class="text-danger"> La provincia es requerida </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Ciudad</label>
+                                    <input type="text" class="form-control" formControlName="ciudad">
+                                    <small *ngIf="campoNoValido('ciudad')" class="text-danger"> La ciudad es requerida </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="form-group">
+                                    <label>Calle principal y secundaria</label>
+                                    <input type="text" class="form-control" formControlName="direccion">
+                                    <small *ngIf="campoNoValido('direccion')" class="text-danger"> La direccion es requerida </small>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="checkbox" (change)="cambiar()" id="basic_checkbox_2" class="filled-in" formControlName="cambioDomicilio">
+                                    <label for="basic_checkbox_2">Cambio de domicilio</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Motivos</label>
+                                    <input type="text" class="form-control" formControlName="motivo">
+                                    <small *ngIf="campoNoValido('motivo')" class="text-danger"> El motivo es requerido </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Instrucción</label>
+                                    <input type="text" class="form-control" formControlName="instruccion">
+                                    <small *ngIf="campoNoValido('instruccion')" class="text-danger"> La instruccion es requerida </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Ocupación</label>
+                                    <input type="text" class="form-control" formControlName="ocupacion">
+                                    <small *ngIf="campoNoValido('ocupacion')" class="text-danger"> La ocupacion es requerida </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Estado civíl</label>
+                                    <select class="form-control custom-select" formControlName="estadoCivil">    
+                                            <option value="">Seleccione el estado cívil</option>
+                                            <option value="Casado/a">Casado/a</option>
+                                            <option value="Soltero/a">Soltero/a</option>
+                                            <option value="Unión libre">Unión libre</option>
+                                            <option value="Divorciado/a">Divorciado/a</option>
+                                            <option value="Viudo/a">Viudo/a</option>
+                                        </select>
+                                    <small *ngIf="campoNoValido('estadoCivil')" class="text-danger"> Seleccione el estado cívil </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nombre del cónyuge</label>
+                                    <input type="text" class="form-control" formControlName="conyuge">
+                                    <small *ngIf="campoNoValido('conyuge')" class="text-danger"> La informacion del conyuge es requerida </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Número de hijos</label>
+                                    <input type="text" class="form-control" placeholder="0" formControlName="nHijos">
+                                    <small *ngIf="campoNoValido('nHijos')" class="text-danger"> El número de hijos es requerido </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <h3 class="card-title">CONTACTOS</h3>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Convencional</label>
+                                    <input type="text" class="form-control" formControlName="convecional">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Celular</label>
+                                    <input type="text" class="form-control" formControlName="celular">
+                                    <small *ngIf="campoNoValido('celular')" class="text-danger"> El número de celular es requerido </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="text" class="form-control" formControlName="email">
+                                    <small *ngIf="campoNoValido('email')" class="text-danger"> El email es requerido </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nombre de contacto de emergencia</label>
+                                    <input type="text" class="form-control" formControlName="nombreEmergencia">
+                                    <small *ngIf="campoNoValido('nombreEmergencia')" class="text-danger"> La información del contacto de emergencia es requerido </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Teléfono</label>
+                                    <input type="text" class="form-control" formControlName="telefonoEmergencia">
+                                    <small *ngIf="campoNoValido('telefonoEmergencia')" class="text-danger"> El teléfono es requerido </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Dirección</label>
+                                    <input type="text" class="form-control" formControlName="direccionEmergencia">
+                                    <small *ngIf="campoNoValido('direccionEmergencia')" class="text-danger"> La dirección es requerida </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nombre del acompañante</label>
+                                    <input type="text" class="form-control" formControlName="nombreAcompañante">
+                                    <small *ngIf="campoNoValido('nombreAcompañante')" class="text-danger"> La información del acompañante es requerida </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="card-title">MOTIVO DE CONSULTA</h3>
+                        <hr>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" formControlName="motivoConsulta"></textarea>
+                            <small *ngIf="campoNoValido('motivoConsulta')" class="text-danger"> La información es requerida </small>
+                        </div>
+
+                        <h3 class="card-title">FACTORES DESENCADENANTES DEL EPISODIO ACTUAL</h3>
+                        <hr>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" formControlName="factoresEpisodioActual"></textarea>
+                            <small *ngIf="campoNoValido('factoresEpisodioActual')" class="text-danger"> La información es requerida </small>
+                        </div>
+                        <h3 class="card-title">HISTORIA PASADA DE LA ENFERMEDAD</h3>
+                        <hr>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" formControlName="historiaEnfermedad"></textarea>
+                            <small *ngIf="campoNoValido('historiaEnfermedad')" class="text-danger"> La información es requerida </small>
+                        </div>
+                        <h3 class="card-title">PSICOANAMNESIS PERSONAL NORMAL Y PATOLOGICA</h3>
+                        <hr>
+                        <div class="form-group">
+                            <label>Natal</label>
+                            <textarea class="form-control" rows="5" formControlName="natal"></textarea>
+                            <small *ngIf="campoNoValido('natal')" class="text-danger"> La información es requerida </small>
+                        </div>
+                        <div class="form-group">
+                            <label>Infáncia</label>
+                            <textarea class="form-control" rows="5" formControlName="infancia"></textarea>
+                            <small *ngIf="campoNoValido('infancia')" class="text-danger"> La información es requerida </small>
+                        </div>
+                        <div class="form-group">
+                            <label>Pubertad y Adolescencia</label>
+                            <textarea class="form-control" rows="5" formControlName="pubertad"></textarea>
+                            <small *ngIf="campoNoValido('pubertad')" class="text-danger"> La información es requerida </small>
+                        </div>
+                        <h3 class="card-title">PSICOANAMNESIS FAMILIAR Y PATOLOGICA</h3>
+                        <hr>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" formControlName="familiar"></textarea>
+                            <small *ngIf="campoNoValido('familiar')" class="text-danger"> La información es requerida </small>
+                        </div>
+
+                        <h3 class="card-title">HISTORIA SOCIAL</h3>
+                        <hr>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" formControlName="social"></textarea>
+                            <small *ngIf="campoNoValido('social')" class="text-danger"> La información es requerida </small>
+                        </div>
+                        <h3 class="card-title">HISTORIA LABORAL</h3>
+                        <hr>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" formControlName="laboral"></textarea>
+                            <small *ngIf="campoNoValido('laboral')" class="text-danger"> La información es requerida </small>
+                        </div>
+                        <h3 class="card-title">HISTORIA PSICOSEXUAL</h3>
+                        <hr>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" formControlName="psicosexual"></textarea>
+                            <small *ngIf="campoNoValido('psicosexual')" class="text-danger"> La información es requerida </small>
+                        </div>
+                        <h3 class="card-title">EXPLORACIÓN DE FUNCIONES PSIQUICAS</h3>
+                        <hr>
+
+                        <div class="form-group">
+                            <label>Conciencia</label>
+                            <textarea class="form-control" rows="5" formControlName="conciencia"></textarea>
+                            <small *ngIf="campoNoValido('conciencia')" class="text-danger"> La información es requerida </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Voluntad</label>
+                            <textarea class="form-control" rows="5" formControlName="voluntad"></textarea>
+                            <small *ngIf="campoNoValido('voluntad')" class="text-danger"> La información es requerida </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Atención</label>
+                            <textarea class="form-control" rows="5" formControlName="atencion"></textarea>
+                            <small *ngIf="campoNoValido('atencion')" class="text-danger"> La información es requerida </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Sensopercepciones</label>
+                            <textarea class="form-control" rows="5" formControlName="sensopercepciones"></textarea>
+                            <small *ngIf="campoNoValido('sensopercepciones')" class="text-danger"> La información es requerida </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Afectividad</label>
+                            <textarea class="form-control" rows="5" formControlName="afectividad"></textarea>
+                            <small *ngIf="campoNoValido('afectividad')" class="text-danger"> La información es requerida </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Pensamiento</label>
+                            <textarea class="form-control" rows="5" formControlName="pensamiento"></textarea>
+                            <small *ngIf="campoNoValido('pensamiento')" class="text-danger"> La información es requerida </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Memoria</label>
+                            <textarea class="form-control" rows="5" formControlName="memoria"></textarea>
+                            <small *ngIf="campoNoValido('memoria')" class="text-danger"> La información es requerida </small>
+                        </div>
+
+                        <h3 class="card-title">APLICACIÓN DE PRUEBAS PSICOLOGICAS</h3>
+                        <hr>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" formControlName="aplicacionPruebas"></textarea>
+                            <small *ngIf="campoNoValido('aplicacionPruebas')" class="text-danger"> La información es requerida </small>
+                        </div>
+                        <h3 class="card-title">DIAGNOSTICO PRESUNTIVO</h3>
+                        <hr>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" formControlName="diagnostico"></textarea>
+                            <small *ngIf="campoNoValido('diagnostico')" class="text-danger"> La información es requerida </small>
+                        </div>
+                        <h3 class="card-title">TRATAMIENTO Y RECOMENDACIONES</h3>
+                        <hr>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" formControlName="tratamiento"></textarea>
+                            <small *ngIf="campoNoValido('tratamiento')" class="text-danger"> La información es requerida </small>
+                        </div>
+
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Guardar</button> &nbsp;
+                        <button routerLink="/dashboard/historias" type="button" class="btn btn-inverse">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

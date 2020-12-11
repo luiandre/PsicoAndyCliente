@@ -42,10 +42,6 @@ export class RegisterComponent  {
     }
 
     Swal.fire({
-      title: 'Loading cars from data base'
-    });
-
-    Swal.fire({
       icon: 'warning',
       title: 'Espere por favor...',
       allowOutsideClick: false,
