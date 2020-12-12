@@ -29,6 +29,10 @@ import { HistoriasComponent } from './pacientes/historias/historias.component';
 import { AsignacionesComponent } from './pacientes/asignaciones/asignaciones.component';
 import { AsignacionComponent } from './pacientes/asignaciones/asignacion/asignacion.component';
 import { HistoriaComponent } from './pacientes/historias/historia/historia.component';
+import { SeguimientosComponent } from './pacientes/seguimientos/seguimientos.component';
+import { SeguimientoComponent } from './pacientes/seguimientos/seguimiento/seguimiento.component';
+import { CitasComponent } from './pacientes/citas/citas.component';
+import { TestAutoestimaComponent } from './test-autoestima/test-autoestima.component';
 
 
 @NgModule({
@@ -52,7 +56,11 @@ import { HistoriaComponent } from './pacientes/historias/historia/historia.compo
     AsignacionesComponent,
     AsignacionComponent,
     HistoriasComponent,
-    HistoriaComponent
+    HistoriaComponent,
+    SeguimientosComponent,
+    SeguimientoComponent,
+    CitasComponent,
+    TestAutoestimaComponent
   ],
   exports: [
     DashboardComponent,
@@ -67,7 +75,11 @@ import { HistoriaComponent } from './pacientes/historias/historia/historia.compo
     HistoriasComponent,
     AsignacionComponent,
     AsignacionesComponent,
-    HistoriaComponent
+    HistoriaComponent,
+    SeguimientosComponent,
+    SeguimientoComponent,
+    CitasComponent,
+    TestAutoestimaComponent
   ],
   imports: [
     CommonModule,

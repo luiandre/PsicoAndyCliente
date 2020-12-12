@@ -54,7 +54,7 @@
                                 <p *ngIf="usuario.estado" class="font-italic mb-0 text-small text-success">online</p>
                                 <p *ngIf="!usuario.estado" class="font-italic mb-0 text-small text-danger">offline</p>
                             </div>
-                            <div *ngIf="usuarioService.rol !== 'USER_ROL'"><button [disabled]='!usuario.estado' (click)="llamar(usuario.uid)" class="btn btn-info" style="height: 40px; width: 40px;" target="_blank"><i class=" fa fa-phone"></i></button></div>
+                            <div *ngIf="usuarioService.rol !== 'USER_ROL'"><button title="Llamar" [disabled]='!usuario.estado' (click)="llamar(usuario.uid)" class="btn btn-info" style="height: 40px; width: 40px;" target="_blank"><i class="fa fa-video-camera"></i></button></div>
                         </div>
                         <div *ngIf="usuario.pendiente" class="point"></div>
                     </a>

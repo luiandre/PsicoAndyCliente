@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <form id="historiaform" [formGroup]="seguimientoForm" (ngSubmit)="guardarSeguimiento()">
+                    <div class="form-body">
+                        <div class="row p-t-20">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Sesión N.</label>
+                                    <input type="text" id="numero" class="form-control" placeholder="Sesión N." formControlName="numero">
+                                    <small *ngIf="campoNoValido('numero')" class="text-danger"> El numero de sesión es requerido </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha</label>
+                                    <input type="date" class="form-control" placeholder="dd/mm/yyyy" formControlName="fecha">
+                                    <small *ngIf="campoNoValido('fecha')" class="text-danger"> La fecha es requerida </small>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Actividad</label>
+                            <textarea class="form-control" rows="5" formControlName="actividad"></textarea>
+                            <small *ngIf="campoNoValido('actividad')" class="text-danger"> La información es requerida </small>
+                        </div>
+                        <div class="form-group">
+                            <label>Observaciones</label>
+                            <textarea class="form-control" rows="5" formControlName="observaciones"></textarea>
+                            <small *ngIf="campoNoValido('observaciones')" class="text-danger"> La información es requerida </small>
+                        </div>
+
+
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Guardar</button> &nbsp;
+                        <button (click)="cancelar()" type="button" class="btn btn-inverse">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,251 @@
+<div class="card">
+    <div class="card-body">
+
+        <h4 class="card-title m-t-40">
+            Indicación:<br>
+            <small class="text-justify">Cuestionario para explorar la autoestima personai entendida como los sentimientos
+                de valia personal y de respeto a si mismo. </small>
+        </h4>
+        <br>
+        <small class="text-justify">Este test tiene por objeto evaluar el sentimiento de satisfacción que la persona tiene de si misma.
+                Por favor, conteste las siguientes frases con la respuesta que considere más apropiada. 
+        </small>
+
+        <ul>
+            <li>A. Muy de acuerdo</li>
+            <li>B. De acuerdo</li>
+            <li>C. En desacuerdo</li>
+            <li>D. Muy en desacuerdo
+            </li>
+        </ul>
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form [formGroup]="testForm" (ngSubmit)="enviar()">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 75px;">N.</th>
+                                        <th>Item</th>
+                                        <th>Opciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong *ngIf="campoNoValido('group1')" class="text-danger">*</strong> 1.
+                                        </td>
+                                        <td>Siento que soy una persona digna de aprecio, al menos en igual medida que los demás. </td>
+                                        <td class="text-nowrap">
+                                            <div class="demo-radio-button">
+                                                <input value="4" name="group1" type="radio" id="radio_11" formControlName="group1">
+                                                <label for="radio_11">A</label>
+                                                <br>
+                                                <input value="3" name="group1" type="radio" id="radio_12" formControlName="group1">
+                                                <label for="radio_12">B</label>
+                                                <br>
+                                                <input value="2" name="group1" type="radio" id="radio_13" formControlName="group1">
+                                                <label for="radio_13">C</label>
+                                                <br>
+                                                <input value="1" name="group1" type="radio" id="radio_14" formControlName="group1">
+                                                <label for="radio_14">D</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong *ngIf="campoNoValido('group2')" class="text-danger">*</strong> 2.
+                                        </td>
+                                        <td>Estoy convencido de que tengo cualidades buenas. </td>
+                                        <td class="text-nowrap">
+                                            <div class="demo-radio-button">
+                                                <input value="4" name="group2" type="radio" id="radio_21" formControlName="group2">
+                                                <label for="radio_21">A</label>
+                                                <br>
+                                                <input value="3" name="group2" type="radio" id="radio_22" formControlName="group2">
+                                                <label for="radio_22">B</label>
+                                                <br>
+                                                <input value="2" name="group2" type="radio" id="radio_23" formControlName="group2">
+                                                <label for="radio_23">C</label>
+                                                <br>
+                                                <input value="1" name="group2" type="radio" id="radio_24" formControlName="group2">
+                                                <label for="radio_24">D</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong *ngIf="campoNoValido('group3')" class="text-danger">*</strong> 3.
+                                        </td>
+                                        <td>Soy capaz de hacer las cosas tan bien como la mayoría de la gente.</td>
+                                        <td class="text-nowrap">
+                                            <div class="demo-radio-button">
+                                                <input value="4" name="group3" type="radio" id="radio_31" formControlName="group3">
+                                                <label for="radio_31">A</label>
+                                                <br>
+                                                <input value="3" name="group3" type="radio" id="radio_32" formControlName="group3">
+                                                <label for="radio_32">B</label>
+                                                <br>
+                                                <input value="2" name="group3" type="radio" id="radio_33" formControlName="group3">
+                                                <label for="radio_33">C</label>
+                                                <br>
+                                                <input value="1" name="group3" type="radio" id="radio_34" formControlName="group3">
+                                                <label for="radio_34">D</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong *ngIf="campoNoValido('group4')" class="text-danger">*</strong> 4.
+                                        </td>
+                                        <td>Tengo una actitud positiva hacia mi mismola.</td>
+                                        <td class="text-nowrap">
+                                            <div class="demo-radio-button">
+                                                <input value="4" name="group4" type="radio" id="radio_41" formControlName="group4">
+                                                <label for="radio_41">A</label>
+                                                <br>
+                                                <input value="3" name="group4" type="radio" id="radio_42" formControlName="group4">
+                                                <label for="radio_42">B</label>
+                                                <br>
+                                                <input value="2" name="group4" type="radio" id="radio_43" formControlName="group4">
+                                                <label for="radio_43">C</label>
+                                                <br>
+                                                <input value="1" name="group4" type="radio" id="radio_44" formControlName="group4">
+                                                <label for="radio_44">D</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong *ngIf="campoNoValido('group5')" class="text-danger">*</strong> 5.
+                                        </td>
+                                        <td>En general estoy satisfechola de mi mismola. </td>
+                                        <td class="text-nowrap">
+                                            <div class="demo-radio-button">
+                                                <input value="4" name="group5" type="radio" id="radio_51" formControlName="group5">
+                                                <label for="radio_51">A</label>
+                                                <br>
+                                                <input value="3" name="group5" type="radio" id="radio_52" formControlName="group5">
+                                                <label for="radio_52">B</label>
+                                                <br>
+                                                <input value="2" name="group5" type="radio" id="radio_53" formControlName="group5">
+                                                <label for="radio_53">C</label>
+                                                <br>
+                                                <input value="1" name="group5" type="radio" id="radio_54" formControlName="group5">
+                                                <label for="radio_54">D</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong *ngIf="campoNoValido('group6')" class="text-danger">*</strong> 6.
+                                        </td>
+                                        <td>Siento que no tengo mucho de lo que estar orgullosola.</td>
+                                        <td class="text-nowrap">
+                                            <div class="demo-radio-button">
+                                                <input value="1" name="group6" type="radio" id="radio_61" formControlName="group6">
+                                                <label for="radio_61">A</label>
+                                                <br>
+                                                <input value="2" name="group6" type="radio" id="radio_62" formControlName="group6">
+                                                <label for="radio_62">B</label>
+                                                <br>
+                                                <input value="3" name="group6" type="radio" id="radio_63" formControlName="group6">
+                                                <label for="radio_63">C</label>
+                                                <br>
+                                                <input value="4" name="group6" type="radio" id="radio_64" formControlName="group6">
+                                                <label for="radio_64">D</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong *ngIf="campoNoValido('group7')" class="text-danger">*</strong> 7.
+                                        </td>
+                                        <td>En general, me inclino a pensar que soy un fracasadola.</td>
+                                        <td class="text-nowrap">
+                                            <div class="demo-radio-button">
+                                                <input value="1" name="group7" type="radio" id="radio_71" formControlName="group7">
+                                                <label for="radio_71">A</label>
+                                                <br>
+                                                <input value="2" name="group7" type="radio" id="radio_72" formControlName="group7">
+                                                <label for="radio_72">B</label>
+                                                <br>
+                                                <input value="3" name="group7" type="radio" id="radio_73" formControlName="group7">
+                                                <label for="radio_73">C</label>
+                                                <br>
+                                                <input value="4" name="group7" type="radio" id="radio_74" formControlName="group7">
+                                                <label for="radio_74">D</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong *ngIf="campoNoValido('group8')" class="text-danger">*</strong> 8.
+                                        </td>
+                                        <td>Me gustaría poder sentir más respeto por mi mismo.</td>
+                                        <td class="text-nowrap">
+                                            <div class="demo-radio-button">
+                                                <input value="1" name="group8" type="radio" id="radio_81" formControlName="group8">
+                                                <label for="radio_81">A</label>
+                                                <br>
+                                                <input value="2" name="group8" type="radio" id="radio_82" formControlName="group8">
+                                                <label for="radio_82">B</label>
+                                                <br>
+                                                <input value="3" name="group8" type="radio" id="radio_83" formControlName="group8">
+                                                <label for="radio_83">C</label>
+                                                <br>
+                                                <input value="4" name="group8" type="radio" id="radio_84" formControlName="group8">
+                                                <label for="radio_84">D</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong *ngIf="campoNoValido('group9')" class="text-danger">*</strong> 9.
+                                        </td>
+                                        <td>Hay veces que realmente pienso que soy un inútil.</td>
+                                        <td class="text-nowrap">
+                                            <div class="demo-radio-button">
+                                                <input value="1" name="group9" type="radio" id="radio_91" formControlName="group9">
+                                                <label for="radio_91">A</label>
+                                                <br>
+                                                <input value="2" name="group9" type="radio" id="radio_92" formControlName="group9">
+                                                <label for="radio_92">B</label>
+                                                <br>
+                                                <input value="3" name="group9" type="radio" id="radio_93" formControlName="group9">
+                                                <label for="radio_93">C</label>
+                                                <br>
+                                                <input value="4" name="group9" type="radio" id="radio_94" formControlName="group9">
+                                                <label for="radio_94">D</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong *ngIf="campoNoValido('group10')" class="text-danger">*</strong> 10.
+                                        </td>
+                                        <td>A veces creo que no soy buena persona.</td>
+                                        <td class="text-nowrap">
+                                            <div class="demo-radio-button">
+                                                <input value="1" name="group10" type="radio" id="radio_01" formControlName="group10">
+                                                <label for="radio_01">A</label>
+                                                <br>
+                                                <input value="2" name="group10" type="radio" id="radio_02" formControlName="group10">
+                                                <label for="radio_02">B</label>
+                                                <br>
+                                                <input value="3" name="group10" type="radio" id="radio_03" formControlName="group10">
+                                                <label for="radio_03">C</label>
+                                                <br>
+                                                <input value="4" name="group10" type="radio" id="radio_04" formControlName="group10">
+                                                <label for="radio_04">D</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success waves-effect waves-light">Enviar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

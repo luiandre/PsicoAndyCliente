@@ -56,9 +56,9 @@
                                 <td>{{ noticia.fecha | date:'short'}}</td>
                                 <td>{{ noticia.usuario.nombre + ' ' + noticia.usuario.apellido}}</td>
                                 <td class="text-nowrap text-center">
-                                    <a [routerLink]="['/dashboard/noticias/', noticia.id]" data-original-title="Editar"> <i class="fa fa-edit text-dark cursor"></i> </a> &nbsp;
-                                    <a (click)="abrirModal(noticia)" data-original-title="Imagen"> <i class="fa fa-image text-dark cursor"></i> </a> &nbsp;
-                                    <a (click)="eliminarNoticia(noticia)" data-original-title="Eliminar"> <i class="fa fa-close text-danger cursor"></i> </a>
+                                    <a (click)="abrirModal(noticia)" title="Cambiar imagen"> <i class="fa fa-image cursor"></i> </a> &nbsp;
+                                    <a [routerLink]="['/dashboard/noticias/', noticia.id]" title="Editar"> <i class="fa fa-edit cursor"></i> </a> &nbsp;
+                                    <a (click)="eliminarNoticia(noticia)" title="Eliminar"> <i class="fa fa-close text-danger cursor"></i> </a>
                                 </td>
                             </tr>
                         </tbody>

@@ -15,6 +15,7 @@ import { BusquedaComponent } from './pages/busqueda/busqueda.component';
 import { AuthGuard } from './guards/auth.guard';
 import { MensajesComponent } from './pages/mensajes/mensajes.component';
 import { MensajeDetalleComponent } from './pages/mensajes/mensaje-detalle/mensaje-detalle.component';
+import { TestAutoestimaComponent } from './pages/test-autoestima/test-autoestima.component';
 
 const routes: Routes = [
 
@@ -27,6 +28,7 @@ const routes: Routes = [
     { path: 'conocenos', component: ConocenosComponent, data: {titulo: 'Conócenos'}},
     { path: 'contactanos', component: ContactanosComponent, data: {titulo: 'Contáctanos'}},
     { path: 'perfil', canActivate: [AuthGuard], component: PerfilComponent, data: {titulo: 'Perfíl'}},
+    { path: 'escalaAutoestima', canActivate: [AuthGuard], component: TestAutoestimaComponent, data: {titulo: 'Escala de Autoestima de Rosemberg'}},
     { path: 'mensajes', canActivate: [AuthGuard], component: MensajesComponent, data: {titulo: 'Mensajes'}},
     { path: 'mensajes/:uid', canActivate: [AuthGuard], component: MensajeDetalleComponent, data: {titulo: 'Mensajes'}},
     // { path: 'account-settings', canActivate: [AuthGuard], component: AccountSettingsComponent, data: {titulo: 'Ajustes'}},

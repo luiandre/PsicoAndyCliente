@@ -10,7 +10,7 @@
                         <p *ngIf="usuarioSeleccionado.estado" class="font-italic mb-0 text-small text-success">online</p>
                         <p *ngIf="!usuarioSeleccionado.estado" class="font-italic mb-0 text-small text-danger">offline</p>
                     </div>
-                    <div *ngIf="usuarioService.rol !== 'USER_ROL'"><button [disabled]='!usuarioSeleccionado.estado' (click)="llamar(usuarioSeleccionado.uid)" class="btn btn-info" style="height: 40px; width: 40px;"><i class=" fa fa-phone"></i></button></div>
+                    <div *ngIf="usuarioService.rol !== 'USER_ROL'"><button title="Llamar" [disabled]='!usuarioSeleccionado.estado' (click)="llamar(usuarioSeleccionado.uid)" class="btn btn-info" style="height: 40px; width: 40px;"><i class="fa fa-video-camera"></i></button></div>
                 </div>
             </div>
             <div class="card-body">

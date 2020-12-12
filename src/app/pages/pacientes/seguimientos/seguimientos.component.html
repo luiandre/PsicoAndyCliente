@@ -1,9 +1,8 @@
 <div class="row animate fadeIn fast text-right">
     <div class="col-12">
-        <button (click)="abrirModal()" class="btn btn-success">Asignar</button>
+        <button routerLink="/dashboard/seguimientos/seguimiento/nuevo" class="btn btn-success">Agregar</button>
     </div>
 </div>
-
 <br>
 
 <div class="row animate fadeIn fast" *ngIf="cargando">
@@ -16,7 +15,7 @@
     </div>
 </div>
 
-<div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="totalAsignaciones > 0">
+<div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="totalSeguimientos > 0">
     <div class="col-12">
         <div class="alert alert-warning text-center">
             <h4 class="alert-heading">Sin resultados</h4>
@@ -26,7 +25,8 @@
     </div>
 </div>
 
-<div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="totalAsignaciones === 0">
+
+<div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="totalSeguimientos === 0">
     <div class="col-12">
         <div class="card">
             <div class="card-body">
@@ -34,19 +34,20 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th class="w200">Nombres</th>
-                                <th>Email</th>
+                                <th class="w200">Número</th>
                                 <th>Fecha</th>
-                                <th class="text-nowrap w100">Eliminar</th>
+                                <th>Actividad</th>
+                                <th class="text-nowrap w100">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let asignacion of asignaciones">
-                                <td>{{ asignacion.profesional.nombre + ' ' + asignacion.profesional.apellido}}</td>
-                                <td>{{ asignacion.profesional.email}}</td>
-                                <td>{{ asignacion.fecha | date:'short'}}</td>
+                            <tr *ngFor="let seguimiento of seguimientos">
+                                <td>{{ seguimiento.numero }}</td>
+                                <td>{{ seguimiento.fecha | date:'short'}}</td>
+                                <td>{{ seguimiento.actividad }}</td>
                                 <td class="text-nowrap text-center">
-                                    <a (click)="eliminarAsignacion(asignacion)" title="Eliminar"> <i class="fa fa-close text-danger cursor"></i> </a>
+                                    <a [routerLink]="['/dashboard/seguimientos/seguimiento/', seguimiento.id]" title="Editar"> <i class="fa fa-edit cursor"></i> </a>&nbsp;
+                                    <a (click)="eliminarSeguimiento(seguimiento)" title="Eliminar"> <i class="fa fa-close text-danger cursor"></i> </a>
                                 </td>
                             </tr>
                         </tbody>
@@ -54,9 +55,9 @@
 
                     <div>
                         <button [disabled]="desde === 0" (click)="cambiarPagina(-6)" class="btn btn-info">Anterior</button> &nbsp;
-                        <button [disabled]="hasta=== totalAsignaciones" (click)="cambiarPagina(6)" class="btn btn-info">Siguiente</button>
+                        <button [disabled]="hasta=== totalSeguimientos" (click)="cambiarPagina(6)" class="btn btn-info">Siguiente</button>
                         <div class="float-right">
-                            {{desde+1}}-{{hasta}} ({{totalAsignaciones}})
+                            {{desde+1}}-{{hasta}} ({{totalSeguimientos}})
                         </div>
                     </div>
 

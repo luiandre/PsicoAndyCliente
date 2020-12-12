@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Label, MultiDataSet, Color } from 'ng2-charts';
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { Label, Color } from 'ng2-charts';
 
 @Component({
   selector: 'app-dona',
@@ -11,17 +12,31 @@ export class DonaComponent implements OnInit {
 
   // Doughnut
   // tslint:disable-next-line: no-input-rename
-  @Input('labels') doughnutChartLabels: Label[] = ['Label 1', 'Label 2', 'Label 3'];
+  @Input('labels') barChartLabels: Label[] = [];
   // tslint:disable-next-line: no-input-rename
-  @Input('data') doughnutChartData: MultiDataSet = [
-    [350, 450, 100]
+  @Input('data') barChartData: ChartDataSets[] = [
+    { data: [], label: ''}
   ];
 
   @Input() colors: Color[] = [
-    { backgroundColor: [ '#6857e6', '#009fee', '#f02059']}
+    { backgroundColor: [ '#009fee', '#009fee', '#009fee']}
   ];
 
   @Input() titulo = 'Sin Titulo';
+
+  public barChartType: ChartType = 'bar';
+  public barChartLegend = true;
+
+  public barChartOptions: ChartOptions = {
+    responsive: true,
+    scales: { xAxes: [{}], yAxes: [{}] },
+    plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+      }
+    }
+  };
 
   constructor() { }
 

@@ -8,7 +8,7 @@ export class SidebarService {
   public menu: any[] = [
     {
       titulo: 'PsicoAndy',
-      icono: 'mdi mdi-arrow-down-drop-circle',
+      icono: 'mdi mdi-city',
       submenu: [
         { titulo: 'Inicio', url: '/'},
         { titulo: 'Servicios', url: '/servicios'},

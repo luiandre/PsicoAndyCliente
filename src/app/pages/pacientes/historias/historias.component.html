@@ -38,7 +38,9 @@
                                 <td>{{ asignacion.paciente.email}}</td>
                                 <td>{{ asignacion.fecha | date:'short'}}</td>
                                 <td class="text-nowrap text-center">
-                                    <a (click)="revisarHistoria(asignacion)" data-original-title="Revisar"> <i class="fa fa-address-book-o cursor"></i> </a>
+                                    <a (click)="revisarHistoria(asignacion)" title="Historia Clínica"> <i class="fa fa-address-book-o cursor"></i> </a>&nbsp;
+                                    <a routerLink="/dashboard/seguimientos/{{asignacion.paciente._id}}" title="Seguimiento"> <i class="fa fa-id-card-o cursor"></i> </a>&nbsp;
+                                    <a routerLink="/dashboard/grafica/{{asignacion.paciente._id}}" title="Resultados de test"> <i class="fa fa-bar-chart cursor"></i> </a>
                                 </td>
                             </tr>
                         </tbody>

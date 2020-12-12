@@ -41,7 +41,6 @@ export class ComunicadosComponent implements OnInit {
       this.comunicados = comunicado;
       this.comunicadosTemp = comunicado;
       this.cargando = false;
-      console.log(this.comunicados);
       if (this.totalComunicados < 6) {
         this.hasta = this.totalComunicados;
       }

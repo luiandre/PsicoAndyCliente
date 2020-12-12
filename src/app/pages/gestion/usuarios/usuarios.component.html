@@ -60,9 +60,9 @@
                                     <span *ngIf="!usuario.activo" class="label label-danger">Inactivo</span>
                                 </td>
                                 <td class="text-nowrap text-center">
-                                    <a (click)="abrirModal(usuario)" data-original-title="Imagen"> <i class="fa fa-image text-dark cursor"></i> </a> &nbsp;
-                                    <a *ngIf="usuario.activo" (click)="eliminarUsuario(usuario)" data-original-title="Inhabilitar"> <i class="fa fa-close text-danger cursor"></i> </a>
-                                    <a *ngIf="!usuario.activo" (click)="habilitarUsuario(usuario)" data-original-title="Habilitar"> <i class="fa fa-check text-success cursor"></i> </a>
+                                    <a (click)="abrirModal(usuario)" title="Cambiar imagen"> <i class="fa fa-image cursor"></i> </a> &nbsp;
+                                    <a *ngIf="usuario.activo" (click)="eliminarUsuario(usuario)" title="Inhabilitar"> <i class="fa fa-close text-danger cursor"></i> </a>
+                                    <a *ngIf="!usuario.activo" (click)="habilitarUsuario(usuario)" title="Habilitar"> <i class="fa fa-check text-success cursor"></i> </a>
                                 </td>
                             </tr>
                         </tbody>
