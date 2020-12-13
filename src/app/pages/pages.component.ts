@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../services/settings.service';
 import { SidebarService } from '../services/sidebar.service';
+import { PdfMakeWrapper } from 'pdfmake-wrapper';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+
+PdfMakeWrapper.setFonts(pdfFonts);
 
 declare function customInitFunctions();
 

@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SeguimientoService } from '../../../../services/seguimiento.service';
 import { delay } from 'rxjs/operators';
 import {Location} from '@angular/common';
+import { Columns, PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
 
 @Component({
   selector: 'app-seguimiento',
@@ -175,6 +176,37 @@ export class SeguimientoComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  generarPdf(){
+    const pdf = new PdfMakeWrapper();
+
+    pdf.info({
+      title: 'Seguimiento',
+      author: 'PsicoAndy M&D',
+      subject: 'Seguimiento' + this.seguimientoForm.value.numero,
+    });
+
+    pdf.add(new Txt('SEGUIMIENTO').alignment('center').bold().fontSize(25).end);
+    pdf.add(pdf.ln(1));
+    pdf.add(new Columns([new Txt('Sesion N. :').bold().end, new Txt(this.seguimientoForm.value.numero).end]).end);
+    pdf.add(new Columns([new Txt('Fecha :').bold().end, new Txt(this.seguimientoForm.value.fecha).end]).end);
+    pdf.add(pdf.ln(1));
+    pdf.add(pdf.ln(1));
+
+    pdf.add(new Txt('ACTIVIDAD').bold().decoration('underline').fontSize(20).end);
+    pdf.add(pdf.ln(1));
+    pdf.add(new Txt(this.seguimientoForm.value.actividad).alignment('justify').end);
+    pdf.add(pdf.ln(1));
+
+    pdf.add(new Txt('OBSERVACIONES').bold().decoration('underline').fontSize(20).end);
+    pdf.add(pdf.ln(1));
+    pdf.add(new Txt(this.seguimientoForm.value.observaciones).alignment('justify').end);
+    pdf.add(pdf.ln(1));
+
+    pdf.create().open();
+
+
   }
 
 }
