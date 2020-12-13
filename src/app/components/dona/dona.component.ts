@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
-import { Label, Color } from 'ng2-charts';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import { Color, Label } from 'ng2-charts';
 
 @Component({
   selector: 'app-dona',
@@ -19,28 +20,51 @@ export class DonaComponent implements OnInit {
   ];
 
   @Input() colors: Color[] = [
-    { backgroundColor: [ '#009fee', '#009fee', '#009fee']}
+    { backgroundColor: [ '#009fee', '#009fee', '#009fee', '#009fee', '#009fee', '#009fee', '#009fee', '#009fee', '#009fee', '#009fee']}
   ];
 
   @Input() titulo = 'Sin Titulo';
 
+  @Input() maxValueY = 5;
+
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
+  public barChartPlugins = [pluginDataLabels];
 
   public barChartOptions: ChartOptions = {
     responsive: true,
-    scales: { xAxes: [{}], yAxes: [{}] },
+    scales: { xAxes: [{}], yAxes: [{
+      ticks: {
+        min: 0,
+        max: this.maxValueY,
+      }
+    }]},
     plugins: {
       datalabels: {
         anchor: 'end',
         align: 'end',
       }
-    }
+    },
   };
 
   constructor() { }
 
   ngOnInit(): void {
+    this.barChartOptions = {
+      responsive: true,
+      scales: { xAxes: [{}], yAxes: [{
+        ticks: {
+          min: 0,
+          max: this.maxValueY,
+        }
+      }]},
+      plugins: {
+        datalabels: {
+          anchor: 'end',
+          align: 'end',
+        },
+      }
+    };
   }
 
 }

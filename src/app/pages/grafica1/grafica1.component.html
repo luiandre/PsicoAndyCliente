@@ -1,5 +1,31 @@
-<div class="row">
+<div class="row animate fadeIn fast" *ngIf="cargando">
     <div class="col-12">
-        <app-dona [titulo]="'Total'" [labels]="labels1" [data]="data1"></app-dona>
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando...</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row animate fadeIn fast" *ngIf="!cargando" [hidden]="tests.length > 0">
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <h4 class="alert-heading">Sin resultados</h4>
+            <i class="fa fa-warning fa-2x"></i>
+            <p class="mb-0"></p>
+        </div>
+    </div>
+</div>
+
+<div class="row" [hidden]="tests.length == 0">
+    <div class="col-12">
+        <app-dona [colors]="colors1" [maxValueY]="45" [titulo]="'Total'" [labels]="labels1" [data]="data1"></app-dona>
+    </div>
+</div>
+
+<div *ngFor="let test of testList" class="row" [hidden]="tests.length == 0">
+    <div class="col-12">
+        <app-dona [maxValueY]="4.5" [titulo]="test.titulo" [labels]="test.labels" [data]="test.data"></app-dona>
     </div>
 </div>
