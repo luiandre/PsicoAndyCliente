@@ -8,6 +8,9 @@ import { SharedModule } from '../shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
 
 import { LinkyModule } from 'ngx-linky';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
@@ -34,6 +37,10 @@ import { SeguimientoComponent } from './pacientes/seguimientos/seguimiento/segui
 import { CitasComponent } from './pacientes/citas/citas.component';
 import { TestAutoestimaComponent } from './test-autoestima/test-autoestima.component';
 
+FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 @NgModule({
   declarations: [
@@ -89,7 +96,8 @@ import { TestAutoestimaComponent } from './test-autoestima/test-autoestima.compo
     ComponentsModule,
     ReactiveFormsModule,
     PipesModule,
-    LinkyModule
+    LinkyModule,
+    FullCalendarModule
   ]
 })
 export class PagesModule { }
