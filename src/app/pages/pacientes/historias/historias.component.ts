@@ -48,7 +48,6 @@ export class HistoriasComponent implements OnInit {
     this.asignacionService.getAsignacionesProfesional(uid, this.desde).subscribe( ({total, asignaciones}) => {
       this.totalAsignaciones = total;
       this.asignaciones = asignaciones;
-      this.asignaciones = asignaciones;
       this.cargando = false;
       if (this.totalAsignaciones < 6) {
         this.hasta = this.totalAsignaciones;

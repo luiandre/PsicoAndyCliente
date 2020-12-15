@@ -4,7 +4,6 @@ export class Cita {
 
     constructor(
         public titulo: string,
-        public detalle?: string,
         public fecha?: string,
         public usuario?: NoticiaUser | string,
         public paciente?: NoticiaUser | string,

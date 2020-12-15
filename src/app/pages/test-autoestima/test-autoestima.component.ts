@@ -57,19 +57,19 @@ export class TestAutoestimaComponent implements OnInit {
       if (this.total <= 40 && this.total >= 30){
         Swal.fire(
           'Su resultado es: ' + this.total,
-          'Su autoestima se encuentra en excelentes condiciones',
+          'Autoestima elevada. Considerada como autoestima normal',
           'success'
         );
       } else if (this.total <= 29 && this.total >= 26){
         Swal.fire(
           'Su resultado es: ' + this.total,
-          'No presenta problemas en su autoestima, pero podemos mejorar',
+          'Autoestima media. Sin problemas de autoestima significantes, pero podemos mejorar',
           'info'
         );
       } else {
         Swal.fire(
           'Su resultado es: ' + this.total,
-          'Hemos encontrado algunos problemas, pero no te preocupes, estamos para ayudarte',
+          'Autoestima baja. Hemos encontrado algunos problemas, pero no te preocupes, estamos para ayudarte',
           'warning'
         );
       }

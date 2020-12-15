@@ -3,14 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Mensaje } from 'src/app/models/mensaje.model';
 import { MensajeService } from 'src/app/services/mensajes.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { environment } from 'src/environments/environment';
-import * as io from 'socket.io-client';
 import { Usuario } from '../../../models/usuario.model';
 import Push from 'push.js';
 import { SalasService } from '../../../services/salas.service';
 import Swal from 'sweetalert2';
 import { Sala } from 'src/app/models/sala.model';
-import { error } from 'protractor';
+import * as io from 'socket.io-client';
+import { environment } from 'src/environments/environment';
 
 const socket_url = environment.socket_url;
 

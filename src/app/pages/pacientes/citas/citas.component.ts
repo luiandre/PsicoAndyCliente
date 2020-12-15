@@ -6,7 +6,14 @@ import { CitasService } from '../../../services/citas.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import Swal from 'sweetalert2';
 import { Cita } from '../../../models/cita.model';
-import { element } from 'protractor';
+import { Usuario } from '../../../models/usuario.model';
+import { Mensaje } from 'src/app/models/mensaje.model';
+import { MensajeService } from '../../../services/mensajes.service';
+import * as io from 'socket.io-client';
+import { environment } from 'src/environments/environment';
+
+const socket_url = environment.socket_url;
+
 
 @Component({
   selector: 'app-citas',
@@ -16,6 +23,9 @@ import { element } from 'protractor';
 export class CitasComponent implements OnInit {
 
   initialEvents: EventInput[] = [];
+  paciente: Usuario;
+  servicio: string;
+  public socket = io(socket_url);
 
   calendarOptions: CalendarOptions =  {
     plugins: [ timeGridPlugin ],
@@ -39,7 +49,8 @@ export class CitasComponent implements OnInit {
   uid: string;
 
   constructor(  private citasService: CitasService,
-                private usuarioService: UsuarioService) {
+                private usuarioService: UsuarioService,
+                private mensajeService: MensajeService) {
                   this.uid = this.usuarioService.uid;
                 }
 
@@ -47,111 +58,168 @@ export class CitasComponent implements OnInit {
     this.cargarCitas();
   }
 
-  async handleDateSelect(selectInfo: DateSelectArg) {
+  handleDateSelect(selectInfo: DateSelectArg) {
+    this.guardarCita(selectInfo);
+  }
+
+  async guardarCita(selectInfo: DateSelectArg){
     const calendarApi = selectInfo.view.calendar;
     calendarApi.unselect();
-    const { value: formValues } = await Swal.fire({
+    const { value: email } = await Swal.fire({
+      title: 'Fecha: ' + selectInfo.startStr,
+      input: 'email',
+      inputPlaceholder: 'Ingresa el email del paciente',
       showCancelButton: true,
-      confirmButtonText: `Guardar`,
-      cancelButtonText: `Cancelar`,
-      title: 'Nueva Cita',
-      html:
-        '<b>Titulo:<b>' +
-        '<input id="titulo" class="swal2-input">' +
-        '<b>Detalle:<b>' +
-        '<input id="detalle" class="swal2-input">' ,
-        // +
-        // '<b>Usuario:<b>' +
-        // '<input id="paciente" class="swal2-input">',
-      preConfirm: () => {
-        const titulo: any = document.getElementById('titulo');
-        const detalle: any = document.getElementById('detalle');
-        // const paciente: any = document.getElementById('paciente');
-        return [
-          titulo.value,
-          detalle.value,
-          // paciente.value
-        ];
+      confirmButtonText: 'Siguiente',
+      cancelButtonText: 'Cancelar',
+      validationMessage: 'Ingrese un email',
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          this.usuarioService.getUsuarioEmail(value).subscribe( resp => {
+            this.paciente = resp;
+              resolve();
+          }, err => {
+            resolve(err.error.msg);
+          });
+        })
       }
-    });
+    })
+    
+    if (email) {
+      const { value: servicio } = await Swal.fire({
+        title: 'Paciente: ' + this.paciente.nombre + ' ' + this.paciente.apellido,
+        input: 'text',
+        inputPlaceholder: 'Ingrese detalles del servicio',
+        showCancelButton: true,
+        confirmButtonText: 'Guardar',
+        cancelButtonText: 'Cancelar',
+        validationMessage: 'El detalle del servicio es requerido',
+        inputValidator: (value) => {
+          return new Promise((resolve) => {
+            if(value){
+              this.servicio = value;
+              resolve();
+            } else {
+              resolve('El detalle del servicio es requerido');
+            }
+          })
+        }
+      })
+      
+      if (servicio) {
+        const cita: Cita = {
+          titulo: this.servicio,
+          paciente: this.paciente.uid,
+          usuario: this.uid,
+          fecha: selectInfo.startStr
+        };
 
-    if (formValues){
-      const cita: Cita = {
-        titulo: formValues[0],
-        detalle: formValues[1],
-        paciente: this.uid,
-        usuario: this.uid,
-        fecha: selectInfo.startStr
-      };
-
-      Swal.fire({
-        icon: 'warning',
-        title: 'Espere por favor...',
-        allowOutsideClick: false,
-        onBeforeOpen: () => {
-            Swal.showLoading();
-        },
-      });
-
-      this.citasService.crearCita(cita).subscribe( (resp: any) => {
-        calendarApi.addEvent({
-          id: resp.cita.id,
-          title: formValues[0],
-          start: selectInfo.startStr,
-          end: selectInfo.endStr,
-          allDay: selectInfo.allDay
-        });
-        Swal.close();
-      }, err => {
-        Swal.close();
         Swal.fire({
-          title: 'Error!',
-          text: err.error.msg,
-          icon: 'error',
-          confirmButtonText: 'Aceptar'
+          icon: 'warning',
+          title: 'Espere por favor...',
+          allowOutsideClick: false,
+          onBeforeOpen: () => {
+              Swal.showLoading();
+          },
         });
-      });
+
+        this.citasService.crearCita(cita).subscribe( (resp: any) => {
+          calendarApi.addEvent({
+            id: resp.cita.id,
+            title: cita.titulo,
+            start: selectInfo.startStr,
+            end: selectInfo.endStr,
+            allDay: selectInfo.allDay
+          });
+
+          console.log(resp.cita);
+
+          const mensaje = `Su cita se agendó para la fecha ${resp.cita.fecha} con el profesional ${this.usuarioService.usuario.nombre} ${this.usuarioService.usuario.apellido}`;
+          
+          const mensajeEnviar: Mensaje = {
+            de: this.usuarioService.uid,
+            para: this.paciente.uid,
+            mensaje: mensaje
+          };
+      
+          this.mensajeService.enviarMensaje(mensajeEnviar).subscribe( (resp: Mensaje) => {
+            this.socket.emit('guardar-mensaje', resp.mensaje);
+          });
+
+          Swal.close();
+        }, err => {
+          Swal.close();
+          Swal.fire({
+            title: 'Error!',
+            text: err.error.msg,
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+          });
+        });
+      }
     }
   }
 
   handleEventClick(clickInfo: EventClickArg) {
-    this.citasService.getCita(clickInfo.event.id).subscribe(
-      resp => {
-        Swal.fire({
-          showCancelButton: true,
-          confirmButtonText: `Guardar`,
-          cancelButtonText: `Cancelar`,
-          showDenyButton: true,
-          denyButtonText: `Eliminar`,
-          title: 'Nueva Cita',
-          html:
-            '<b>Titulo:<b>' +
-            '<input id="titulo" class="swal2-input" value="' + resp.titulo + '">' +
-            '<b>Detalle:<b>' +
-            '<input id="detalle" class="swal2-input" value="' + resp.detalle + '">',
-          preConfirm: () => {
-            const titulo: any = document.getElementById('titulo');
-            const detalle: any = document.getElementById('detalle');
-            return [
-              titulo.value,
-              detalle.value,
-            ];
-          }
-        }).then(
-          result => {
-            if (result.isConfirmed) {
-              const dataCita: Cita = {
-                titulo: result.value[0],
-                detalle: result.value[1]
-              };
-              this.actualizarCita(resp.id, dataCita, clickInfo);
-            } else if (result.isDenied) {
-              this.eliminarCita(clickInfo);
+    this.accederCita(clickInfo);
+  }
+
+  accederCita(clickInfo: EventClickArg){
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+    this.citasService.getCita(clickInfo.event.id).subscribe( async resp => {
+      Swal.close();
+      await Swal.fire({
+        title: 'Paciente: ' + resp.paciente.nombre + ' ' +  resp.paciente.apellido,
+        html: '<b>' + 'Fecha: ' +'<b>' + resp.fecha,
+        input: 'text',
+        inputPlaceholder: 'Ingrese detalles del servicio',
+        showCancelButton: true,
+        confirmButtonText: 'Guardar',
+        cancelButtonText: 'Cancelar',
+        validationMessage: 'El detalle del servicio es requerido',
+        inputValue: resp.titulo,
+        showDenyButton: true,
+        denyButtonText: `Eliminar`,
+        inputValidator: (value) => {
+          return new Promise((resolve) => {
+            if(value){
+              this.servicio = value;
+              resolve();
+            } else {
+              resolve('El detalle del servicio es requerido');
             }
+          })
+        }
+      }).then(
+        result => {
+          if (result.isConfirmed) {
+            const dataCita: Cita = {
+              titulo: this.servicio,
+            };
+            this.actualizarCita(resp.id, dataCita, clickInfo);
+          } else if (result.isDenied) {
+            this.eliminarCita(clickInfo);
           }
-        );
-      }
-    );
+        }
+      );
+
+      
+    }, err => {
+      Swal.close();
+      Swal.fire({
+        title: 'Error!',
+        text: err.error.msg,
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      });
+    });
   }
 
   actualizarCita(id: string, cita: Cita, clickInfo: EventClickArg){

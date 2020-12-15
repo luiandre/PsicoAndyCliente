@@ -346,7 +346,7 @@ export class HistoriaComponent implements OnInit {
     pdf.add(new Txt(this.historiaForm.value.psicosexual).alignment('justify').end);
     pdf.add(pdf.ln(1));
 
-    pdf.add(new Txt('EXPLORACIÓN DE FUNCIONES PSIQUICAS').bold().decoration('underline').fontSize(20).end);
+    pdf.add(new Txt('EXPLORACIÓN DE FUNCIONES PSÍQUICAS').bold().decoration('underline').fontSize(20).end);
     pdf.add(pdf.ln(1));
     pdf.add(new Txt('Conciencia').bold().fontSize(15).end);
     pdf.add(new Txt(this.historiaForm.value.conciencia).alignment('justify').end);
@@ -370,7 +370,7 @@ export class HistoriaComponent implements OnInit {
     pdf.add(new Txt(this.historiaForm.value.memoria).alignment('justify').end);
     pdf.add(pdf.ln(1));
 
-    pdf.add(new Txt('APLICACIÓN DE PRUEBAS PSICOLOGICAS').bold().decoration('underline').fontSize(20).end);
+    pdf.add(new Txt('APLICACIÓN DE PRUEBAS PSICOLÓGICAS').bold().decoration('underline').fontSize(20).end);
     pdf.add(pdf.ln(1));
     pdf.add(new Txt(this.historiaForm.value.aplicacionPruebas).alignment('justify').end);
     pdf.add(pdf.ln(1));

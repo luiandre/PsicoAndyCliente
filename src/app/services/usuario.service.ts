@@ -261,6 +261,13 @@ export class UsuarioService {
       );
   }
 
+  getUsuarioEmail(email: string){
+    return this.http.get(`${base_url}/usuarios/getUsuarioEmail/${email}`)
+      .pipe(
+        map( (resp: any) => resp = resp.usuario)
+      );
+  }
+
   getUsuariosChat(rol: string){
     return this.http.get(`${base_url}/usuarios/rol/usuario/${rol}`)
     .pipe(
