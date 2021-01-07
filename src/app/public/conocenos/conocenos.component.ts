@@ -27,7 +27,6 @@ export class ConocenosComponent implements OnInit {
     this.usuarioService.getUsuariosAdministrativos().subscribe( usuarios => {
       this.usuarios = usuarios;
       this.cargando = false;
-      console.log(this.usuarios);
     });
   }
 

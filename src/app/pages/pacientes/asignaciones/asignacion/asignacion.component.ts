@@ -82,7 +82,7 @@ export class AsignacionComponent implements OnInit {
 
     Swal.fire({
       title: '¿Estas seguro?',
-      text: 'Eliminar asignacion de ' + asignacion.profesional.nombre + ' ' + asignacion.profesional.apellido,
+      text: 'Eliminar asignación de ' + asignacion.profesional.nombre + ' ' + asignacion.profesional.apellido,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -105,7 +105,7 @@ export class AsignacionComponent implements OnInit {
           Swal.close();
           Swal.fire(
             'Exito!',
-            'Asignació eliminada.',
+            'Asignación eliminada.',
             'success'
           );
           this.cargarAsignaciones(this.uid);

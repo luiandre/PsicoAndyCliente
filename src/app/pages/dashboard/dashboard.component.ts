@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import * as io from 'socket.io-client';
 import { Comunicado } from '../../models/comunicado.model';
 import { ComunicadoService } from '../../services/comunicado.service';
+import { UsuarioService } from '../../services/usuario.service';
 
 const socket_url = environment.socket_url;
 
@@ -19,7 +20,8 @@ export class DashboardComponent implements OnInit {
   public socket = io(socket_url);
   public cargando = true;
 
-  constructor(  private comunicadoService: ComunicadoService) { }
+  constructor(  private comunicadoService: ComunicadoService,
+                private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
     this.cargarComunicados();
@@ -30,12 +32,15 @@ export class DashboardComponent implements OnInit {
   }
 
   cargarComunicados(){
-    this.cargando = true;
-    this.comunicados = [];
-    this.comunicadoService.cargarComunicados().subscribe(resp => {
+
+    if (this.usuarioService.rol !== 'USER_ROL'){
+      this.cargando = true;
+      this.comunicados = [];
+      this.comunicadoService.cargarComunicados().subscribe(resp => {
         this.comunicados = resp.comunicado;
         this.cargando = false;
     });
+    }
   }
 
 }

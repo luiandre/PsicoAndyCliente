@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { Router } from '@angular/router';
 import { Usuario } from '../../models/usuario.model';
-import * as io from 'socket.io-client';
-import { environment } from 'src/environments/environment';
 import { Mensaje } from '../../models/mensaje.model';
 import Swal from 'sweetalert2';
 import { MensajeService } from '../../services/mensajes.service';
+import { environment } from 'src/environments/environment';
+import * as io from 'socket.io-client';
 
 declare function customSidebar();
 const socket_url = environment.socket_url;
