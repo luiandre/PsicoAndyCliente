@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 import * as io from 'socket.io-client';
 import Swal from 'sweetalert2';
 import { Mensaje } from 'src/app/models/mensaje.model';
-import { Usuario } from 'src/app/models/usuario.model';
 
 
 const socket_url = environment.socket_url;

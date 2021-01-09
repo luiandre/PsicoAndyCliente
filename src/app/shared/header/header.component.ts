@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { MensajeService } from '../../services/mensajes.service';
 import { environment } from 'src/environments/environment';
 import * as io from 'socket.io-client';
+import { CryptoService } from 'src/app/services/crypto.service';
 
 declare function customSidebar();
 const socket_url = environment.socket_url;
@@ -21,11 +22,11 @@ export class HeaderComponent implements OnInit {
 
   public usuario: Usuario;
   socket = io(socket_url);
-  public pendiente = false;
 
-  constructor(  private usuarioService: UsuarioService,
+  constructor(  public usuarioService: UsuarioService,
                 private router: Router,
-                private mensajeService: MensajeService) {
+                private mensajeService: MensajeService,
+                private cryptoService: CryptoService) {
       this.usuario = usuarioService.usuario;
   }
 
@@ -35,17 +36,20 @@ export class HeaderComponent implements OnInit {
     this.cargarPendiente();
 
     this.socket.on('nuevo-mensaje', function(data: Mensaje){
+
+      const decrypted = this.cryptoService.get('123456$#@$^@1ERF', data.mensaje);
+
       const mensajeRecibido: Mensaje = {
         de: { _id: data.de },
         para: { _id: data.para },
         fecha: data.fecha,
-        mensaje: data.mensaje,
+        mensaje: decrypted,
         id: data.id,
         pendiente: data.pendiente
       };
 
       if (mensajeRecibido.para._id === this.usuarioService.uid){
-        this.pendiente = true;
+        this.usuarioService.pendiente = true;
 
         this.usuarioService.getUsuario(mensajeRecibido.de._id).subscribe( (usuario: Usuario) => {
           Swal.fire({
@@ -147,12 +151,6 @@ export class HeaderComponent implements OnInit {
 
   }
 
-  cambiarEstado(){
-    if (this.pendiente){
-      this.pendiente = false;
-    }
-  }
-
   buscar(termino: string){
 
     if (termino.length === 0){
@@ -168,7 +166,7 @@ export class HeaderComponent implements OnInit {
           this.mensajeService.getUltimoRecibido(usuario.uid).subscribe(mensaje => {
             if (mensaje.length !== 0){
                 if (mensaje[0].pendiente){
-                  this.pendiente = true;
+                  this.usuarioService.pendiente = true;
                   return;
                 }
             }

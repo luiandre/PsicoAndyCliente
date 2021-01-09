@@ -17,18 +17,18 @@ export class AppComponent {
 
   constructor( private usuarioService: UsuarioService){}
 
-  @HostListener('window:beforeunload', [ '$event' ])
-  beforeUnloadHander(event) {
-    if (this.usuarioService.usuario){
-      localStorage.clear();
-      this.usuarioService.restarConexion(this.usuarioService.uid).subscribe( data => {
-        this.usuarioService.logout();
-      });
-    }
-  }
+  // @HostListener('window:beforeunload', [ '$event' ])
+  // beforeUnloadHander(event) {
+  //   if (this.usuarioService.usuario){
+  //     localStorage.clear();
+  //     this.usuarioService.restarConexion(this.usuarioService.uid).subscribe( data => {
+  //       this.usuarioService.logout();
+  //     });
+  //   }
+  // }
 
-  @HostListener('window:unload', [ '$event' ])
-  unloadHandler(event) {
-      this.socket.emit('guardar-usuarios', {});
-  }
+  // @HostListener('window:unload', [ '$event' ])
+  // unloadHandler(event) {
+  //     this.socket.emit('guardar-usuarios', {});
+  // }
 }

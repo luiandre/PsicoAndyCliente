@@ -151,6 +151,7 @@ export class MensajesComponent implements OnInit {
 
     if (pendiente === true){
       this.mensajesService.desactivarPendiente(id).subscribe();
+      this.usuarioService.pendiente = false;
     }
   }
 

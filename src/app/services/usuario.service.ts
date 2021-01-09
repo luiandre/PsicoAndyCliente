@@ -22,11 +22,21 @@ export class UsuarioService {
 
   public auth2: any;
   public usuario: Usuario;
+  // tslint:disable-next-line: variable-name
+  private _pendiente: boolean;
 
   constructor(  private http: HttpClient,
                 private router: Router,
                 private ngZone: NgZone) {
     this.googleInit();
+  }
+
+  set pendiente(value: boolean) {
+    this._pendiente = value;
+  }
+
+  get pendiente(): boolean {
+    return this._pendiente;
   }
 
   get rol(): 'ADMIN_ROL' | 'PROF_ROL' | 'USER_ROL' {

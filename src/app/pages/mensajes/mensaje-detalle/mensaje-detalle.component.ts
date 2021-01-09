@@ -4,12 +4,12 @@ import { Mensaje } from 'src/app/models/mensaje.model';
 import { MensajeService } from 'src/app/services/mensajes.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from '../../../models/usuario.model';
-import Push from 'push.js';
 import { SalasService } from '../../../services/salas.service';
 import Swal from 'sweetalert2';
 import { Sala } from 'src/app/models/sala.model';
 import * as io from 'socket.io-client';
 import { environment } from 'src/environments/environment';
+import { CryptoService } from '../../../services/crypto.service';
 
 const socket_url = environment.socket_url;
 
@@ -33,7 +33,8 @@ export class MensajeDetalleComponent implements OnInit {
                 public usuarioService: UsuarioService,
                 private activatedRoute: ActivatedRoute,
                 private salasService: SalasService,
-                private router: Router) { }
+                private router: Router,
+                private cryptoService: CryptoService) { }
 
   ngOnInit(): void {
     this.mensajeNuevo = new Mensaje('', '', '');
@@ -54,6 +55,7 @@ export class MensajeDetalleComponent implements OnInit {
     });
 
     this.socket.on('nuevo-mensaje', function(data: Mensaje){
+
       const mensajeRecibido: Mensaje = {
         de: { _id: data.de },
         para: { _id: data.para },
@@ -62,22 +64,6 @@ export class MensajeDetalleComponent implements OnInit {
         id: data.id,
         pendiente: data.pendiente
       };
-
-      this.usuarioService.getUsuario(data.de).subscribe( (usuario: Usuario) => {
-        if (usuario.uid !== this.usuarioService.uid){
-          Push.create(usuario.nombre + ' ' + usuario.apellido, {
-            body: data.mensaje,
-            icon: usuario.imagenUrl,
-            timeout: 4000,
-            // tslint:disable-next-line: object-literal-shorthand
-            onClick: function() {
-                window.focus();
-                this.close();
-            }
-          });
-
-        }
-      });
 
       this.mensajes.push(mensajeRecibido);
 
@@ -115,13 +101,16 @@ export class MensajeDetalleComponent implements OnInit {
       return;
     }
 
+    const encrypted = this.cryptoService.set('123456$#@$^@1ERF', this.mensajeNuevo.mensaje);
+
     const mensajeEnviar: Mensaje = {
       de: this.usuarioService.uid,
       para: this.usuarioSeleccionado.uid,
-      mensaje: this.mensajeNuevo.mensaje
+      mensaje: encrypted
     };
 
     this.mensajesService.enviarMensaje(mensajeEnviar).subscribe( (resp: Mensaje) => {
+      console.log(resp);
       this.socket.emit('guardar-mensaje', resp.mensaje);
       this.scrollToBottom();
       this.mensajeNuevo.mensaje = '';
@@ -156,8 +145,11 @@ export class MensajeDetalleComponent implements OnInit {
 
   obtenerUltimoMensaje(){
     this.mensajesService.getUltimoRecibido(this.uid).subscribe( (mensaje) => {
-      if (mensaje[0].pendiente){
-        this.mensajesService.desactivarPendiente(mensaje[0].id).subscribe();
+      if (mensaje[0]){
+        if (mensaje[0].pendiente){
+          this.mensajesService.desactivarPendiente(mensaje[0].id).subscribe();
+        }
+
       }
     });
   }

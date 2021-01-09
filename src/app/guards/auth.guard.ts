@@ -43,22 +43,24 @@ export class AuthGuard implements CanActivate, CanLoad {
 
   logout(){
 
-    Swal.fire({
-      icon: 'warning',
-      title: 'Espere por favor...',
-      allowOutsideClick: false,
-      onBeforeOpen: () => {
-          Swal.showLoading();
-      },
-    });
-
-    this.usuarioService.restarConexion(this.usuarioService.uid).subscribe( () => {
-      this.usuarioService.desconectado(this.usuarioService.uid).subscribe( data => {
-        this.socket.emit('guardar-usuarios', data);
-        Swal.close();
-        this.usuarioService.logout();
+    if (this.usuarioService.usuario){
+      Swal.fire({
+        icon: 'warning',
+        title: 'Espere por favor...',
+        allowOutsideClick: false,
+        onBeforeOpen: () => {
+            Swal.showLoading();
+        },
       });
-    });
+
+      this.usuarioService.restarConexion(this.usuarioService.uid).subscribe( () => {
+        this.usuarioService.desconectado(this.usuarioService.uid).subscribe( data => {
+          this.socket.emit('guardar-usuarios', data);
+          Swal.close();
+          this.usuarioService.logout();
+        });
+      });
+    }
 
   }
 
