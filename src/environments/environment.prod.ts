@@ -4,4 +4,5 @@ export const environment = {
   // socket_url: 'https://app-psicoandy.herokuapp.com',
   base_url: 'https://psicoandymd.com/api',
   socket_url: 'https://psicoandymd.com/',
+  clave_crypt: 'psicoandymd@gmail.compsicoandy2020crypt'
 };

@@ -24,6 +24,7 @@ export class CryptoService {
   }
 
   get(keys, value){
+
     const key = CryptoJS.enc.Utf8.parse(keys);
     const iv = CryptoJS.enc.Utf8.parse(keys);
     const decrypted = CryptoJS.AES.decrypt(value, key, {

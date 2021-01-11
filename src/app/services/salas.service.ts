@@ -53,4 +53,14 @@ export class SalasService {
       map( (resp: any) => resp = resp.sala)
     );
   }
+
+  agregarSalaCon(uuid: string) {
+    const url = `${ base_url }/salas/agregarSalaCon/${ uuid }`;
+    return this.http.put(url, '', this.headers);
+  }
+
+  eliminarSalaCon(uuid: string) {
+    const url = `${ base_url }/salas/eliminarSalaCon/${ uuid }`;
+    return this.http.put(url, '', this.headers);
+  }
 }

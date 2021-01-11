@@ -11,8 +11,10 @@ import { Mensaje } from 'src/app/models/mensaje.model';
 import { MensajeService } from '../../../services/mensajes.service';
 import * as io from 'socket.io-client';
 import { environment } from 'src/environments/environment';
+import { CryptoService } from '../../../services/crypto.service';
 
 const socket_url = environment.socket_url;
+const clave_crypt = environment.clave_crypt;
 
 
 @Component({
@@ -50,7 +52,8 @@ export class CitasComponent implements OnInit {
 
   constructor(  private citasService: CitasService,
                 private usuarioService: UsuarioService,
-                private mensajeService: MensajeService) {
+                private mensajeService: MensajeService,
+                private cryptoService: CryptoService) {
                   this.uid = this.usuarioService.uid;
                 }
 
@@ -65,8 +68,14 @@ export class CitasComponent implements OnInit {
   async guardarCita(selectInfo: DateSelectArg){
     const calendarApi = selectInfo.view.calendar;
     calendarApi.unselect();
+    let fecha;
+    if (selectInfo.startStr.length > 10){
+      fecha = selectInfo.startStr.slice(0, 10) + ' ' + selectInfo.startStr.slice(11, 16);
+    } else {
+      fecha = selectInfo.startStr;
+    }
     const { value: email } = await Swal.fire({
-      title: 'Fecha: ' + selectInfo.startStr,
+      title: 'Fecha: ' + fecha,
       input: 'email',
       inputPlaceholder: 'Ingresa el email del paciente',
       showCancelButton: true,
@@ -77,14 +86,14 @@ export class CitasComponent implements OnInit {
         return new Promise((resolve) => {
           this.usuarioService.getUsuarioEmail(value).subscribe( resp => {
             this.paciente = resp;
-              resolve();
+            resolve();
           }, err => {
             resolve(err.error.msg);
           });
-        })
+        });
       }
-    })
-    
+    });
+
     if (email) {
       const { value: servicio } = await Swal.fire({
         title: 'Paciente: ' + this.paciente.nombre + ' ' + this.paciente.apellido,
@@ -96,16 +105,16 @@ export class CitasComponent implements OnInit {
         validationMessage: 'El detalle del servicio es requerido',
         inputValidator: (value) => {
           return new Promise((resolve) => {
-            if(value){
+            if (value){
               this.servicio = value;
               resolve();
             } else {
               resolve('El detalle del servicio es requerido');
             }
-          })
+          });
         }
-      })
-      
+      });
+
       if (servicio) {
         const cita: Cita = {
           titulo: this.servicio,
@@ -132,16 +141,16 @@ export class CitasComponent implements OnInit {
             allDay: selectInfo.allDay
           });
 
-          console.log(resp.cita);
+          const mensaje = `Su cita se agendó para la fecha ${fecha} con el profesional ${this.usuarioService.usuario.nombre} ${this.usuarioService.usuario.apellido}`;
 
-          const mensaje = `Su cita se agendó para la fecha ${resp.cita.fecha} con el profesional ${this.usuarioService.usuario.nombre} ${this.usuarioService.usuario.apellido}`;
-          
+          const encrypted = this.cryptoService.set(clave_crypt, mensaje);
+
           const mensajeEnviar: Mensaje = {
             de: this.usuarioService.uid,
             para: this.paciente.uid,
-            mensaje: mensaje
+            mensaje: encrypted
           };
-      
+
           this.mensajeService.enviarMensaje(mensajeEnviar).subscribe( (resp: Mensaje) => {
             this.socket.emit('guardar-mensaje', resp.mensaje);
           });
@@ -177,7 +186,7 @@ export class CitasComponent implements OnInit {
       Swal.close();
       await Swal.fire({
         title: 'Paciente: ' + resp.paciente.nombre + ' ' +  resp.paciente.apellido,
-        html: '<b>' + 'Fecha: ' +'<b>' + resp.fecha,
+        html: '<b>' + 'Fecha: ' + '<b>' + resp.fecha,
         input: 'text',
         inputPlaceholder: 'Ingrese detalles del servicio',
         showCancelButton: true,
@@ -189,13 +198,13 @@ export class CitasComponent implements OnInit {
         denyButtonText: `Eliminar`,
         inputValidator: (value) => {
           return new Promise((resolve) => {
-            if(value){
+            if (value){
               this.servicio = value;
               resolve();
             } else {
               resolve('El detalle del servicio es requerido');
             }
-          })
+          });
         }
       }).then(
         result => {
@@ -210,7 +219,7 @@ export class CitasComponent implements OnInit {
         }
       );
 
-      
+
     }, err => {
       Swal.close();
       Swal.fire({
@@ -223,7 +232,7 @@ export class CitasComponent implements OnInit {
   }
 
   actualizarCita(id: string, cita: Cita, clickInfo: EventClickArg){
-    
+
     Swal.fire({
       icon: 'warning',
       title: 'Espere por favor...',
@@ -252,6 +261,27 @@ export class CitasComponent implements OnInit {
           allDay: clickInfo.event.allDay
         });
       }
+
+      let fecha;
+      if (resp.cita.fecha.length > 10){
+        fecha = resp.cita.fecha.slice(0, 10) + ' ' + resp.cita.fecha.slice(11, 16);
+      } else {
+        fecha = resp.cita.fecha;
+      }
+
+      const mensaje = `Su cita se re-agendó para la fecha ${fecha} con el profesional ${this.usuarioService.usuario.nombre} ${this.usuarioService.usuario.apellido}`;
+
+      const encrypted = this.cryptoService.set(clave_crypt, mensaje);
+
+      const mensajeEnviar: Mensaje = {
+        de: this.usuarioService.uid,
+        para: resp.cita.paciente,
+        mensaje: encrypted
+      };
+
+      this.mensajeService.enviarMensaje(mensajeEnviar).subscribe( (resp: Mensaje) => {
+        this.socket.emit('guardar-mensaje', resp.mensaje);
+      });
 
     }, err => {
       Swal.close();

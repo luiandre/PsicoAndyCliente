@@ -22,6 +22,7 @@ export class MensajeDetalleComponent implements OnInit {
 
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
 
+  public clave_crypt = environment.clave_crypt;
   public mensajes: Mensaje[] = [];
   public usuarioSeleccionado: Usuario = new Usuario('', '', '', '', null);
   public uid;
@@ -101,7 +102,7 @@ export class MensajeDetalleComponent implements OnInit {
       return;
     }
 
-    const encrypted = this.cryptoService.set('123456$#@$^@1ERF', this.mensajeNuevo.mensaje);
+    const encrypted = this.cryptoService.set(this.clave_crypt, this.mensajeNuevo.mensaje);
 
     const mensajeEnviar: Mensaje = {
       de: this.usuarioService.uid,
@@ -110,7 +111,6 @@ export class MensajeDetalleComponent implements OnInit {
     };
 
     this.mensajesService.enviarMensaje(mensajeEnviar).subscribe( (resp: Mensaje) => {
-      console.log(resp);
       this.socket.emit('guardar-mensaje', resp.mensaje);
       this.scrollToBottom();
       this.mensajeNuevo.mensaje = '';

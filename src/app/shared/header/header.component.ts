@@ -11,6 +11,7 @@ import { CryptoService } from 'src/app/services/crypto.service';
 
 declare function customSidebar();
 const socket_url = environment.socket_url;
+const clave_crypt = environment.clave_crypt;
 
 @Component({
   selector: 'app-header',
@@ -37,7 +38,7 @@ export class HeaderComponent implements OnInit {
 
     this.socket.on('nuevo-mensaje', function(data: Mensaje){
 
-      const decrypted = this.cryptoService.get('123456$#@$^@1ERF', data.mensaje);
+      const decrypted = this.cryptoService.get(clave_crypt, data.mensaje);
 
       const mensajeRecibido: Mensaje = {
         de: { _id: data.de },

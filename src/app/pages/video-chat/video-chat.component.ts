@@ -65,13 +65,30 @@ export class VideoChatComponent implements OnInit {
       this.uuid = uuid;
       this.salasService.getSala(this.uuid).subscribe( (sala: Sala) => {
 
-          if (sala.origen === this.usuarioService.uid || sala.destino === this.usuarioService.uid){
+          if (sala.origen === this.usuarioService.uid){
+            if (sala.conOrigen){
+              this.redireccionar();
+            }
+          } else if (sala.destino === this.usuarioService.uid){
+            if (sala.conDestino){
+              this.redireccionar();
+            }
           } else {
-            this.router.navigateByUrl('/mensajes');
+            this.redireccionar();
+          }
+
+          if (sala.origen === this.usuarioService.uid || sala.destino === this.usuarioService.uid){
+            this.salasService.agregarSalaCon(this.uuid).subscribe( resp => {
+              // notificar union
+            }, err => {
+              this.redireccionar();
+            });
+          } else {
+            this.redireccionar();
           }
 
       }, err => {
-        this.router.navigateByUrl('/mensajes');
+        this.redireccionar();
       });
     });
 
@@ -252,11 +269,10 @@ export class VideoChatComponent implements OnInit {
   }
 
   salir(){
-    if (this.usuarioService.rol !== 'USER_ROL'){
-      this.salasService.eliminarSala(this.uuid).subscribe( resp => {
-        this.socket.emit('sala-eliminada', this.uuid);
-      });
-    }
+
+    this.redireccionar();
+
+    this.socket.emit('sala-eliminada', this.uuid);
 
     this.socket.on('user-disconnected', userId => {
       if (this.peers[userId]) {
@@ -272,10 +288,17 @@ export class VideoChatComponent implements OnInit {
         }
       });
     }
-
-    this.router.navigateByUrl('/mensajes');
   }
 
+  redireccionar(){
+    if (this.usuarioService.rol !== 'USER_ROL'){
+      this.salasService.eliminarSala(this.uuid).subscribe( resp => {
+        this.salasService.eliminarSalaCon(this.uuid).subscribe();
+      });
 
-
+      window.close();
+    } else {
+      this.router.navigateByUrl('/mensajes');
+    }
+  }
 }
