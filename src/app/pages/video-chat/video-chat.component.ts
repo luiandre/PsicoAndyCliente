@@ -67,28 +67,28 @@ export class VideoChatComponent implements OnInit {
 
           if (sala.origen === this.usuarioService.uid){
             if (sala.conOrigen){
-              this.redireccionar();
+              this.salir();
             }
           } else if (sala.destino === this.usuarioService.uid){
             if (sala.conDestino){
-              this.redireccionar();
+              this.salir();
             }
           } else {
-            this.redireccionar();
+            this.salir();
           }
 
           if (sala.origen === this.usuarioService.uid || sala.destino === this.usuarioService.uid){
             this.salasService.agregarSalaCon(this.uuid).subscribe( resp => {
               // notificar union
             }, err => {
-              this.redireccionar();
+              this.salir();
             });
           } else {
-            this.redireccionar();
+            this.salir();
           }
 
       }, err => {
-        this.redireccionar();
+        this.salir();
       });
     });
 
@@ -271,9 +271,6 @@ export class VideoChatComponent implements OnInit {
   salir(){
 
     this.redireccionar();
-
-    this.socket.emit('sala-eliminada', this.uuid);
-
     this.socket.on('user-disconnected', userId => {
       if (this.peers[userId]) {
         this.peers[userId].close();
@@ -292,12 +289,13 @@ export class VideoChatComponent implements OnInit {
 
   redireccionar(){
     if (this.usuarioService.rol !== 'USER_ROL'){
+      this.socket.emit('sala-eliminada', this.uuid);
       this.salasService.eliminarSala(this.uuid).subscribe( resp => {
-        this.salasService.eliminarSalaCon(this.uuid).subscribe();
       });
 
       window.close();
     } else {
+      this.salasService.eliminarSalaCon(this.uuid).subscribe();
       this.router.navigateByUrl('/mensajes');
     }
   }
