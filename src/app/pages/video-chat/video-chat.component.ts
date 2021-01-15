@@ -292,9 +292,9 @@ export class VideoChatComponent implements OnInit {
     if (this.usuarioService.rol !== 'USER_ROL'){
       this.socket.emit('sala-eliminada', this.uuid);
       this.salasService.eliminarSala(this.uuid).subscribe( resp => {
+        window.close();
       });
 
-      window.close();
     } else {
       this.salasService.eliminarSalaCon(this.uuid).subscribe();
       this.router.navigateByUrl('/mensajes');
