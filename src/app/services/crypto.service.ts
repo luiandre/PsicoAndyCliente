@@ -36,4 +36,30 @@ export class CryptoService {
 
     return decrypted.toString(CryptoJS.enc.Utf8);
   }
+
+  encrypt(keys, value) {
+    const key = CryptoJS.enc.Utf8.parse(keys);
+    const iv = CryptoJS.enc.Utf8.parse(keys);
+    const encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(value.toString()), key,
+    {
+        keySize: 128 / 8,
+        iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+    });
+
+    return encrypted.toString();
+    }
+
+  decrypt(keys, value) {
+    const key = CryptoJS.enc.Utf8.parse(keys);
+    const iv = CryptoJS.enc.Utf8.parse(keys);
+    return JSON.parse(CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(value,  iv,
+    {
+        keySize: 128 / 8,
+        iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+      })));
+  }
 }

@@ -8,9 +8,11 @@ import { environment } from 'src/environments/environment';
 import * as io from 'socket.io-client';
 import Swal from 'sweetalert2';
 import { Mensaje } from 'src/app/models/mensaje.model';
+import { CryptoService } from '../../services/crypto.service';
 
 
 const socket_url = environment.socket_url;
+const clave_crypt = environment.clave_crypt;
 
 declare var Peer: any;
 
@@ -46,7 +48,8 @@ export class VideoChatComponent implements OnInit {
   constructor(  private salasService: SalasService,
                 private usuarioService: UsuarioService,
                 private activatedRoute: ActivatedRoute,
-                private router: Router) {}
+                private router: Router,
+                private cryptoService: CryptoService) {}
 
   @HostListener('window:beforeunload', [ '$event' ])
   beforeUnloadHander(event) {
