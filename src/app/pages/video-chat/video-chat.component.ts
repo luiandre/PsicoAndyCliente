@@ -82,7 +82,65 @@ export class VideoChatComponent implements OnInit {
 
           if (sala.origen === this.usuarioService.uid || sala.destino === this.usuarioService.uid){
             this.salasService.agregarSalaCon(this.uuid).subscribe( resp => {
-              // notificar union
+              this.socket.on('nuevo-eliminada', function(data) {
+                if (data === this.uuid){
+                 if (this.stream){
+                   this.stream.getTracks().forEach((track) => {
+                     if (track.readyState === 'live') {
+                       track.stop();
+                     }
+                   });
+                 }
+                 this.router.navigateByUrl('/mensajes');
+                }
+               }.bind(this));
+
+              if (navigator.mediaDevices){
+                navigator.mediaDevices.getUserMedia(this.options).then(stream => {
+                  this.stream = stream;
+                  this.addVideoStream(this.myVideo, this.stream);
+
+                  this.myPeer.on('call', call => {
+                    call.answer(this.stream);
+                    const video = document.createElement('video');
+                    video.className = 'remote-video';
+                    call.on('stream', userVideoStream => {
+                      this.remoteStream = userVideoStream;
+                      this.addVideoStream(video, userVideoStream);
+                    }, error => {
+                      Swal.fire({
+                        icon: 'error',
+                        title: 'Lo siento',
+                        text: error
+                      });
+                    });
+                  }, error => {
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Lo siento',
+                      text: error
+                    });
+                  });
+
+                  this.socket.on('user-connected', userId => {
+                    this.connectToNewUser(userId, this.stream);
+                  });
+                }).catch( error => {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Lo siento',
+                    text: error.message
+                  });
+                  this.salir();
+                });
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Lo siento',
+                  text: 'Revise sus dispositivos de audio y video'
+                });
+                this.salir();
+              }
             }, err => {
               this.salir();
             });
@@ -94,66 +152,6 @@ export class VideoChatComponent implements OnInit {
         this.salir();
       });
     });
-
-    this.socket.on('nuevo-eliminada', function(data) {
-     if (data === this.uuid){
-      if (this.stream){
-        this.stream.getTracks().forEach((track) => {
-          if (track.readyState === 'live') {
-            track.stop();
-          }
-        });
-      }
-      this.router.navigateByUrl('/mensajes');
-     }
-    }.bind(this));
-
-    if (navigator.mediaDevices){
-      navigator.mediaDevices.getUserMedia(this.options).then(stream => {
-        this.stream = stream;
-        this.addVideoStream(this.myVideo, this.stream);
-
-        this.myPeer.on('call', call => {
-          call.answer(this.stream);
-          const video = document.createElement('video');
-          video.className = 'remote-video';
-          call.on('stream', userVideoStream => {
-            this.remoteStream = userVideoStream;
-            this.addVideoStream(video, userVideoStream);
-          }, error => {
-            Swal.fire({
-              icon: 'error',
-              title: 'Lo siento',
-              text: error
-            });
-          });
-        }, error => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Lo siento',
-            text: error
-          });
-        });
-
-        this.socket.on('user-connected', userId => {
-          this.connectToNewUser(userId, this.stream);
-        });
-      }).catch( error => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Lo siento',
-          text: error.message
-        });
-        this.salir();
-      });
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Lo siento',
-        text: 'Revise sus dispositivos de audio y video'
-      });
-      this.salir();
-    }
 
     this.socket.on('user-disconnected', userId => {
       if (this.peers[userId]) {
