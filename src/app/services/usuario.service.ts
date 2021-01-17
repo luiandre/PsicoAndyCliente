@@ -24,11 +24,23 @@ export class UsuarioService {
   public usuario: Usuario;
   // tslint:disable-next-line: variable-name
   private _pendiente: boolean;
+  // tslint:disable-next-line: variable-name
+  private _conexion: number;
+  // tslint:disable-next-line: variable-name
+  private _uid: string;
 
   constructor(  private http: HttpClient,
                 private router: Router,
                 private ngZone: NgZone) {
     this.googleInit();
+  }
+
+  set conexion(value: number) {
+    this._conexion = value;
+  }
+
+  get conexion(): number {
+    return this._conexion;
   }
 
   set pendiente(value: boolean) {
@@ -47,8 +59,12 @@ export class UsuarioService {
     return localStorage.getItem('token') || '';
   }
 
+  set uid(value: string) {
+    this._uid = value;
+  }
+
   get uid(): string {
-    return this.usuario.uid || '';
+    return this._uid;
   }
 
   get headers() {
@@ -98,7 +114,7 @@ export class UsuarioService {
 
         const { rol, google, activo, nombre, apellido, email, img = '', uid, bio } = resp.usuario;
         this.usuario = new Usuario(nombre, apellido, email, '', google, activo, img, rol, bio, uid);
-
+        this.uid = this.usuario.uid;
         this.guardarDatosUsuario(resp.token, resp.menu);
 
         return true;

@@ -56,21 +56,60 @@ export class LoginComponent implements OnInit {
 
     this.usuarioService.login(this.loginForm.value).subscribe( resp => {
 
-      if (this.loginForm.get('recordarme').value){
-        localStorage.setItem('email', this.loginForm.get('email').value);
-      } else {
-        localStorage.removeItem('email');
-      }
+      if (resp.usuario.conexiones > 0){
+        Swal.fire({
+          title: 'Esta cuenta esta abierta en otro dispositivo',
+          html: '<h4>¿Qué desea hacer?</h4>',
+          icon: 'warning',
+          showCancelButton: true,
+          focusConfirm: false,
+          confirmButtonText:
+          'Mantener en este dispositivo',
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          cancelButtonText:
+            'Mantener en el otro dispositivo',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            if (this.loginForm.get('recordarme').value){
+              localStorage.setItem('email', this.loginForm.get('email').value);
+            } else {
+              localStorage.removeItem('email');
+            }
 
-      this.usuarioService.conectado(resp.usuario.uid).subscribe( () => {
-        this.usuarioService.sumarConexion(resp.usuario.uid).subscribe(() => {
-          this.usuarioService.cargarUsuarios().subscribe( data => {
-            this.socket.emit('guardar-usuarios', data.usuarios);
-            this.router.navigateByUrl('/dashboard');
-            Swal.close();
+            this.usuarioService.conectado(resp.usuario.uid).subscribe( () => {
+              this.usuarioService.sumarConexion(resp.usuario.uid).subscribe(() => {
+                this.usuarioService.cargarUsuarios().subscribe( data => {
+                  this.usuarioService.uid = resp.usuario.uid;
+                  this.socket.emit('guardar-usuarios', data.usuarios);
+                  this.socket.emit('guardar-dispositivo', data.usuarios);
+                  this.usuarioService.conexion = 1;
+                  this.router.navigateByUrl('/dashboard');
+                  Swal.close();
+                });
+              });
+            });
+          } else if (result.isDismissed) {
+            this.usuarioService.logout();
+          }
+        });
+      } else {
+        if (this.loginForm.get('recordarme').value){
+          localStorage.setItem('email', this.loginForm.get('email').value);
+        } else {
+          localStorage.removeItem('email');
+        }
+
+        this.usuarioService.conectado(resp.usuario.uid).subscribe( () => {
+          this.usuarioService.sumarConexion(resp.usuario.uid).subscribe(() => {
+            this.usuarioService.cargarUsuarios().subscribe( data => {
+              this.socket.emit('guardar-usuarios', resp);
+              this.router.navigateByUrl('/dashboard');
+              Swal.close();
+            });
           });
         });
-      });
+      }
     }, (err) => {
       Swal.close();
       Swal.fire({
@@ -176,25 +215,61 @@ export class LoginComponent implements OnInit {
 
         const id_token = googleUser.getAuthResponse().id_token;
         this.usuarioService.loginGoogle(id_token).subscribe( resp => {
-            this.ngZone.run( () => {
 
-              this.usuarioService.conectado(resp.usuario.uid).subscribe( () => {
-                this.usuarioService.sumarConexion(resp.usuario.uid).subscribe(() => {
-                  this.usuarioService.cargarUsuarios().subscribe( data => {
-                    this.socket.emit('guardar-usuarios', data.usuarios);
-                    if (!resp.usuario.terminos){
-                      this.socket.emit('guardar-usuario', data.usuarios);
-                    }
-
-                    this.router.navigateByUrl('/dashboard');
-
-                    Swal.close();
-                    this.aceptarTerminosGoolge(resp.usuario);
+            if (resp.usuario.conexiones > 0){
+              Swal.fire({
+                title: 'Esta cuenta esta abierta en otro dispositivo',
+                html: '<h4>¿Qué desea hacer?</h4>',
+                icon: 'warning',
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText:
+                'Mantener en este dispositivo',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                cancelButtonText:
+                  'Mantener en el otro dispositivo',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.ngZone.run( () => {
+                    this.usuarioService.conectado(resp.usuario.uid).subscribe( () => {
+                      this.usuarioService.sumarConexion(resp.usuario.uid).subscribe(() => {
+                        this.usuarioService.cargarUsuarios().subscribe( data => {
+                          this.usuarioService.uid = resp.usuario.uid;
+                          this.socket.emit('guardar-usuarios', data.usuarios);
+                          this.socket.emit('guardar-dispositivo', resp);
+                          this.usuarioService.conexion = 1;
+                          if (!resp.usuario.terminos){
+                            this.socket.emit('guardar-usuario', data.usuarios);
+                          }
+                          this.router.navigateByUrl('/dashboard');
+                          Swal.close();
+                          this.aceptarTerminosGoolge(resp.usuario);
+                        });
+                      });
+                    });
+                  });
+                } else if (result.isDismissed) {
+                  this.usuarioService.logout();
+                }
+              });
+            } else {
+              this.ngZone.run( () => {
+                this.usuarioService.conectado(resp.usuario.uid).subscribe( () => {
+                  this.usuarioService.sumarConexion(resp.usuario.uid).subscribe(() => {
+                    this.usuarioService.cargarUsuarios().subscribe( data => {
+                      this.socket.emit('guardar-usuarios', data.usuarios);
+                      if (!resp.usuario.terminos){
+                        this.socket.emit('guardar-usuario', data.usuarios);
+                      }
+                      this.router.navigateByUrl('/dashboard');
+                      Swal.close();
+                      this.aceptarTerminosGoolge(resp.usuario);
+                    });
                   });
                 });
               });
-
-            });
+            }
           }, (err) => {
             Swal.close();
             Swal.fire({

@@ -129,6 +129,17 @@ export class HeaderComponent implements OnInit {
 
     }.bind(this));
 
+    this.socket.on('nuevo-dispositivo', function(data){
+      if (data.usuario.uid === this.usuarioService.uid){
+        if (this.usuarioService.conexion === 0){
+          this.logout();
+        }
+      }
+
+    }.bind(this));
+
+    this.usuarioService.conexion = 0;
+
   }
 
   logout(){
