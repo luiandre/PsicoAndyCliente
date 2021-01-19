@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
 
   cargarComunicados(){
 
-    if (this.usuarioService.rol !== 'USER_ROL'){
+    if (this.usuarioService.rol !== 'USER_ROL' && this.usuarioService.uid){
       this.cargando = true;
       this.comunicados = [];
       this.comunicadoService.cargarComunicados().subscribe(resp => {

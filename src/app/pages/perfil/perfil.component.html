@@ -12,12 +12,14 @@
                                 <div class="form-group">
                                     <label class="control-label">Nombre</label>
                                     <input type="text" class="form-control" placeholder="Nombre" formControlName="nombre">
+                                    <small *ngIf="campoNoValido('nombre')" class="text-danger"> El nombre es requerido, máximo 25 caracteres </small>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Apellido</label>
                                     <input type="text" class="form-control" placeholder="Apellido" formControlName="apellido">
+                                    <small *ngIf="campoNoValido('apellido')" class="text-danger"> El apellido es requerido, máximo 25 caracteres </small>
                                 </div>
                             </div>
                         </div>
@@ -25,7 +27,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Biografría</label>
-                                    <input type="text" class="form-control" placeholder="Biografía" formControlName="bio">
+                                    <textarea type="text" class="form-control" placeholder="Biografía" formControlName="bio" rows="5"></textarea>
+                                    <small *ngIf="campoNoValido('bio')" class="text-danger"> Máximo 100 caracteres </small>
                                 </div>
                             </div>
                         </div>
@@ -44,10 +47,14 @@
                                     <div class="form-group">
                                         <label class="control-label">Nueva Contraseña</label>
                                         <input type="password" class="form-control" placeholder="Nueva Contraseña" formControlName="nueva">
+                                        <small *ngIf="campoNoValido('nueva')" class="text-danger"> La contraseña debe tener más de 6 caracteres </small>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Repetir Contraseña</label>
                                         <input type="password" class="form-control" placeholder="Repetir Contraseña" formControlName="repetir">
+                                        <small *ngIf="passwordNoValido()" class="text-danger"> Las contraseñas deben ser iguales </small>
+                                        <br>
+                                        <small *ngIf="campoNoValido('repetir')" class="text-danger"> La contraseña debe tener más de 6 caracteres </small>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +63,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-actions">
-                                    <button [disabled]="perfilForm.invalid" type="submit" class="btn btn-info"> <i class="fa fa-save"></i> Guardar</button>
+                                    <button type="submit" class="btn btn-info"> <i class="fa fa-save"></i> Guardar</button>
                                 </div>
                             </div>
                         </div>

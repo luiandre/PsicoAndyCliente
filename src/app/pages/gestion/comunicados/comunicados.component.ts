@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
 import { ComunicadoService } from '../../../services/comunicado.service';
 import { BusquedasService } from 'src/app/services/busquedas.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 
 const socket_url = environment.socket_url;
@@ -28,23 +29,24 @@ export class ComunicadosComponent implements OnInit {
   public socket = io(socket_url);
 
   constructor(  private comunicadoService: ComunicadoService,
-                private busquedaService: BusquedasService) { }
+                private busquedaService: BusquedasService,
+                private usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
     this.cargarComunicados();
   }
 
   public cargarComunicados() {
-    this.cargando = true;
-    this.comunicadoService.cargarComunicados(this.desde).subscribe( ({total, comunicado}) => {
-      this.totalComunicados = total;
-      this.comunicados = comunicado;
-      this.comunicadosTemp = comunicado;
-      this.cargando = false;
-      if (this.totalComunicados < 6) {
-        this.hasta = this.totalComunicados;
-      }
-    });
+      this.cargando = true;
+      this.comunicadoService.cargarComunicados(this.desde).subscribe( ({total, comunicado}) => {
+        this.totalComunicados = total;
+        this.comunicados = comunicado;
+        this.comunicadosTemp = comunicado;
+        this.cargando = false;
+        if (this.totalComunicados < 6) {
+          this.hasta = this.totalComunicados;
+        }
+      });
   }
 
   cambiarPagina( valor: number) {

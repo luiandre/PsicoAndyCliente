@@ -58,8 +58,12 @@ export class SidebarComponent implements OnInit {
   }
 
   cargarComunicados(){
-    this.comunicadoService.cargarComunicados().subscribe(({total, comunicado}) => {
-      this.totalComunicados = total;
-    });
+    if (this.usuarioService.uid){
+      if (this.usuarioService.rol !== 'USER_ROL'){
+        this.comunicadoService.cargarComunicados().subscribe(({total, comunicado}) => {
+          this.totalComunicados = total;
+        });
+      }
+    }
   }
 }

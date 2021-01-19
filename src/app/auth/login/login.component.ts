@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
                 this.usuarioService.cargarUsuarios().subscribe( data => {
                   this.usuarioService.uid = resp.usuario.uid;
                   this.socket.emit('guardar-usuarios', data.usuarios);
-                  this.socket.emit('guardar-dispositivo', data.usuarios);
+                  this.socket.emit('guardar-dispositivo', resp);
                   this.usuarioService.conexion = 1;
                   this.router.navigateByUrl('/dashboard');
                   Swal.close();

@@ -6,8 +6,6 @@ import Swal from 'sweetalert2';
 import { UsuarioService } from '../../services/usuario.service';
 import { FileUploadService } from '../../services/file-upload.service';
 import { Usuario } from 'src/app/models/usuario.model';
-import { ModalImagenService } from '../../services/modal-imagen.service';
-import { ignoreElements } from 'rxjs/operators';
 
 
 
@@ -23,6 +21,7 @@ export class PerfilComponent implements OnInit {
   public perfilForm: FormGroup;
   public imagenNueva: File;
   public imgShow: any = null;
+  public formSubmitted = false;
 
   constructor(  private usuarioService: UsuarioService,
                 private fb: FormBuilder,
@@ -34,16 +33,20 @@ export class PerfilComponent implements OnInit {
     this.perfilForm = this.fb.group({
       nombre: [this.usuario.nombre, [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
       apellido: [this.usuario.apellido, [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
-      bio: [this.usuario.bio, [Validators.minLength(5), Validators.maxLength(100)]],
+      bio: [this.usuario.bio, [Validators.maxLength(100)]],
       anterior: ['', [Validators.minLength(5), Validators.maxLength(100)]],
       nueva: ['', [Validators.minLength(5), Validators.maxLength(100)]],
       repetir: ['', [Validators.minLength(5), Validators.maxLength(100)]],
-    }, {
-      validators: this.passwordsIguales('nueva', 'repetir')
     });
   }
 
   actualizarPerfil(){
+
+    this.formSubmitted = true;
+
+    if (this.perfilForm.invalid) {
+      return;
+    }
 
     let data;
 
@@ -152,5 +155,25 @@ export class PerfilComponent implements OnInit {
         confirmButtonText: 'Aceptar'
       });
     });
+  }
+
+  campoNoValido(campo: string): boolean{
+
+    if (this.perfilForm.get(campo).invalid && this.formSubmitted){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  passwordNoValido(){
+    const pass1 = this.perfilForm.get('nueva').value;
+    const pass2 = this.perfilForm.get('repetir').value;
+
+    if ((pass1 !== pass2) && this.formSubmitted){
+      return true;
+    } else {
+      return false;
+    }
   }
 }
