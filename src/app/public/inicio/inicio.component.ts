@@ -31,7 +31,7 @@ export class InicioComponent implements OnInit {
   cargarNoticias() {
     this.cargando = true;
     this.noticias = [];
-    this.noticiasService.cargarNoticias()
+    this.noticiasService.cargarNoticiasAll()
     .subscribe( resp => {
       this.noticias = resp.noticias;
       this.cargando = false;

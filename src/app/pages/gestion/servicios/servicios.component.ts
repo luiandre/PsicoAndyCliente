@@ -21,7 +21,7 @@ export class ServiciosComponent implements OnInit, OnDestroy {
   public servicios: any[];
   public serviciosTemp: Servicio[];
   public desde = 0;
-  public hasta = 0;
+  public hasta = 6;
   public cargando = true;
   private imgSubs: Subscription;
 

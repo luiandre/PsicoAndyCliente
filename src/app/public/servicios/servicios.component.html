@@ -1,14 +1,10 @@
-<div class="row row-cols-1 row-cols-md-2">
-    <div class="col mb-4" *ngFor="let servicio of servicios">
-        <div class="card">
-            <div class="text-center center-block">
-                <img [src]="servicio.img | imagen:'servicios'" class="img-responsive text-center img-padding" style="width: 340px;" [alt]="servicio.titulo">
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">{{ servicio.titulo}}</h5>
-                <p class="card-text text-justify" [innerHTML]="servicio.detalle | linky:{newWindow: true}"></p>
-                <button (click)="enviarMensaje(servicio.responsable._id)" class="btn btn-info">Contactar a {{ servicio.responsable.nombre + ' ' + servicio.responsable.apellido }}</button>
-            </div>
+<div class="card-columns">
+    <div class="card" style="height: 870px;" *ngFor="let servicio of servicios">
+        <img [src]="servicio.img | imagen:'servicios'" class="card-img-top" style="padding: 10px; height: 350px;" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{ servicio.titulo}}</h5>
+            <p class="card-text text-justify" [innerHTML]="servicio.detalle | linky:{newWindow: true}"></p>
+            <button style="width: 300px;" (click)="enviarMensaje(servicio.responsable._id)" class="btn btn-info text-center">Contactar a {{ servicio.responsable.nombre + ' ' + servicio.responsable.apellido }}</button>
         </div>
     </div>
 </div>

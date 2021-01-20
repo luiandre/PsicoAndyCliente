@@ -27,7 +27,7 @@ export class ServiciosComponent implements OnInit {
 
   cargarServicios() {
     this.cargando = true;
-    this.serviciosService.cargarServicios(0).subscribe( resp => {
+    this.serviciosService.cargarServiciosAll().subscribe( resp => {
       this.servicios = resp.servicios;
       this.cargando = false;
     });

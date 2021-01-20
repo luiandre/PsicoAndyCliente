@@ -31,6 +31,11 @@ export class ServiciosService {
     return this.http.get<CargarServicio>(url, this.headers);
   }
 
+  cargarServiciosAll() {
+    const url = `${ base_url }/servicios/all`;
+    return this.http.get<CargarServicio>(url, this.headers);
+  }
+
   crearServicio(servicio: Servicio) {
     const url = `${ base_url }/servicios`;
     return this.http.post<CargarServicio>(url, servicio, this.headers);

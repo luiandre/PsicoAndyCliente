@@ -32,6 +32,11 @@ export class NoticiasService {
     return this.http.get<CargarNoticia>(url, this.headers);
   }
 
+  cargarNoticiasAll() {
+    const url = `${ base_url }/noticias/all`;
+    return this.http.get<CargarNoticia>(url, this.headers);
+  }
+
   crearNoticia(noticia: Noticia) {
     const url = `${ base_url }/noticias`;
     return this.http.post<CargarNoticia>(url, noticia, this.headers);
