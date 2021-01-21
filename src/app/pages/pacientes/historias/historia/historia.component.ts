@@ -6,6 +6,10 @@ import { Historia } from 'src/app/models/historia.model';
 import Swal from 'sweetalert2';
 import { delay } from 'rxjs/operators';
 import { Columns, PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
+import { CryptoService } from '../../../../services/crypto.service';
+import { environment } from 'src/environments/environment';
+
+const clave_crypt = environment.clave_crypt;
 
 @Component({
   selector: 'app-historia',
@@ -27,7 +31,8 @@ export class HistoriaComponent implements OnInit {
   constructor(  private historiasService: HistoriasService,
                 private activatedRoute: ActivatedRoute,
                 private fb: FormBuilder,
-                private router: Router) { }
+                private router: Router,
+                private cryptoService: CryptoService) { }
 
   ngOnInit(): void {
 
@@ -119,51 +124,51 @@ export class HistoriaComponent implements OnInit {
         {
           entrevistador: this.entrevistadorInfo || '',
           fecha: fechaPrimeraConsulta || '',
-          email: this.historia.email || '',
           numero: this.historia.numero || '',
-          nombres: this.historia.nombres || '',
-          apellidos: this.historia.apellidos || '',
-          fechaNacimiento: this.historia.fechaNacimiento || '',
-          lugarNacimiento: this.historia.lugarNacimiento || '',
-          sexo: this.historia.sexo || '',
-          religion: this.historia.religion || '',
-          nacionalidad: this.historia.nacionalidad || '',
-          provincia: this.historia.provincia || '',
-          ciudad: this.historia.ciudad || '',
-          direccion: this.historia.direccion || '',
+          email: this.cryptoService.get(clave_crypt, this.historia.email || ''),
+          nombres: this.cryptoService.get(clave_crypt, this.historia.nombres || ''),
+          apellidos: this.cryptoService.get(clave_crypt, this.historia.apellidos || ''),
+          fechaNacimiento: this.cryptoService.get(clave_crypt, this.historia.fechaNacimiento || ''),
+          lugarNacimiento: this.cryptoService.get(clave_crypt, this.historia.lugarNacimiento || ''),
+          sexo: this.cryptoService.get(clave_crypt, this.historia.sexo || ''),
+          religion: this.cryptoService.get(clave_crypt, this.historia.religion || ''),
+          nacionalidad: this.cryptoService.get(clave_crypt, this.historia.nacionalidad || ''),
+          provincia: this.cryptoService.get(clave_crypt, this.historia.provincia || ''),
+          ciudad: this.cryptoService.get(clave_crypt, this.historia.ciudad || ''),
+          direccion: this.cryptoService.get(clave_crypt, this.historia.direccion || ''),
           cambioDomicilio: this.historia.cambioDomicilio || false,
-          motivo: this.historia.motivo || '',
-          instruccion: this.historia.instruccion || '',
-          ocupacion: this.historia.ocupacion || '',
-          estadoCivil: this.historia.estadoCivil || '',
-          conyuge: this.historia.conyuge || '',
-          nHijos: this.historia.nHijos || '',
-          convecional: this.historia.convecional || '',
-          celular: this.historia.celular || '',
-          nombreEmergencia: this.historia.nombreEmergencia || '',
-          telefonoEmergencia: this.historia.telefonoEmergencia || '',
-          direccionEmergencia: this.historia.direccionEmergencia || '',
-          nombreAcompañante: this.historia.nombreAcompañante || '',
-          motivoConsulta: this.historia.motivoConsulta || '',
-          factoresEpisodioActual: this.historia.factoresEpisodioActual || '',
-          historiaEnfermedad: this.historia.historiaEnfermedad || '',
-          natal: this.historia.natal || '',
-          infancia: this.historia.infancia || '',
-          pubertad: this.historia.pubertad || '',
-          familiar: this.historia.familiar || '',
-          social: this.historia.social || '',
-          laboral: this.historia.laboral || '',
-          psicosexual: this.historia.psicosexual || '',
-          conciencia: this.historia.conciencia || '',
-          voluntad: this.historia.voluntad || '',
-          atencion: this.historia.atencion || '',
-          sensopercepciones: this.historia.sensopercepciones || '',
-          afectividad: this.historia.afectividad || '',
-          pensamiento: this.historia.pensamiento || '',
-          memoria: this.historia.memoria || '',
-          aplicacionPruebas: this.historia.aplicacionPruebas || '',
-          diagnostico: this.historia.diagnostico || '',
-          tratamiento: this.historia.tratamiento || '',
+          motivo: this.cryptoService.get(clave_crypt, this.historia.motivo || ''),
+          instruccion: this.cryptoService.get(clave_crypt, this.historia.instruccion || ''),
+          ocupacion: this.cryptoService.get(clave_crypt, this.historia.ocupacion || ''),
+          estadoCivil: this.cryptoService.get(clave_crypt, this.historia.estadoCivil || ''),
+          conyuge: this.cryptoService.get(clave_crypt, this.historia.conyuge || ''),
+          nHijos: this.historia.nHijos || 0,
+          convecional: this.cryptoService.get(clave_crypt, this.historia.convecional || ''),
+          celular: this.cryptoService.get(clave_crypt, this.historia.celular || ''),
+          nombreEmergencia: this.cryptoService.get(clave_crypt, this.historia.nombreEmergencia || ''),
+          telefonoEmergencia: this.cryptoService.get(clave_crypt, this.historia.telefonoEmergencia || ''),
+          direccionEmergencia: this.cryptoService.get(clave_crypt, this.historia.direccionEmergencia || ''),
+          nombreAcompañante: this.cryptoService.get(clave_crypt, this.historia.nombreAcompañante || ''),
+          motivoConsulta: this.cryptoService.get(clave_crypt, this.historia.motivoConsulta || ''),
+          factoresEpisodioActual: this.cryptoService.get(clave_crypt, this.historia.factoresEpisodioActual || ''),
+          historiaEnfermedad: this.cryptoService.get(clave_crypt, this.historia.historiaEnfermedad || ''),
+          natal: this.cryptoService.get(clave_crypt, this.historia.natal || ''),
+          infancia: this.cryptoService.get(clave_crypt, this.historia.infancia || ''),
+          pubertad: this.cryptoService.get(clave_crypt, this.historia.pubertad || ''),
+          familiar: this.cryptoService.get(clave_crypt, this.historia.familiar || ''),
+          social: this.cryptoService.get(clave_crypt, this.historia.social || ''),
+          laboral: this.cryptoService.get(clave_crypt, this.historia.laboral || ''),
+          psicosexual: this.cryptoService.get(clave_crypt, this.historia.psicosexual || ''),
+          conciencia: this.cryptoService.get(clave_crypt, this.historia.conciencia || ''),
+          voluntad: this.cryptoService.get(clave_crypt, this.historia.voluntad || ''),
+          atencion: this.cryptoService.get(clave_crypt, this.historia.atencion || ''),
+          sensopercepciones: this.cryptoService.get(clave_crypt, this.historia.sensopercepciones || ''),
+          afectividad: this.cryptoService.get(clave_crypt, this.historia.afectividad || ''),
+          pensamiento: this.cryptoService.get(clave_crypt, this.historia.pensamiento || ''),
+          memoria: this.cryptoService.get(clave_crypt, this.historia.memoria || ''),
+          aplicacionPruebas: this.cryptoService.get(clave_crypt, this.historia.aplicacionPruebas || ''),
+          diagnostico: this.cryptoService.get(clave_crypt, this.historia.diagnostico || ''),
+          tratamiento: this.cryptoService.get(clave_crypt, this.historia.tratamiento || ''),
         });
 
       this.cambiar();
@@ -182,7 +187,50 @@ export class HistoriaComponent implements OnInit {
     }
 
     const historiaActualizada: Historia = {
-      ...this.historiaForm.value
+          numero: this.historiaForm.value.numero,
+          nombres: this.cryptoService.set(clave_crypt, this.historiaForm.value.nombres),
+          apellidos: this.cryptoService.set(clave_crypt, this.historiaForm.value.apellidos),
+          fechaNacimiento: this.cryptoService.set(clave_crypt, this.historiaForm.value.fechaNacimiento),
+          lugarNacimiento: this.cryptoService.set(clave_crypt, this.historiaForm.value.lugarNacimiento),
+          sexo: this.cryptoService.set(clave_crypt, this.historiaForm.value.sexo),
+          religion: this.cryptoService.set(clave_crypt, this.historiaForm.value.religion),
+          nacionalidad: this.cryptoService.set(clave_crypt, this.historiaForm.value.nacionalidad),
+          provincia: this.cryptoService.set(clave_crypt, this.historiaForm.value.provincia),
+          ciudad: this.cryptoService.set(clave_crypt, this.historiaForm.value.ciudad),
+          direccion: this.cryptoService.set(clave_crypt, this.historiaForm.value.direccion),
+          cambioDomicilio: this.historia.cambioDomicilio,
+          motivo: this.cryptoService.set(clave_crypt, this.historiaForm.value.motivo || ''),
+          instruccion: this.cryptoService.set(clave_crypt, this.historiaForm.value.instruccion),
+          ocupacion: this.cryptoService.set(clave_crypt, this.historiaForm.value.ocupacion),
+          estadoCivil: this.cryptoService.set(clave_crypt, this.historiaForm.value.estadoCivil),
+          conyuge: this.cryptoService.set(clave_crypt, this.historiaForm.value.conyuge),
+          nHijos: Number(this.historiaForm.value.nHijos),
+          convecional: this.cryptoService.set(clave_crypt, this.historiaForm.value.convecional),
+          celular: this.cryptoService.set(clave_crypt, this.historiaForm.value.celular),
+          nombreEmergencia: this.cryptoService.set(clave_crypt, this.historiaForm.value.nombreEmergencia),
+          telefonoEmergencia: this.cryptoService.set(clave_crypt, this.historiaForm.value.telefonoEmergencia),
+          direccionEmergencia: this.cryptoService.set(clave_crypt, this.historiaForm.value.direccionEmergencia),
+          nombreAcompañante: this.cryptoService.set(clave_crypt, this.historiaForm.value.nombreAcompañante),
+          motivoConsulta: this.cryptoService.set(clave_crypt, this.historiaForm.value.motivoConsulta),
+          factoresEpisodioActual: this.cryptoService.set(clave_crypt, this.historiaForm.value.factoresEpisodioActual),
+          historiaEnfermedad: this.cryptoService.set(clave_crypt, this.historiaForm.value.historiaEnfermedad),
+          natal: this.cryptoService.set(clave_crypt, this.historiaForm.value.natal),
+          infancia: this.cryptoService.set(clave_crypt, this.historiaForm.value.infancia),
+          pubertad: this.cryptoService.set(clave_crypt, this.historiaForm.value.pubertad),
+          familiar: this.cryptoService.set(clave_crypt, this.historiaForm.value.familiar),
+          social: this.cryptoService.set(clave_crypt, this.historiaForm.value.social),
+          laboral: this.cryptoService.set(clave_crypt, this.historiaForm.value.laboral),
+          psicosexual: this.cryptoService.set(clave_crypt, this.historiaForm.value.psicosexual),
+          conciencia: this.cryptoService.set(clave_crypt, this.historiaForm.value.conciencia),
+          voluntad: this.cryptoService.set(clave_crypt, this.historiaForm.value.voluntad),
+          atencion: this.cryptoService.set(clave_crypt, this.historiaForm.value.atencion),
+          sensopercepciones: this.cryptoService.set(clave_crypt, this.historiaForm.value.sensopercepciones),
+          afectividad: this.cryptoService.set(clave_crypt, this.historiaForm.value.afectividad),
+          pensamiento: this.cryptoService.set(clave_crypt, this.historiaForm.value.pensamiento),
+          memoria: this.cryptoService.set(clave_crypt, this.historiaForm.value.memoria),
+          aplicacionPruebas: this.cryptoService.set(clave_crypt, this.historiaForm.value.aplicacionPruebas),
+          diagnostico: this.cryptoService.set(clave_crypt, this.historiaForm.value.diagnostico),
+          tratamiento: this.cryptoService.set(clave_crypt, this.historiaForm.value.tratamiento),
     };
 
     Swal.fire({
@@ -290,7 +338,7 @@ export class HistoriaComponent implements OnInit {
     pdf.add(pdf.ln(1));
     pdf.add(new Columns([new Txt('Convencional :').bold().end, new Txt(this.historiaForm.value.convecional).end]).end);
     pdf.add(new Columns([new Txt('Celular :').bold().end, new Txt(this.historiaForm.value.celular).end]).end);
-    pdf.add(new Columns([new Txt('Email :').bold().end, new Txt(this.historia.email).end]).end);
+    pdf.add(new Columns([new Txt('Email :').bold().end, new Txt(this.cryptoService.get(clave_crypt, this.historia.email)).end]).end);
     pdf.add(pdf.ln(1));
     pdf.add(new Columns([new Txt('Contacto de Emergenicia:').bold().end, new Txt(this.historiaForm.value.nombreEmergencia).end]).end);
     pdf.add(new Columns([new Txt('Teléfono:').bold().end, new Txt(this.historiaForm.value.telefonoEmergencia).end]).end);

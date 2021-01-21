@@ -8,9 +8,11 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { HistoriasService } from '../../../services/historias.service';
 import { Router } from '@angular/router';
 import { Historia } from 'src/app/models/historia.model';
+import { CryptoService } from '../../../services/crypto.service';
 
 
 const socket_url = environment.socket_url;
+const clave_crypt = environment.clave_crypt;
 
 @Component({
   selector: 'app-historias',
@@ -31,7 +33,8 @@ export class HistoriasComponent implements OnInit {
   constructor(private asignacionService: AsignacionService,
               private usuarioService: UsuarioService,
               private historiasService: HistoriasService,
-              private router: Router) { }
+              private router: Router,
+              private cryptoService: CryptoService) { }
 
   ngOnInit(): void {
     this.cargarAsignaciones(this.usuarioService.uid);
@@ -79,12 +82,17 @@ export class HistoriasComponent implements OnInit {
       this.router.navigateByUrl(`/dashboard/historias/${asignacion.paciente._id}`);
     }, err => {
       if (err.error.msg === 'Sin historia'){
+
+        const nombres = this.cryptoService.set(clave_crypt, asignacion.paciente.nombre);
+        const apellidos = this.cryptoService.set(clave_crypt, asignacion.paciente.apellido);
+        const email = this.cryptoService.set(clave_crypt, asignacion.paciente.email);
+
         const historia: Historia = {
           entrevistador: this.usuarioService.uid,
           usuario: asignacion.paciente._id,
-          nombres: asignacion.paciente.nombre,
-          apellidos: asignacion.paciente.apellido,
-          email: asignacion.paciente.email
+          nombres,
+          apellidos,
+          email
         };
         this.historiasService.crearHistoria(historia).subscribe( resp => {
           this.router.navigateByUrl(`/dashboard/historias/${asignacion.paciente._id}`);

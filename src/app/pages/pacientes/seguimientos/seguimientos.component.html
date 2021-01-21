@@ -44,7 +44,7 @@
                             <tr *ngFor="let seguimiento of seguimientos">
                                 <td>{{ seguimiento.numero }}</td>
                                 <td>{{ seguimiento.fecha | date:'short'}}</td>
-                                <td>{{ seguimiento.actividad }}</td>
+                                <td>{{ seguimiento.actividad | crypto:clave_crypt }}</td>
                                 <td class="text-nowrap text-center">
                                     <a [routerLink]="['/dashboard/seguimientos/seguimiento/', seguimiento.id]" title="Editar"> <i class="fa fa-edit cursor"></i> </a>&nbsp;
                                     <a (click)="eliminarSeguimiento(seguimiento)" title="Eliminar"> <i class="fa fa-close text-danger cursor"></i> </a>

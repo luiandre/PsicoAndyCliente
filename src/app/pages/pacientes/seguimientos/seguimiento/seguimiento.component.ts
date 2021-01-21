@@ -7,6 +7,10 @@ import { SeguimientoService } from '../../../../services/seguimiento.service';
 import { delay } from 'rxjs/operators';
 import {Location} from '@angular/common';
 import { Columns, PdfMakeWrapper, Txt } from 'pdfmake-wrapper';
+import { environment } from 'src/environments/environment';
+import { CryptoService } from '../../../../services/crypto.service';
+
+const clave_crypt = environment.clave_crypt;
 
 @Component({
   selector: 'app-seguimiento',
@@ -26,7 +30,12 @@ export class SeguimientoComponent implements OnInit {
                 private fb: FormBuilder,
                 private seguimientoService: SeguimientoService,
                 private router: Router,
-                private location: Location) { }
+                private location: Location,
+                private cryptoService: CryptoService) {
+                  if (!this.seguimientoService.id){
+                    this.router.navigateByUrl('/dashboard/historias');
+                  }
+                }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe( ({id}) => {
@@ -61,7 +70,6 @@ export class SeguimientoComponent implements OnInit {
       delay(1000)
     )
     .subscribe( seguimiento => {
-
       Swal.close();
 
       if ( !seguimiento ){
@@ -71,8 +79,8 @@ export class SeguimientoComponent implements OnInit {
       this.seguimientoForm.setValue({
         numero: seguimiento.numero,
         fecha: seguimiento.fecha,
-        actividad: seguimiento.actividad,
-        observaciones: seguimiento.observaciones
+        actividad:  this.cryptoService.get(clave_crypt, seguimiento.actividad),
+        observaciones:  this.cryptoService.get(clave_crypt, seguimiento.observaciones)
       });
 
     }, (err) => {
@@ -96,9 +104,13 @@ export class SeguimientoComponent implements OnInit {
   }
 
   nuevoSeguimiento() {
+
     const seguimiento: Seguimiento = {
       paciente: this.seguimientoService.id,
-      ...this.seguimientoForm.value
+      numero: this.seguimientoForm.value.numero,
+      fecha: this.seguimientoForm.value.fecha,
+      actividad: this.cryptoService.set(clave_crypt, this.seguimientoForm.value.actividad),
+      observaciones: this.cryptoService.set(clave_crypt, this.seguimientoForm.value.observaciones)
     };
 
     Swal.fire({
@@ -133,7 +145,10 @@ export class SeguimientoComponent implements OnInit {
   actualizarSeguimiento(){
     const seguimiento: Seguimiento = {
       fechaActualizacion: new Date().getTime(),
-      ...this.seguimientoForm.value
+      numero: this.seguimientoForm.value.numero,
+      fecha: this.seguimientoForm.value.fecha,
+      actividad: this.cryptoService.set(clave_crypt, this.seguimientoForm.value.actividad),
+      observaciones: this.cryptoService.set(clave_crypt, this.seguimientoForm.value.observaciones)
     };
 
     Swal.fire({

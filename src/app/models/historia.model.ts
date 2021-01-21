@@ -3,8 +3,8 @@ import { NoticiaUser } from '../interfaces/noticia-user.interface';
 export class Historia {
 
     constructor(
-        public usuario: NoticiaUser | string,
-        public entrevistador: NoticiaUser | string,
+        public usuario?: NoticiaUser | string,
+        public entrevistador?: NoticiaUser | string,
         public email?: string,
         public fecha?: number,
         public id?: string,

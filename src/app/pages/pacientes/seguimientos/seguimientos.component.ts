@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UsuarioService } from 'src/app/services/usuario.service';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { Seguimiento } from '../../../models/seguimiento.model';
 import { SeguimientoService } from '../../../services/seguimiento.service';
+
+const clave_crypt = environment.clave_crypt;
 
 @Component({
   selector: 'app-seguimientos',
@@ -13,6 +15,7 @@ import { SeguimientoService } from '../../../services/seguimiento.service';
 })
 export class SeguimientosComponent implements OnInit {
 
+  public clave_crypt = clave_crypt;
   public totalSeguimientos = 0;
   public seguimientos: any[];
   public seguimientosTemp: Seguimiento[];
@@ -22,11 +25,14 @@ export class SeguimientosComponent implements OnInit {
   public id;
 
   constructor(  private seguimientoService: SeguimientoService,
-                private usuarioService: UsuarioService,
                 private router: Router,
-                private activatedRoute: ActivatedRoute) { }
+                private activatedRoute: ActivatedRoute) {
+                }
 
   ngOnInit(): void {
+    if (!this.seguimientoService.id){
+      this.router.navigateByUrl('/dashboard/historias');
+    }
 
     this.activatedRoute.params.subscribe( ({id}) => {
       this.id = id;

@@ -132,7 +132,7 @@ export class HeaderComponent implements OnInit {
     this.socket.on('nuevo-dispositivo', function(data){
       if (data.usuario.uid === this.usuarioService.uid){
         if (this.usuarioService.conexion === 0){
-          this.logout();
+          this.logoutNuevo();
         }
       }
 
@@ -161,6 +161,24 @@ export class HeaderComponent implements OnInit {
       });
     });
 
+  }
+
+  logoutNuevo(){
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'Espere por favor...',
+      allowOutsideClick: false,
+      onBeforeOpen: () => {
+          Swal.showLoading();
+      },
+    });
+
+    this.usuarioService.restarConexion(this.usuarioService.uid).subscribe( data => {
+        this.socket.emit('guardar-usuarios', data);
+        Swal.close();
+        this.usuarioService.logout();
+      });
   }
 
   buscar(termino: string){
