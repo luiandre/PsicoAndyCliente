@@ -78,7 +78,8 @@ export class LoginComponent implements OnInit {
             }
 
             this.usuarioService.conectado(resp.usuario.uid).subscribe( () => {
-              this.usuarioService.sumarConexion(resp.usuario.uid).subscribe(() => {
+              this.usuarioService.restarConexion(resp.usuario.uid).subscribe(() => {
+                this.usuarioService.sumarConexion(resp.usuario.uid).subscribe();
                 this.usuarioService.cargarUsuarios().subscribe( data => {
                   this.usuarioService.uid = resp.usuario.uid;
                   this.socket.emit('guardar-usuarios', data.usuarios);
@@ -124,10 +125,11 @@ export class LoginComponent implements OnInit {
   renderButton() {
     gapi.signin2.render('my-signin2', {
       scope: 'profile email',
-      width: 50,
-      height: 50,
+      //width: 50,
+      //height: 50,
       longtitle: true,
       theme: 'dark',
+
     });
 
     this.startApp();
@@ -233,7 +235,8 @@ export class LoginComponent implements OnInit {
                 if (result.isConfirmed) {
                   this.ngZone.run( () => {
                     this.usuarioService.conectado(resp.usuario.uid).subscribe( () => {
-                      this.usuarioService.sumarConexion(resp.usuario.uid).subscribe(() => {
+                      this.usuarioService.restarConexion(resp.usuario.uid).subscribe(() => {
+                        this.usuarioService.sumarConexion(resp.usuario.uid).subscribe();
                         this.usuarioService.cargarUsuarios().subscribe( data => {
                           this.usuarioService.uid = resp.usuario.uid;
                           this.socket.emit('guardar-usuarios', data.usuarios);

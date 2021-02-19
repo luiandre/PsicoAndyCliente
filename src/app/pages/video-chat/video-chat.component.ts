@@ -1,5 +1,5 @@
 
-import { Component, HostListener, OnInit} from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
 import { SalasService } from '../../services/salas.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,7 +21,7 @@ declare var Peer: any;
   templateUrl: './video-chat.component.html',
   styleUrls: ['./video-chat.component.css']
 })
-export class VideoChatComponent implements OnInit {
+export class VideoChatComponent implements OnInit, OnDestroy {
 
   private uuid;
   public socket = io(socket_url);
@@ -50,9 +50,15 @@ export class VideoChatComponent implements OnInit {
                 private activatedRoute: ActivatedRoute,
                 private router: Router,
                 private cryptoService: CryptoService) {}
+  ngOnDestroy(): void {
+    this.options.video = false;
+    this.options.audio = false;
+  }
 
   @HostListener('window:beforeunload', [ '$event' ])
   beforeUnloadHander(event) {
+    this.options.video = false;
+    this.options.audio = false;
     this.salir();
   }
 

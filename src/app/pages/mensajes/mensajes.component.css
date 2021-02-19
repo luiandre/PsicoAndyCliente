@@ -50,3 +50,8 @@ input::placeholder {
     font-size: 0.9rem;
     color: #999;
 }
+
+.cursor {
+    cursor: pointer;
+    color: gray;
+}

@@ -39,7 +39,7 @@ export class AsignacionesComponent implements OnInit {
   public cargarUsuarios() {
     this.cargando = true;
     this.usuarioService.cargarUsuariosAsignacion(this.desde).subscribe( ({total, usuarios}) => {
-      this.totalUsuarios = usuarios.length;
+      this.totalUsuarios = total;
       this.usuarios = usuarios;
       this.usuariosTemp = usuarios;
       this.cargando = false;
@@ -61,8 +61,8 @@ export class AsignacionesComponent implements OnInit {
 
     if (this.hasta > this.totalUsuarios){
       this.hasta = this.totalUsuarios;
-    } else if (this.hasta < this.totalUsuarios){
-      this.hasta = 6;
+    } else if (this.hasta - this.desde < 5){
+      this.hasta = this.desde + 6;
     }
 
     this.cargarUsuarios();

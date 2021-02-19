@@ -295,7 +295,7 @@ export class UsuarioService {
   }
 
   getUsuariosChat(rol: string){
-    return this.http.get(`${base_url}/usuarios/rol/usuario/${rol}`)
+    return this.http.get(`${base_url}/usuarios/rol/usuario/${rol}`, this.headers)
     .pipe(
       map( (resp: any) => resp = resp.usuarios)
     );
