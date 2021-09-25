@@ -32,7 +32,7 @@ export class VideoChatComponent implements OnInit, OnDestroy {
 
   private myPeer = new Peer(undefined, {
     // host: 'psicoandymd.com',
-    host: '192.168.0.111',
+    host: '143.198.131.193',
     port: 3001,
     secure: true
   });

@@ -15,7 +15,9 @@ export class AppComponent {
 
   socket = io(socket_url);
 
-  constructor( private usuarioService: UsuarioService){}
+  constructor( private usuarioService: UsuarioService){
+    localStorage.removeItem('menu');
+  }
 
   // @HostListener('window:beforeunload', [ '$event' ])
   // beforeUnloadHander(event) {
